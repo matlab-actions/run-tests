@@ -2,11 +2,12 @@
     "name": "run-matlab-tests-action",
     "version": "0.0.1",
     "description": "",
-    "main": "tsout/index.js",
+    "main": "lib/index.js",
     "scripts": {
         "format": "prettier --write .",
         "format-check": "prettier --check .",
         "build": "tsc",
+        "deps": "bash ./node_modules/run-matlab-command-action/scripts/setupdeps.sh",
         "package": "ncc build --minify",
         "test": "jest",
         "all": "npm run build && npm run package"
@@ -14,7 +15,8 @@
     "author": "The MathWorks, Inc.",
     "dependencies": {
         "@actions/core": "^1.2.4",
-        "run-matlab-command-action": "mathworks-continuous-integration/run-matlab-command-action#jpereira/initial"
+        "@actions/exec": "^1.0.4",
+        "run-matlab-command-action": "github:mathworks-continuous-integration/run-matlab-command-action#jpereira/test-release"
     },
     "devDependencies": {
         "@types/jest": "^26.0.9",
