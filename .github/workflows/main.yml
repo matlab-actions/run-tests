@@ -32,8 +32,6 @@ jobs:
 
       - name: Run MATLAB Tests
         uses: ./
-        with:
-          command: "disp('hello world');"
 
       - name: Push build
         run: |
