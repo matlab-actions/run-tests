@@ -1,3 +1,5 @@
+// Copyright 2020 The MathWorks, Inc.
+
 import * as scriptgen from "./scriptgen";
 
 describe("command generation", () => {
