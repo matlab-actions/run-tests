@@ -10,9 +10,9 @@ async function run() {
     const workspaceDir = process.cwd();
 
     const options: scriptgen.RunTestsOptions = {
-        JUnitTestResults: core.getInput("testResultsJUnit"),
-        CoberturaCodeCoverage: core.getInput("codeCoverageCobertura"),
-        SourceFolder: core.getInput("sourceFolder"),
+        JUnitTestResults: core.getInput("test-results-junit"),
+        CoberturaCodeCoverage: core.getInput("code-coverage-cobertura"),
+        SourceFolder: core.getInput("source-folder"),
     };
 
     const command = scriptgen.generateCommand(options);
