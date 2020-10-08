@@ -1,10 +1,11 @@
-# Run MATLAB Tests
+# Run MATLAB® Tests
 
-Run all tests in a MATLAB project and generate test artifacts using the _first_
-MATLAB on the runner's system `PATH`.
+Use this action to run your MATLAB and Simulink® tests and generate artifacts
+such as JUnit test results and Cobertura code coverage reports. To run the tests
+in your project, the Run MATLAB Tests action uses the first MATLAB version on
+the runner's system PATH.
 
-You also run your MATLAB and Simulink® tests and generate artifacts such as
-JUnit test results and/or Cobertura code coverage reports.
+## Usage
 
 You can use this action `with`:
 | Argument  | Description |
@@ -38,13 +39,13 @@ jobs:
             code-coverage-cobertura: code-coverage/coverage.xml
 ```
 
-> **Note**: MATLAB includes any files in your project that have a Test label. If
+> **Note**: MATLAB includes any files in your project that have a `Test` label. If
 > your pipeline does not leverage a MATLAB project or uses a MATLAB release
 > before R2019a, then MATLAB includes all tests in the root of your repository
 > including its subfolders.
 
 ## See also
-- [Set up MATLAB action](https://github.com/mathworks/)
+- [Set up MATLAB action](https://github.com/mathworks/setup-matlab-action/)
 - [Run MATLAB Command](https://github.com/mathworks/run-matlab-command-action/)
 - [Continuous Integration (CI) - MATLAB & Simulink](https://www.mathworks.com/help/matlab/continuous-integration.html)
 
