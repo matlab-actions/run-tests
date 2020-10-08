@@ -39,10 +39,10 @@ jobs:
             code-coverage-cobertura: code-coverage/coverage.xml
 ```
 
-> **Note**: MATLAB includes any files in your project that have a `Test` label. If
-> your pipeline does not leverage a MATLAB project or uses a MATLAB release
-> before R2019a, then MATLAB includes all tests in the root of your repository
-> including its subfolders.
+**Note**: MATLAB includes any files in your project that have a `Test` label. If
+your pipeline does not leverage a MATLAB project or uses a MATLAB release
+before R2019a, then MATLAB includes all tests in the root of your repository
+including its subfolders.
 
 ## See also
 - [Set up MATLAB action](https://github.com/mathworks/setup-matlab-action/)
