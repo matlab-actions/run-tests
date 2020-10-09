@@ -23,6 +23,8 @@ export function generateCommand(options: RunTestsOptions): string {
         fprintf('__________\\n\\n');
         cd(scriptFolder);
         runAllTests;
-    `.replace(/$\n^\s*/gm, " "); // replace ending newlines and starting spaces
+    `
+        .replace(/$\n^\s*/gm, " ")
+        .trim(); // replace ending newlines and starting spaces
     return command;
 }

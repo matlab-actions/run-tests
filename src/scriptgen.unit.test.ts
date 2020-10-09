@@ -1,6 +1,7 @@
 // Copyright 2020 The MathWorks, Inc.
 
 import * as scriptgen from "./scriptgen";
+import * as testData from "./scriptgen_data.unit.test.json";
 
 describe("command generation", () => {
     it("works with blank input", () => {
@@ -11,6 +12,17 @@ describe("command generation", () => {
         };
 
         const actual = scriptgen.generateCommand(options);
-        expect(actual).toBeDefined();
+        expect(actual.includes(testData.noInputs)).toBeTruthy();
+    });
+
+    it("works with inputs", () => {
+        const options: scriptgen.RunTestsOptions = {
+            JUnitTestResults: "test-results/results.xml",
+            CoberturaCodeCoverage: "code-coverage/coverage.xml",
+            SourceFolder: "source",
+        };
+
+        const actual = scriptgen.generateCommand(options);
+        expect(actual.includes(testData.allInputs)).toBeTruthy();
     });
 });
