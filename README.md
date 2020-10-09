@@ -3,7 +3,7 @@
 Use this action to run your MATLAB and Simulink® tests and generate artifacts
 such as JUnit test results and Cobertura code coverage reports. To run the tests
 in your project, the Run MATLAB Tests action uses the first MATLAB version on
-the runner's system PATH.
+the runner's system `PATH`.
 
 ## Usage
 
