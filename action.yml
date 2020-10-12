@@ -11,7 +11,7 @@ inputs:
     description: >-
       JUnit-style test results
       Path to write test results report in JUnit XML format.
-    required: true
+    required: false
     default: ""
   code-coverage-cobertura:
     description: >-
