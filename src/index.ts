@@ -28,4 +28,6 @@ async function run() {
     });
 }
 
-run().catch((e) => {});
+run().catch((e) => {
+    core.setFailed(e);
+});
