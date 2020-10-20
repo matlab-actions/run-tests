@@ -5,6 +5,9 @@ import * as exec from "@actions/exec";
 import { matlab } from "run-matlab-command-action";
 import * as scriptgen from "./scriptgen";
 
+/**
+ * Gather action inputs and then run action.
+ */
 async function run() {
     const platform = process.platform;
     const workspaceDir = process.cwd();
