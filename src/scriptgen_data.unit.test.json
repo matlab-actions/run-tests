@@ -1,4 +1,4 @@
 {
-    "noInputs": "testScript = genscript('Test','WorkingFolder','..', 'JUnitTestResults','', 'CoberturaCodeCoverage','', 'SourceFolder',''); scriptFolder = '.matlab'; scriptPath = fullfile(scriptFolder, 'runAllTests.m');",
-    "allInputs": "testScript = genscript('Test','WorkingFolder','..', 'JUnitTestResults','test-results/results.xml', 'CoberturaCodeCoverage','code-coverage/coverage.xml', 'SourceFolder','source'); scriptFolder = '.matlab'; scriptPath = fullfile(scriptFolder, 'runAllTests.m');"
+    "noInputs": "genscript('Test', 'JUnitTestResults','', 'CoberturaCodeCoverage','', 'SourceFolder','');",
+    "allInputs": "genscript('Test', 'JUnitTestResults','test-results/results.xml', 'CoberturaCodeCoverage','code-coverage/coverage.xml', 'SourceFolder','source');"
 }
