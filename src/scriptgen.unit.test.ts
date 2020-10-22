@@ -4,7 +4,7 @@ import * as scriptgen from "./scriptgen";
 import * as testData from "./scriptgen_data.unit.test.json";
 
 describe("command generation", () => {
-    it("works with blank input", () => {
+    it("contains genscript invocation with unspecified options", () => {
         const options: scriptgen.RunTestsOptions = {
             JUnitTestResults: "",
             CoberturaCodeCoverage: "",
@@ -15,7 +15,7 @@ describe("command generation", () => {
         expect(actual.includes(testData.noInputs)).toBeTruthy();
     });
 
-    it("works with inputs", () => {
+    it("contains genscript invocation with all options specified", () => {
         const options: scriptgen.RunTestsOptions = {
             JUnitTestResults: "test-results/results.xml",
             CoberturaCodeCoverage: "code-coverage/coverage.xml",
