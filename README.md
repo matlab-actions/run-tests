@@ -5,7 +5,7 @@ such as JUnit test results and Cobertura code coverage reports. To run the tests
 in your project, the Run MATLAB Tests action uses the first MATLAB version on
 the runner's system `PATH`.
 
-**Note**: By running the code in this action, you will be executing third party
+**Note**: By running the code in this action, you will be executing third-party
 code that is licensed under separate terms.
 
 ## Usage
