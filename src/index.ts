@@ -2,7 +2,7 @@
 
 import * as core from "@actions/core";
 import * as exec from "@actions/exec";
-import { matlab } from "run-matlab-command-action";
+import { matlab } from "run-command";
 import * as scriptgen from "./scriptgen";
 
 /**

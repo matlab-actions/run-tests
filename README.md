@@ -32,11 +32,11 @@ jobs:
       - uses: actions/checkout@v2
 
       # Set up MATLAB using this action first if running on a GitHub-hosted runner!
-      - uses: mathworks/setup-matlab-action@v0
+      - uses: matlab-actions/setup-matlab@v0
       
       # Run the MATLAB tests inside the repo and produce test artifacts
       - name: Run all the tests
-        uses: mathworks/run-matlab-tests-action@v0
+        uses: matlab-actions/run-tests@v0
         with:
             test-results-junit: test-results/results.xml
             code-coverage-cobertura: code-coverage/coverage.xml
@@ -48,8 +48,8 @@ before R2019a, then MATLAB includes all tests in the root of your repository
 including its subfolders.
 
 ## See also
-- [Set up MATLAB action](https://github.com/mathworks/setup-matlab-action/)
-- [Run MATLAB Command](https://github.com/mathworks/run-matlab-command-action/)
+- [Set up MATLAB action](https://github.com/matlab-actions/setup-matlab/)
+- [Run MATLAB Command](https://github.com/matlab-actions/run-command/)
 - [Continuous Integration (CI) - MATLAB & Simulink](https://www.mathworks.com/help/matlab/continuous-integration.html)
 
 ## Contact Us
