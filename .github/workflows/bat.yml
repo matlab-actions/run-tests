@@ -10,19 +10,15 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: "12"
-      - name: Configure private dependencies
-        run: |
-          mkdir ~/.ssh
-          echo "${{ secrets.RUN_MATLAB_COMMAND_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -t rsa -H github.com >> ~/.ssh/known_hosts
       - name: Perform npm tasks
         run: npm run ci
 
       - name: Perform 'setup-matlab'
-        uses: matlab-actions/setup-matlab
+        uses: matlab-actions/setup-matlab@v0
         env:
           MATHWORKS_TOKEN: ${{ secrets.MATHWORKS_TOKEN }}
 
       - name: Run MATLAB Tests
         uses: ./
+        with:
+          source-folder: sample
