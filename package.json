@@ -1,7 +1,7 @@
 {
     "name": "run-matlab-tests-action",
     "author": "The MathWorks, Inc.",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "",
     "main": "lib/index.js",
     "scripts": {
@@ -21,7 +21,7 @@
     "dependencies": {
         "@actions/core": "^1.2.6",
         "@actions/exec": "^1.0.4",
-        "run-command": "github:matlab-actions/run-command#v0.1.1"
+        "run-command": "github:matlab-actions/run-command#v0.2.1"
     },
     "devDependencies": {
         "@types/jest": "^26.0.15",
