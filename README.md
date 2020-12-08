@@ -71,8 +71,8 @@ MATLAB includes any files in your project that have a `Test` label. If your work
 By running the **Run MATLAB Tests** action, you will be executing third-party code that is licensed under separate terms.
 
 ## See also
-- [Action for Running MATLAB Commands](https://github.com/matlab-actions/setup-matlab/)
-- [Action for Installing MATLAB on GitHub-Hosted Runner](https://github.com/matlab-actions/run-command/)
+- [Action for Running MATLAB Commands](https://github.com/matlab-actions/run-command/)
+- [Action for Installing MATLAB on GitHub-Hosted Runner](https://github.com/matlab-actions/setup-matlab/)
 - [Continuous Integration with MATLAB and Simulink](https://www.mathworks.com/solutions/continuous-integration.html)
 
 ## Contact Us
