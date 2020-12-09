@@ -12,20 +12,17 @@ Use the **Run MATLAB Tests** action to automatically run tests authored using th
 ### Run MATLAB Tests on Self-Hosted Runner
 Use a self-hosted runner to automatically run the the tests in your [MATLAB project](https://www.mathworks.com/help/matlab/projects.html).
 
-```yaml
-name: Sample workflow
+```yaml 
+name: Run MATLAB Tests on Self-Hosted Runner
 on: [push]
-
 jobs:
   my-job:
-    name: Run MATLAB Tests and Save Results
+    name: Run MATLAB Tests
     runs-on: self-hosted
     steps:
-      # Checkout the project from GitHub
-      - uses: actions/checkout@v2
-      
-      # Run the MATLAB tests inside the repo and produce test artifacts
-      - name: Run all the tests
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Run tests
         uses: matlab-actions/run-tests@v0
 ```
 
@@ -35,26 +32,24 @@ Use the [Set Up MATLAB](https://github.com/matlab-actions/setup-matlab/) action 
 For example, install the latest release of MATLAB on a GitHub-hosted runner, and then use the **Run MATLAB Tests** action to run the tests in your MATLAB project and generate a JUnit test results report and a Cobertura code coverage report.
 
 ```yaml
-name: Sample workflow
+name: Generate Test Artifacts on GitHub-Hosted Runner
 on: [push]
-
 jobs:
   my-job:
-    name: Run MATLAB Tests and Save Results
+    name: Run MATLAB Tests and Generate Artifacts
     runs-on: ubuntu-latest
     steps:
-      # Checkout the project from GitHub
-      - uses: actions/checkout@v2
-
-      # Set up MATLAB using this action first if running on a GitHub-hosted runner!
-      - uses: matlab-actions/setup-matlab@v0
-      
-      # Run the MATLAB tests inside the repo and produce test artifacts
-      - name: Run all the tests
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Install MATLAB
+        uses: matlab-actions/setup-matlab@v0
+        env:
+          MATHWORKS_TOKEN: ${{ secrets.MATHWORKS_TOKEN }}
+      - name: Run tests and generate artifacts
         uses: matlab-actions/run-tests@v0
         with:
-            test-results-junit: test-results/results.xml
-            code-coverage-cobertura: code-coverage/coverage.xml
+          test-results-junit: test-results/results.xml
+          code-coverage-cobertura: code-coverage/coverage.xml
 ```
 ## Run MATLAB Tests
 When you define your workflow in the `.github/workflows` directory of your repositoy, you can specify the **Run MATLAB Tests** action using the `run-tests` key. The action accepts optional inputs.
