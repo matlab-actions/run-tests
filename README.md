@@ -43,8 +43,6 @@ jobs:
         uses: actions/checkout@v2
       - name: Install MATLAB
         uses: matlab-actions/setup-matlab@v0
-        env:
-          MATHWORKS_TOKEN: ${{ secrets.MATHWORKS_TOKEN }}
       - name: Run tests and generate artifacts
         uses: matlab-actions/run-tests@v0
         with:
