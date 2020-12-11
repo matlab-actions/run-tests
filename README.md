@@ -50,7 +50,7 @@ jobs:
           code-coverage-cobertura: code-coverage/coverage.xml
 ```
 ## Run MATLAB Tests
-When you define your workflow in the `.github/workflows` directory of your repositoy, you can specify the **Run MATLAB Tests** action using the `run-tests` key. The action accepts optional inputs.
+When you define your workflow in the `.github/workflows` directory of your repository, you can specify the **Run MATLAB Tests** action as `matlab-actions/run-tests@v0`. The action accepts optional inputs.
 
 | Input     | Description |
 |-----------|-------------|
