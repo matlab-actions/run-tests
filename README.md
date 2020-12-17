@@ -1,6 +1,6 @@
 # Action for Running MATLAB Tests
 
-The [Run MATLAB Tests](#run-matlab-tests) GitHub&reg; action enables you to run MATLAB&reg; and Simulink&reg; tests and generate artifacts such as JUnit test results and Cobertura code coverage reports. You can run tests and generate artifacts on a [GitHub-hosted](https://docs.github.com/en/free-pro-team@latest/actions/reference/specifications-for-github-hosted-runners) or [self-hosted](https://docs.github.com/en/free-pro-team@latest/actions/hosting-your-own-runners/about-self-hosted-runners) runner:
+The [Run MATLAB Tests](#run-matlab-tests) GitHub&reg; action enables you to run MATLAB&reg; and Simulink&reg; tests and generate artifacts such as JUnit test results and Cobertura code coverage reports. You can run tests and generate artifacts on a [self-hosted](https://docs.github.com/en/free-pro-team@latest/actions/hosting-your-own-runners/about-self-hosted-runners) or [GitHub-hosted](https://docs.github.com/en/free-pro-team@latest/actions/reference/specifications-for-github-hosted-runners) runner:
 
 - If you want to use a self-hosted runner, you must set up a computer with MATLAB (R2013b or later) as your runner. The action uses the first MATLAB version on the runner's system path.
 
