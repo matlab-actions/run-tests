@@ -25,7 +25,7 @@ export function generateCommand(options: RunTestsOptions): string {
             'CoberturaCodeCoverage','${options.CoberturaCodeCoverage || ""}',
             'SourceFolder','${options.SourceFolder || ""}');
         disp('Running MATLAB script with contents:');
-        disp(strtrim(testScript.writeToText()));
+        disp(testScript.Contents);
         fprintf('__________\\n\\n');
         run(testScript);
     `
