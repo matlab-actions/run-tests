@@ -27,7 +27,7 @@ jobs:
 ```
 
 ### Generate Test Artifacts on GitHub-Hosted Runner
-Use the [Set Up MATLAB](https://github.com/matlab-actions/setup-matlab/) action when you want to run tests and generate artifacts on a GitHub-hosted runner. The action installs your specified MATLAB release (R2020a or later) on a Linux virtual machine. If you do not specify a release, the action installs the latest release of MATLAB.
+Use the [Set Up MATLAB](https://github.com/matlab-actions/setup-matlab/) action when you want to run tests and generate artifacts on a GitHub-hosted runner. The action installs your specified MATLAB release (R2020a or later) on a Linux&reg; virtual machine. If you do not specify a release, the action installs the latest release of MATLAB.
 
 For example, install the latest release of MATLAB on a GitHub-hosted runner, and then use the **Run MATLAB Tests** action to run the tests in your MATLAB project and generate a JUnit test results report and a Cobertura code coverage report.
 
