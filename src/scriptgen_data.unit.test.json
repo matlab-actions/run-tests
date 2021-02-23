@@ -1,4 +1,0 @@
-{
-    "noInputs": "genscript('Test', 'JUnitTestResults','', 'CoberturaCodeCoverage','', 'SourceFolder','');",
-    "allInputs": "genscript('Test', 'JUnitTestResults','test-results/results.xml', 'CoberturaCodeCoverage','code-coverage/coverage.xml', 'SourceFolder','source');"
-}

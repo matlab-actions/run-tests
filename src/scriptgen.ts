@@ -10,6 +10,11 @@ export interface RunTestsOptions {
     JUnitTestResults?: string;
     CoberturaCodeCoverage?: string;
     SourceFolder?: string;
+    PDFTestReport?: string;
+    SimulinkTestResults?: string;
+    CoberturaModelCoverage?: string;
+    SelectByTag?: string;
+    SelectByFolder?: string;
 }
 
 /**
@@ -18,12 +23,19 @@ export interface RunTestsOptions {
  * @param options scriptgen options for running tests.
  */
 export function generateCommand(options: RunTestsOptions): string {
+
     const command = `
         addpath('${path.join(__dirname, "scriptgen")}');
         testScript = genscript('Test',
             'JUnitTestResults','${options.JUnitTestResults || ""}',
             'CoberturaCodeCoverage','${options.CoberturaCodeCoverage || ""}',
-            'SourceFolder','${options.SourceFolder || ""}');
+            'SourceFolder','${options.SourceFolder || ""}',
+            'PDFTestReport','${options.PDFTestReport || ""}',
+            'SimulinkTestResults','${options.SimulinkTestResults || ""}',
+            'CoberturaModelCoverage','${options.CoberturaModelCoverage || ""}',
+            'SelectByTag','${options.SelectByTag || ""}',
+            'SelectByFolder','${options.SelectByFolder || ""}'
+            );
         disp('Running MATLAB script with contents:');
         disp(testScript.Contents);
         fprintf('__________\\n\\n');
@@ -33,3 +45,5 @@ export function generateCommand(options: RunTestsOptions): string {
         .trim(); // replace ending newlines and starting spaces
     return command;
 }
+
+ 
