@@ -1,9 +1,9 @@
-name: Integration tests
+name: Build and Test
 on: [push]
 
 jobs:
   bat:
-    name: Run Integ Tests
+    name: Build and Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -15,13 +15,18 @@ jobs:
 
       - name: Perform 'setup-matlab'
         uses: matlab-actions/setup-matlab@v0
+
+      - name: Run MATLAB Tests
+        uses: ./
+        with:
+          source-folder: sample
         
       - name: Generate Model
         uses: matlab-actions/run-command@v0
         with: 
             command: cd('sample'),createSampleModel('temp_model'),sltest.testmanager.createTestsFromModel('sltestfile', 'temp_model');
 
-      - name: Run tests
+      - name: Run run-test command
         uses: ./
         with:
             test-results-simulink-test: test-results/simulinktest.mldatx

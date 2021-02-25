@@ -14,5 +14,4 @@ function createSampleModel(model)
     % save system
     save_system(model);
     close_system(model);
-
 end

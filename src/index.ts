@@ -20,7 +20,7 @@ async function run() {
         SimulinkTestResults: core.getInput("test-results-simulink-test"),
         CoberturaModelCoverage: core.getInput("model-coverage-cobertura"),
         SelectByTag: core.getInput("select-by-tag"),
-        SelectByFolder: core.getInput("select-by-folder")
+        SelectByFolder: core.getInput("select-by-folder"),
     };
 
     const command = scriptgen.generateCommand(options);

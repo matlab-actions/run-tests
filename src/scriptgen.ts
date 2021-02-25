@@ -23,7 +23,6 @@ export interface RunTestsOptions {
  * @param options scriptgen options for running tests.
  */
 export function generateCommand(options: RunTestsOptions): string {
-
     const command = `
         addpath('${path.join(__dirname, "scriptgen")}');
         testScript = genscript('Test',
@@ -45,5 +44,3 @@ export function generateCommand(options: RunTestsOptions): string {
         .trim(); // replace ending newlines and starting spaces
     return command;
 }
-
- 
