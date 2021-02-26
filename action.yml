@@ -1,64 +1,56 @@
 # Copyright 2020 The MathWorks, Inc.
 
-name: Run MATLAB Tests
-description: >-
-  Run all tests in a MATLAB project and generate test artifacts. 
-  MATLAB includes any files in your project that have a Test label. If your
-  pipeline does not leverage a MATLAB project, then MATLAB includes all tests in
-  the the root of your repository including its subfolders.
+name: Run MATLAB Tests description: >-
+  Run all tests in a MATLAB project and generate test artifacts. MATLAB includes
+  any files in your project that have a Test label. If your pipeline does not
+  leverage a MATLAB project, then MATLAB includes all tests in the the root of
+  your repository including its subfolders.
 inputs:
   source-folder:
     description: >-
-      Source code folder
-      Location of the folder containing source code, relative to the project
-      root folder. The specified folder and its subfolders are added to the top
-      of the MATLAB search path. To generate a code coverage report, MATLAB uses
-      only the source code in the specified folder and its subfolders. You can
-      specify multiple folders using a colon-separated or a semicolon-separated
-      list.
-    required: false
-    default: ""
+      Source code folder Location of the folder containing source code, relative
+      to the project root folder. The specified folder and its subfolders are
+      added to the top of the MATLAB search path. To generate a code coverage
+      report, MATLAB uses only the source code in the specified folder and its
+      subfolders. You can specify multiple folders using a colon-separated or a
+      semicolon-separated list.
+    required: false default: ""
   select-by-folder:
     description: >-
-      Locations of the folders used to select test suite elements, relative to the project root folder. To create a test suite, MATLAB uses only the tests in the specified folders and their subfolders. 
-      You can specify multiple folders using a colon-separated or semicolon-separated list.
-    required: false
-    default: ""
+      Locations of the folders used to select test suite elements, relative to
+      the project root folder. To create a test suite, MATLAB uses only the
+      tests in the specified folders and their subfolders. You can specify
+      multiple folders using a colon-separated or semicolon-separated list.
+    required: false default: ""
   select-by-tag:
     description: >-
-      Test tag used to select test suite elements. To create a test suite, 
+      Test tag used to select test suite elements. To create a test suite,
       MATLAB uses only the test elements with the specified tag.
-    required: false
-    default: ""
+    required: false default: ""
   test-results-pdf:
     description: >-
-      Path to write test results report in PDF format (currently not supported on macOS platforms).
-    required: false
-    default: ""
+      Path to write test results report in PDF format (currently not supported
+      on macOS platforms).
+    required: false default: ""
   test-results-junit:
     description: >-
-      JUnit-style test results
-      Path to write test results report in JUnit XML format.
-    required: false
-    default: ""
+      JUnit-style test results Path to write test results report in JUnit XML
+      format.
+    required: false default: ""
   test-results-simulink-test:
     description: >-
-      Path to export Simulink Test Manager results in MLDATX format 
-      (requires Simulink Test license and is supported in MATLAB R2019a or later).
-    required: false
-    default: ""
+      Path to export Simulink Test Manager results in MLDATX format (requires
+      Simulink Test license and is supported in MATLAB R2019a or later).
+    required: false default: ""
   code-coverage-cobertura:
     description: >-
-      Cobertura code coverage
-      Path to write code coverage report in Cobertura XML format.
-    required: false
-    default: ""
+      Cobertura code coverage Path to write code coverage report in Cobertura
+      XML format.
+    required: false default: ""
   model-coverage-cobertura:
     description: >-
-      Path to write model coverage report in Cobertura XML format 
-      (requires Simulink Coverage license and is supported in MATLAB R2018b or later).
-    required: false
-    default: ""
+      Path to write model coverage report in Cobertura XML format (requires
+      Simulink Coverage license and is supported in MATLAB R2018b or later).
+    required: false default: ""
 runs:
-  using: node12
-  main: dist/index.js
+  using: node12 main: dist/index.js
