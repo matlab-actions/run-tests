@@ -6,6 +6,11 @@ export interface RunTestsOptions {
     JUnitTestResults?: string;
     CoberturaCodeCoverage?: string;
     SourceFolder?: string;
+    PDFTestReport?: string;
+    SimulinkTestResults?: string;
+    CoberturaModelCoverage?: string;
+    SelectByTag?: string;
+    SelectByFolder?: string;
 }
 /**
  * Generate scriptgen command for running tests.
