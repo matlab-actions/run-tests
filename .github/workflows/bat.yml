@@ -25,3 +25,24 @@ jobs:
         uses: ./
         with:
           source-folder: sample
+        
+      - name: Generate Model
+        uses: matlab-actions/run-command@v0
+        with: 
+            command: cd('sample'),createSampleModel('temp_model'),sltest.testmanager.createTestsFromModel('sltestfile', 'temp_model');
+
+      - name: Run run-test command
+        uses: ./
+        with:
+            test-results-simulink-test: test-results/simulinktest.mldatx
+            model-coverage-cobertura: test-results/modelcoverage.xml
+            test-results-pdf: test-results/pdf-results.pdf
+            select-by-folder: sample
+
+      - name: Verify artifacts generation
+        run: |
+            (test -f test-results/simulinktest.mldatx) || (echo "File simulinktest.mldatx does not exist" && exit 1)
+            (test -f test-results/modelcoverage.xml) || (echo "File modelcoverage.xml does not exist" && exit 1)
+            (test -f test-results/pdf-results.pdf) || (echo "File pdf-results.pdf does not exist" && exit 1)
+
+

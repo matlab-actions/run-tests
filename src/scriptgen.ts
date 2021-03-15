@@ -10,6 +10,11 @@ export interface RunTestsOptions {
     JUnitTestResults?: string;
     CoberturaCodeCoverage?: string;
     SourceFolder?: string;
+    PDFTestReport?: string;
+    SimulinkTestResults?: string;
+    CoberturaModelCoverage?: string;
+    SelectByTag?: string;
+    SelectByFolder?: string;
 }
 
 /**
@@ -23,7 +28,13 @@ export function generateCommand(options: RunTestsOptions): string {
         testScript = genscript('Test',
             'JUnitTestResults','${options.JUnitTestResults || ""}',
             'CoberturaCodeCoverage','${options.CoberturaCodeCoverage || ""}',
-            'SourceFolder','${options.SourceFolder || ""}');
+            'SourceFolder','${options.SourceFolder || ""}',
+            'PDFTestReport','${options.PDFTestReport || ""}',
+            'SimulinkTestResults','${options.SimulinkTestResults || ""}',
+            'CoberturaModelCoverage','${options.CoberturaModelCoverage || ""}',
+            'SelectByTag','${options.SelectByTag || ""}',
+            'SelectByFolder','${options.SelectByFolder || ""}'
+            );
         disp('Running MATLAB script with contents:');
         disp(testScript.Contents);
         fprintf('__________\\n\\n');

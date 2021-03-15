@@ -16,6 +16,11 @@ async function run() {
         JUnitTestResults: core.getInput("test-results-junit"),
         CoberturaCodeCoverage: core.getInput("code-coverage-cobertura"),
         SourceFolder: core.getInput("source-folder"),
+        PDFTestReport: core.getInput("test-results-pdf"),
+        SimulinkTestResults: core.getInput("test-results-simulink-test"),
+        CoberturaModelCoverage: core.getInput("model-coverage-cobertura"),
+        SelectByTag: core.getInput("select-by-tag"),
+        SelectByFolder: core.getInput("select-by-folder"),
     };
 
     const command = scriptgen.generateCommand(options);
