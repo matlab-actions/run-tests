@@ -27,7 +27,7 @@ jobs:
           source-folder: sample
         
       - name: Generate Model
-        uses: matlab-actions/run-command@v0
+        uses: matlab-actions/run-command@private-repo-pilot
         with: 
             command: cd('sample'),createSampleModel('temp_model'),sltest.testmanager.createTestsFromModel('sltestfile', 'temp_model');
 
