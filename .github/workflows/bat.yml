@@ -6,7 +6,12 @@ jobs:
     name: Build and Test
     runs-on: ubuntu-latest
     steps:
+      # Checkout repo but don't persist credentials 
+      # Workaround for https://github.com/actions/setup-node/issues/214
       - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
       - uses: actions/setup-node@v1
         with:
           node-version: "12"
