@@ -8,8 +8,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: webfactory/ssh-agent@v0.5.2
-        name: Configure SSH+Git
+      - name: Configure run-command
+        uses: webfactory/ssh-agent@v0.5.2
         with:
           ssh-private-key: |
             ${{ secrets.RUN_COMMAND_KEY }}
