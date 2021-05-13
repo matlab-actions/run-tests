@@ -6,15 +6,13 @@ jobs:
     name: Build and Test
     runs-on: ubuntu-latest
     steps:
-      # Need to do some special git configuration after checking out
-      # https://github.com/actions/setup-node/issues/214
       - uses: actions/checkout@v2
+
+      - name: Configure run-command
+        uses: webfactory/ssh-agent@v0.5.2
         with:
-          persist-credentials: false
-      - name: Use HTTPS instead of SSH for git auth
-        run: >
-          git config --global url."https://github.com/".insteadOf
-          ssh://git@github.com/
+          ssh-private-key: |
+            ${{ secrets.RUN_COMMAND_KEY }}
 
       - uses: actions/setup-node@v1
         with:
