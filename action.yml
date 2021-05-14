@@ -6,13 +6,12 @@ description: >-
 inputs:
   source-folder:
     description: >-
-      Source code folder location of the folder containing source code
+      Location of the folder containing source code
     required: false
     default: ""
   select-by-folder:
     description: >-
-      Locations of the folders used to select test suite elements, relative to
-      the project root folder
+      Location of the folder containing test files
     required: false
     default: ""
   select-by-tag:
@@ -22,8 +21,7 @@ inputs:
     default: ""
   test-results-pdf:
     description: >-
-      Path to write test results report in PDF format (not supported
-      on macOS)
+      Path to write test results report in PDF format (not supported on macOS)
     required: false
     default: ""
   test-results-junit:
