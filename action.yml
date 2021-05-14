@@ -21,7 +21,7 @@ inputs:
     default: ""
   test-results-pdf:
     description: >-
-      Path to write test results report in PDF format (not supported on macOS)
+      Path to write test results report in PDF format
     required: false
     default: ""
   test-results-junit:
