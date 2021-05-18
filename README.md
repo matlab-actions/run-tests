@@ -23,7 +23,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
       - name: Run tests
-        uses: matlab-actions/run-tests@v0
+        uses: matlab-actions/run-tests@v1
 ```
 
 ### Generate Test Artifacts on GitHub-Hosted Runner
@@ -42,15 +42,15 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
       - name: Install MATLAB
-        uses: matlab-actions/setup-matlab@v0
+        uses: matlab-actions/setup-matlab@v1
       - name: Run tests and generate artifacts
-        uses: matlab-actions/run-tests@v0
+        uses: matlab-actions/run-tests@v1
         with:
           test-results-junit: test-results/results.xml
           code-coverage-cobertura: code-coverage/coverage.xml
 ```
 ## Run MATLAB Tests
-When you define your workflow in the `.github/workflows` directory of your repository, specify the **Run MATLAB Tests** action as `matlab-actions/run-tests@v0`.
+When you define your workflow in the `.github/workflows` directory of your repository, specify the **Run MATLAB Tests** action as `matlab-actions/run-tests@v1`.
 
 By default, MATLAB includes any files in your project that have a `Test` label. If your workflow does not use a MATLAB project, or if it uses a MATLAB release before R2019a, then MATLAB includes all tests in the root of your repository or in any of its subfolders.
 
