@@ -4,7 +4,7 @@ The [Run MATLAB Tests](#run-matlab-tests) GitHub&reg; action enables you to run 
 
 - To use a self-hosted runner, you must set up a computer with MATLAB (R2013b or later) as your runner. The action uses the topmost MATLAB version on the runner's system path.
 
-- To use a GitHub-hosted runner, you must include the [Setup MATLAB](https://github.com/matlab-actions/setup-matlab/) action in your workflow to install MATLAB on the runner. Currently, this action is available only for public projects. It does not install transformation products, such as MATLAB Coder&trade; and MATLAB Compiler&trade;.
+- To use a GitHub-hosted runner, you must include the [Setup MATLAB](https://github.com/matlab-actions/setup-matlab/) action in your workflow to set up MATLAB on the runner. Currently, this action is available only for public projects. It does not set up transformation products, such as MATLAB Coder&trade; and MATLAB Compiler&trade;.
 
 ## Usage Examples
 Use the **Run MATLAB Tests** action to automatically run tests authored using the MATLAB Unit Testing Framework or Simulink Test&trade;. You can use this action with optional inputs to generate various test and coverage artifacts.
@@ -27,9 +27,9 @@ jobs:
 ```
 
 ### Generate Test Artifacts on GitHub-Hosted Runner
-Before you run tests and generate artifacts on a GitHub-hosted runner, first use the [Setup MATLAB](https://github.com/matlab-actions/setup-matlab/) action. The action installs your specified MATLAB release (R2020a or later) on a Linux&reg; virtual machine. If you do not specify a release, the action installs the latest release of MATLAB.
+Before you run tests and generate artifacts on a GitHub-hosted runner, first use the [Setup MATLAB](https://github.com/matlab-actions/setup-matlab/) action. The action sets up your specified MATLAB release (R2020a or later) on a Linux&reg; virtual machine. If you do not specify a release, the action sets up the latest release of MATLAB.
 
-For example, install the latest release of MATLAB on a GitHub-hosted runner, and then use the **Run MATLAB Tests** action to run the tests in your MATLAB project and generate a JUnit test results report and a Cobertura code coverage report.
+For example, set up the latest release of MATLAB on a GitHub-hosted runner, and then use the **Run MATLAB Tests** action to run the tests in your MATLAB project and generate a JUnit test results report and a Cobertura code coverage report.
 
 ```yaml
 name: Generate Test Artifacts on GitHub-Hosted Runner
