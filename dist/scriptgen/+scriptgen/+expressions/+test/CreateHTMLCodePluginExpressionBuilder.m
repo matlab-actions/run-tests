@@ -2,7 +2,7 @@ classdef CreateHTMLCodePluginExpressionBuilder < scriptgen.CodeBuilder
     % Copyright 2020 The MathWorks, Inc.
     
     properties
-        FolderPath = '''html'''
+        FolderPath = '''htmlCodeCoverage'''
         Source = {'pwd'}
     end
     

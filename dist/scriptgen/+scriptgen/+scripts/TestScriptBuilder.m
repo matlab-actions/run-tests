@@ -1,16 +1,18 @@
 classdef TestScriptBuilder < scriptgen.CodeBuilder
-    % Copyright 2020 The MathWorks, Inc.
+    % Copyright 2020 - 2021 The MathWorks, Inc.
     
     properties
         CodeProvider = scriptgen.CodeProvider.default()
         WorkingFolder = ''
         PDFTestReport = ''
+        HTMLTestReport = ''
         TAPTestResults = ''
         JUnitTestResults = ''
         SimulinkTestResults = ''
         CoberturaCodeCoverage = ''
         HTMLCodeCoverage = ''
         CoberturaModelCoverage = ''
+        HTMLModelCoverage = ''
         SourceFolder = ''
         SelectByFolder = ''
         SelectByTag = ''
@@ -30,6 +32,11 @@ classdef TestScriptBuilder < scriptgen.CodeBuilder
         function set.PDFTestReport(obj, value)
             scriptgen.internal.validateTextScalar(value);
             obj.PDFTestReport = value;
+        end
+
+        function set.HTMLTestReport(obj, value)
+            scriptgen.internal.validateTextScalar(value);
+            obj.HTMLTestReport = value;
         end
         
         function set.TAPTestResults(obj, value)
@@ -61,7 +68,12 @@ classdef TestScriptBuilder < scriptgen.CodeBuilder
             scriptgen.internal.validateTextScalar(value);
             obj.CoberturaModelCoverage = value;
         end
-        
+
+        function set.HTMLModelCoverage(obj, value)
+            scriptgen.internal.validateTextScalar(value);
+            obj.HTMLModelCoverage = value;
+        end
+
         function set.SourceFolder(obj, value)
             scriptgen.internal.validateText(value);
             obj.SourceFolder = value;

@@ -1,6 +1,6 @@
 classdef CreateTestRunnerSequenceBuilder < scriptgen.sequences.test.CreateTestRunnerSequenceBuilder ...
         & scriptgen.internal.mixin.VersionDependent
-    % Copyright 2020 The MathWorks, Inc.
+    % Copyright 2020 - 2021 The MathWorks, Inc.
 
     properties (Constant, Access = protected)
         MinSupportedVersion = scriptgen.internal.Version.forRelease('R2013a')
@@ -30,6 +30,12 @@ classdef CreateTestRunnerSequenceBuilder < scriptgen.sequences.test.CreateTestRu
                 [statements(end+1), hasPDF] = obj.buildPluginStatement(testCodeProvider, 'PDF test reports', ...
                     'CreatePDFPlugin', 'FilePath', obj.PDFTestReport);
             end
+
+             if ~isempty(obj.HTMLTestReport)
+                 [statements(end+1)] = obj.buildPluginStatement(testCodeProvider, 'HTML test reports', ...
+                     'CreateHTMLTestReportPlugin', 'FolderPath', obj.HTMLTestReport);
+             end
+
             
             if ~isempty(obj.TAPTestResults)
                 statements(end+1) = obj.buildPluginStatement(testCodeProvider, 'TAP test results', ...
@@ -65,6 +71,12 @@ classdef CreateTestRunnerSequenceBuilder < scriptgen.sequences.test.CreateTestRu
                 statements(end+1) = obj.buildPluginStatement(testCodeProvider, 'Cobertura model coverage', ...
                     'CreateCoberturaModelPlugin', 'FilePath', obj.CoberturaModelCoverage);
             end
+
+            if ~isempty(obj.HTMLModelCoverage)
+                statements(end+1) = obj.buildPluginStatement(testCodeProvider, 'HTML model coverage', ...
+                    'CreateHTMLModelPlugin', 'FolderPath', obj.HTMLModelCoverage);
+            end
+
             
             sequence = Sequence(statements);
         end

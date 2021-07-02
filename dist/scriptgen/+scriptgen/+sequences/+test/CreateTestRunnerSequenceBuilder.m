@@ -1,16 +1,18 @@
 classdef CreateTestRunnerSequenceBuilder < scriptgen.CodeBuilder
-    % Copyright 2020 The MathWorks, Inc.
+    % Copyright 2020 - 2021 The MathWorks, Inc.
     
     properties
         CodeProvider = scriptgen.CodeProvider.default()
         RunnerName = 'runner'
         PDFTestReport = ''
+        HTMLTestReport = ''
         TAPTestResults = ''
         JUnitTestResults = ''
         SimulinkTestResults = ''
         CoberturaCodeCoverage = ''
         HTMLCodeCoverage = ''
         CoberturaModelCoverage = ''
+        HTMLModelCoverage = ''
         SourceFolder = {}
     end
     
@@ -28,6 +30,11 @@ classdef CreateTestRunnerSequenceBuilder < scriptgen.CodeBuilder
         function set.PDFTestReport(obj, value)
             scriptgen.internal.validateTextScalar(value);
             obj.PDFTestReport = value;
+        end
+
+        function set.HTMLTestReport(obj, value)
+            scriptgen.internal.validateTextScalar(value);
+            obj.HTMLTestReport = value;
         end
         
         function set.TAPTestResults(obj, value)
@@ -58,6 +65,11 @@ classdef CreateTestRunnerSequenceBuilder < scriptgen.CodeBuilder
         function set.CoberturaModelCoverage(obj, value)
             scriptgen.internal.validateTextScalar(value);
             obj.CoberturaModelCoverage = value;
+        end
+
+        function set.HTMLModelCoverage(obj, value)
+            scriptgen.internal.validateTextScalar(value);
+            obj.HTMLModelCoverage = value;
         end
         
         function set.SourceFolder(obj, value)
