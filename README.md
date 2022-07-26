@@ -1,13 +1,13 @@
 # Action for Running MATLAB Tests
 
-The [Run MATLAB Tests](#run-matlab-tests) GitHub&reg; action enables you to run MATLAB&reg; and Simulink&reg; tests and generate artifacts such as JUnit test results and Cobertura code coverage reports. You can run tests and generate artifacts on a [self-hosted](https://docs.github.com/en/free-pro-team@latest/actions/hosting-your-own-runners/about-self-hosted-runners) or [GitHub-hosted](https://docs.github.com/en/free-pro-team@latest/actions/reference/specifications-for-github-hosted-runners) runner:
+The [Run MATLAB Tests](#run-matlab-tests) action enables you to run MATLAB&reg; and Simulink&reg; tests and generate artifacts such as JUnit test results and Cobertura code coverage reports. You can run tests and generate artifacts on a [self-hosted](https://docs.github.com/en/free-pro-team@latest/actions/hosting-your-own-runners/about-self-hosted-runners) or [GitHub&reg;-hosted](https://docs.github.com/en/free-pro-team@latest/actions/reference/specifications-for-github-hosted-runners) runner:
 
-- To use a self-hosted runner, you must set up a computer with MATLAB (R2013b or later) as your runner. The action uses the topmost MATLAB version on the runner's system path.
+- To use a self-hosted runner, you must set up a computer with MATLAB (R2013b or later) as your runner. The runner uses the topmost MATLAB version on the system path to execute your workflow.
 
 - To use a GitHub-hosted runner, you must include the [Setup MATLAB](https://github.com/matlab-actions/setup-matlab/) action in your workflow to set up MATLAB on the runner. Currently, this action is available only for public projects. It does not set up transformation products, such as MATLAB Coder&trade; and MATLAB Compiler&trade;.
 
-## Usage Examples
-Use the **Run MATLAB Tests** action to automatically run tests authored using the MATLAB Unit Testing Framework or Simulink Test&trade;. You can use this action with optional inputs to generate various test and coverage artifacts.
+## Examples
+Use the **Run MATLAB Tests** action to automatically run tests authored using the MATLAB unit testing framework or Simulink Test&trade;. You can use this action with optional inputs to generate various test and coverage artifacts.
 
 ### Run MATLAB Tests on Self-Hosted Runner
 Use a self-hosted runner to automatically run the tests in your [MATLAB project](https://www.mathworks.com/help/matlab/projects.html).
@@ -52,7 +52,7 @@ jobs:
 ## Run MATLAB Tests
 When you define your workflow in the `.github/workflows` directory of your repository, specify the **Run MATLAB Tests** action as `matlab-actions/run-tests@v1`.
 
-By default, MATLAB includes any files in your project that have a `Test` label. If your workflow does not use a MATLAB project, or if it uses a MATLAB release before R2019a, then MATLAB includes all tests in the root of your repository or in any of its subfolders.
+By default, MATLAB includes any files in your project that have a `Test` label. If your workflow does not use a MATLAB project, or if it uses a MATLAB release before R2019a, then MATLAB includes all tests in the root of your repository and in any of its subfolders.
 
 The **Run MATLAB Tests** action lets you customize your test run using optional inputs. For example, you can add folders to the MATLAB search path, control which tests to run, and generate various artifacts.
 
@@ -68,7 +68,8 @@ Input                     | Description
 `model-coverage-cobertura`  | (Optional) Path to write model coverage report in Cobertura XML format. This input requires a Simulink Coverage™ license, and is supported in MATLAB R2018b and later.<br/>**Example:** `model-coverage/coverage.xml`
 
 ## Notes
-When you use the **Run MATLAB Tests** action, you execute third-party code that is licensed under separate terms.
+* In MATLAB R2019a and later, the **Run MATLAB Tests** action uses  the `-batch` option to start MATLAB noninteractively. Preferences do not persist across different MATLAB sessions launched with the `-batch` option. To run code that requires the same preferences, use a single action.
+* When you use the **Run MATLAB Tests** action, you execute third-party code that is licensed under separate terms.
 
 ## See Also
 - [Action for Running MATLAB Commands](https://github.com/matlab-actions/run-command/)
