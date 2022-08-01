@@ -1,4 +1,4 @@
-// Copyright 2020 The MathWorks, Inc.
+// Copyright 2020-2022 The MathWorks, Inc.
 
 import * as path from "path";
 
@@ -15,6 +15,7 @@ export interface RunTestsOptions {
     CoberturaModelCoverage?: string;
     SelectByTag?: string;
     SelectByFolder?: string;
+    UseParallel?: boolean;
 }
 
 /**
@@ -33,7 +34,8 @@ export function generateCommand(options: RunTestsOptions): string {
             'SimulinkTestResults','${options.SimulinkTestResults || ""}',
             'CoberturaModelCoverage','${options.CoberturaModelCoverage || ""}',
             'SelectByTag','${options.SelectByTag || ""}',
-            'SelectByFolder','${options.SelectByFolder || ""}'
+            'SelectByFolder','${options.SelectByFolder || ""}',
+            'UseParallel',${options.UseParallel || false}
             );
         disp('Running MATLAB script with contents:');
         disp(testScript.Contents);

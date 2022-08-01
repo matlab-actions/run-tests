@@ -1,4 +1,4 @@
-# Copyright 2020 The MathWorks, Inc.
+# Copyright 2020-2022 The MathWorks, Inc.
 
 name: Run MATLAB Tests
 description: >-
@@ -44,6 +44,11 @@ inputs:
       Path to write model coverage report in Cobertura XML format
     required: false
     default: ""
+  use-parallel:
+    description: >-
+      Indicator to run tests in parallel
+    required: false
+    default: false
 runs:
   using: node12
   main: dist/index.js
