@@ -1,4 +1,4 @@
-# Copyright 2020 The MathWorks, Inc.
+# Copyright 2020-2022 The MathWorks, Inc.
 
 name: Run MATLAB Tests
 description: >-
@@ -9,6 +9,11 @@ inputs:
       Location of the folder containing source code
     required: false
     default: ""
+  use-parallel:
+    description: >-
+      Whether to run tests in parallel
+    required: false
+    default: false
   select-by-folder:
     description: >-
       Location of the folder containing test files

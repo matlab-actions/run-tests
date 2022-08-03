@@ -1,4 +1,4 @@
-// Copyright 2020 The MathWorks, Inc.
+// Copyright 2020-2022 The MathWorks, Inc.
 
 import * as scriptgen from "./scriptgen";
 
@@ -13,6 +13,7 @@ describe("command generation", () => {
             CoberturaModelCoverage: "",
             SelectByTag: "",
             SelectByFolder: "",
+            UseParallel: false,
         };
 
         const actual = scriptgen.generateCommand(options);
@@ -26,10 +27,12 @@ describe("command generation", () => {
         expect(actual.includes("'CoberturaModelCoverage',''")).toBeTruthy();
         expect(actual.includes("'SelectByTag',''")).toBeTruthy();
         expect(actual.includes("'SelectByFolder',''")).toBeTruthy();
+        expect(actual.includes("'UseParallel',false")).toBeTruthy();
 
         const expected = `genscript('Test', 'JUnitTestResults','', 'CoberturaCodeCoverage','', 
         'SourceFolder','', 'PDFTestReport','', 'SimulinkTestResults','', 
-        'CoberturaModelCoverage','', 'SelectByTag','', 'SelectByFolder','' )`.replace(/\s+/g, "");
+        'CoberturaModelCoverage','', 'SelectByTag','', 'SelectByFolder','', 
+        'UseParallel',false )`.replace(/\s+/g, "");
         expect(actual.replace(/\s+/g, "").includes(expected)).toBeTruthy();
     });
 
@@ -43,6 +46,7 @@ describe("command generation", () => {
             CoberturaModelCoverage: "test-results/modelcoverage.xml",
             SelectByTag: "FeatureA",
             SelectByFolder: "test/tools;test/toolbox",
+            UseParallel: true,
         };
 
         const actual = scriptgen.generateCommand(options);
@@ -62,12 +66,13 @@ describe("command generation", () => {
         ).toBeTruthy();
         expect(actual.includes("'SelectByTag','FeatureA'")).toBeTruthy();
         expect(actual.includes("'SelectByFolder','test/tools;test/toolbox'")).toBeTruthy();
+        expect(actual.includes("'UseParallel',true")).toBeTruthy();
 
         const expected = `genscript('Test', 'JUnitTestResults','test-results/results.xml', 
         'CoberturaCodeCoverage','code-coverage/coverage.xml', 'SourceFolder','source',
          'PDFTestReport','test-results/pdf-results.pdf', 'SimulinkTestResults','test-results/simulinkTest.mldatx',
           'CoberturaModelCoverage','test-results/modelcoverage.xml', 'SelectByTag','FeatureA', 
-          'SelectByFolder','test/tools;test/toolbox' )`.replace(/\s+/g, "");
+          'SelectByFolder','test/tools;test/toolbox', 'UseParallel',true )`.replace(/\s+/g, "");
         expect(actual.replace(/\s+/g, "").includes(expected)).toBeTruthy();
     });
 });
