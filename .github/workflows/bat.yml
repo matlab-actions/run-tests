@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Configure run-command
+      - name: Set ssh-key for run-command clone
         uses: webfactory/ssh-agent@v0.5.2
         with:
           ssh-private-key: |
@@ -21,7 +21,7 @@ jobs:
         run: npm run ci
 
       - name: Perform 'setup-matlab'
-        uses: matlab-actions/setup-matlab@v0
+        uses: matlab-actions/setup-matlab@v1
 
       - name: Run MATLAB Tests
         uses: ./
@@ -29,7 +29,7 @@ jobs:
           source-folder: sample
         
       - name: Generate Model
-        uses: matlab-actions/run-command@v0
+        uses: matlab-actions/run-command@v1
         with: 
             command: cd('sample'),createSampleModel('temp_model'),sltest.testmanager.createTestsFromModel('sltestfile', 'temp_model');
 
