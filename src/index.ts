@@ -2,7 +2,7 @@
 
 import * as core from "@actions/core";
 import * as exec from "@actions/exec";
-import { matlab } from "run-command";
+import { matlab } from "run-matlab-command-action";
 import * as scriptgen from "./scriptgen";
 
 /**
@@ -10,6 +10,7 @@ import * as scriptgen from "./scriptgen";
  */
 async function run() {
     const platform = process.platform;
+    const architecture = process.arch;
     const workspaceDir = process.cwd();
 
     const options: scriptgen.RunTestsOptions = {
@@ -33,7 +34,7 @@ async function run() {
     });
 
     await core.group("Run command", async () => {
-        await matlab.runCommand(helperScript, platform, exec.exec);
+        await matlab.runCommand(helperScript, platform, architecture, exec.exec);
     });
 }
 
