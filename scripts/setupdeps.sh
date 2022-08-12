@@ -5,8 +5,8 @@ RMC_BASE_URL='https://ssd.mathworks.com/supportfiles/ci/run-matlab-command/v1'
 SUPPORTED_OS=('win64' 'maci64' 'glnxa64')
 
 # Create dist directory if it doesn't already exist
-DISTDIR="$(pwd)/dist/bin"
-mkdir -p $DISTDIR
+DISTDIR="$(pwd)/dist"
+mkdir -p $DISTDIR/bin
 
 # Download and extract in a temporary directory
 WORKINGDIR=$(mktemp -d -t rmc_build.XXXXXX)
@@ -28,8 +28,9 @@ done
 
 wget -O scriptgen.zip $SCRIPTGEN_URL
 unzip -qod scriptgen scriptgen.zip
+mv -f scriptgen $DISTDIR
 rm scriptgen.zip
 
-mv -f ./* "$DISTDIR/"
+mv -f ./* "$DISTDIR/bin"
 rm -rf $WORKINGDIR
 
