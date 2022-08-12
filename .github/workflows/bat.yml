@@ -8,6 +8,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Set ssh-key for run-command clone
+        uses: webfactory/ssh-agent@v0.5.2
+        with:
+          ssh-private-key: |
+            ${{ secrets.RUN_COMMAND_KEY }}
+
       - uses: actions/setup-node@v1
         with:
           node-version: "12"
