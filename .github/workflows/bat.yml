@@ -8,12 +8,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Configure run-command
-        uses: webfactory/ssh-agent@v0.5.2
-        with:
-          ssh-private-key: |
-            ${{ secrets.RUN_COMMAND_KEY }}
-
       - uses: actions/setup-node@v1
         with:
           node-version: "12"
