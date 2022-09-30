@@ -73,6 +73,7 @@ Input                     | Description
 * When you use the **Run MATLAB Tests** action, you execute third-party code that is licensed under separate terms.
 
 ## See Also
+- [Action for Running MATLAB Builds](https://github.com/matlab-actions/run-build/)
 - [Action for Running MATLAB Commands](https://github.com/matlab-actions/run-command/)
 - [Action for Setting Up MATLAB on GitHub-Hosted Runner](https://github.com/matlab-actions/setup-matlab/)
 - [Continuous Integration with MATLAB and Simulink](https://www.mathworks.com/solutions/continuous-integration.html)
