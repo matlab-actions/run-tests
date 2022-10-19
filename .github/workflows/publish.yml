@@ -12,11 +12,11 @@ jobs:
       tag: ${{ steps.update-package-version.outputs.version }}
     steps:
       # Configure runner with the right stuff
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Set ssh-key for run-command clone
-        uses: webfactory/ssh-agent@v0.5.2
+        uses: webfactory/ssh-agent@v0.6.0
         with:
           ssh-private-key: |
             ${{ secrets.RUN_COMMAND_KEY }}
@@ -24,9 +24,9 @@ jobs:
         run: |
           git config user.name 'Release Action'
           git config user.email '<>'
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
-          node-version: "12"
+          node-version: 16
 
       # Call `npm version`. It increments the version and commits the changes.
       # We'll save the output (new version string) for use in the following
