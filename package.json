@@ -19,7 +19,7 @@
         "lib/"
     ],
     "dependencies": {
-        "@actions/core": "^1.4.0",
+        "@actions/core": "^1.10.0",
         "@actions/exec": "^1.1.0",
         "run-matlab-command-action": "github:matlab-actions/run-command#v1.1.0"
     },
