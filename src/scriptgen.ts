@@ -15,7 +15,10 @@ export interface RunTestsOptions {
     CoberturaModelCoverage?: string;
     SelectByTag?: string;
     SelectByFolder?: string;
+    Strict?: boolean;
     UseParallel?: boolean;
+    OutputDetail?: string;
+    LoggingLevel?: string;
 }
 
 /**
@@ -35,7 +38,10 @@ export function generateCommand(options: RunTestsOptions): string {
             'CoberturaModelCoverage','${options.CoberturaModelCoverage || ""}',
             'SelectByTag','${options.SelectByTag || ""}',
             'SelectByFolder','${options.SelectByFolder || ""}',
-            'UseParallel',${options.UseParallel || false}
+            'Strict',${options.Strict || false},
+            'UseParallel',${options.UseParallel || false},
+            'OutputDetail','${options.OutputDetail || ""}',
+            'LoggingLevel','${options.LoggingLevel || ""}'
             );
         disp('Running MATLAB script with contents:');
         disp(testScript.Contents);

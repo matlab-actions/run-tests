@@ -22,7 +22,10 @@ async function run() {
         CoberturaModelCoverage: core.getInput("model-coverage-cobertura"),
         SelectByTag: core.getInput("select-by-tag"),
         SelectByFolder: core.getInput("select-by-folder"),
+        Strict: core.getBooleanInput("strict"),
         UseParallel: core.getBooleanInput("use-parallel"),
+        OutputDetail: core.getInput("output-detail"),
+        LoggingLevel: core.getInput("logging-level"),
     };
 
     const command = scriptgen.generateCommand(options);

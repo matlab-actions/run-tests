@@ -9,11 +9,27 @@ inputs:
       Location of the folder containing source code
     required: false
     default: ""
+  strict:
+    description: >
+      Whether to apply strict checks when running the tests. For example, the action generates a
+      qualification failure if a test issues a warning.
+    required: false
+    default: false
   use-parallel:
     description: >-
       Whether to run tests in parallel
     required: false
     default: false
+  output-detail:
+    description: >
+      Display level for event details produced by the test run, specified as 'None', 'Terse', 'Concise', 'Detailed', or 'Verbose'.
+    required: false
+    default: ""
+  logging-level:
+    description: >
+      Maximum verbosity level for logged diagnostics included for the test run, specified as 'None', 'Terse', 'Concise', 'Detailed', or 'Verbose'.
+    required: false
+    default: ""
   select-by-folder:
     description: >-
       Location of the folder containing test files
