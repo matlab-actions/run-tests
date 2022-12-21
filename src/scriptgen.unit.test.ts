@@ -53,7 +53,7 @@ describe("command generation", () => {
             CoberturaModelCoverage: "test-results/modelcoverage.xml",
             SelectByTag: "FeatureA",
             SelectByFolder: "test/tools;test/toolbox",
-            Strict: false,
+            Strict: true,
             UseParallel: true,
             OutputDetail: "Detailed",
             LoggingLevel: "Detailed",
