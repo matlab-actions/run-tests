@@ -11,8 +11,7 @@ inputs:
     default: ""
   strict:
     description: >
-      Whether to apply strict checks when running the tests. For example, the action generates a
-      qualification failure if a test issues a warning.
+      Whether to apply strict checks when running the tests.
     required: false
     default: false
   use-parallel:
@@ -22,12 +21,12 @@ inputs:
     default: false
   output-detail:
     description: >
-      Display level for event details produced by the test run, specified as 'None', 'Terse', 'Concise', 'Detailed', or 'Verbose'.
+      Display level for event details produced by the test run
     required: false
     default: ""
   logging-level:
     description: >
-      Maximum verbosity level for logged diagnostics included for the test run, specified as 'None', 'Terse', 'Concise', 'Detailed', or 'Verbose'.
+      Maximum verbosity level for logged diagnostics included for the test run
     required: false
     default: ""
   select-by-folder:
