@@ -47,4 +47,18 @@ jobs:
             (test -f test-results/modelcoverage.xml) || (echo "File modelcoverage.xml does not exist" && exit 1)
             (test -f test-results/pdf-results.pdf) || (echo "File pdf-results.pdf does not exist" && exit 1)
 
+      - name: Set up diary for logging
+        run: echo 'diary console.log' >> startup.m
+
+      - name: Run MATLAB tests with strict checks
+        uses: ./
+        with:
+            strict: true
+            source-folder: sample
+
+      - name: Verify tests ran with strict checks
+        run: |
+            grep -q "runner.addPlugin(FailOnWarningsPlugin())" console.log
+            rm console.log
+
 
