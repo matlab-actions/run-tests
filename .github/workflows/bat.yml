@@ -45,7 +45,7 @@ jobs:
             select-by-folder: sample
             strict: true
             # use-parallel: true
-            # output-detail: Detailed
+            output-detail: Detailed
             # logging-level: Detailed
 
       - name: Verify artifacts generation
@@ -54,8 +54,8 @@ jobs:
             (test -f test-results/modelcoverage.xml) || (echo "File modelcoverage.xml does not exist" && exit 1)
             (test -f test-results/pdf-results.pdf) || (echo "File pdf-results.pdf does not exist" && exit 1)
             grep -q "runner.addPlugin(FailOnWarningsPlugin())" console.log
+            grep -q "TestRunner.withTextOutput('OutputDetail', 3)" console.log
           # grep -q "parallel pool" console.log
-          # grep -q "TestRunner.withTextOutput('OutputDetail', 3)" console.log
           # grep -q "TestRunner.withTextOutput('LoggingLevel', 3)" console.log
 
       # - name: Set up diary for logging
