@@ -33,6 +33,9 @@ jobs:
         with: 
             command: cd('sample'),createSampleModel('temp_model'),sltest.testmanager.createTestsFromModel('sltestfile', 'temp_model');
 
+      - name: Set up diary for logging
+        run: echo 'diary console.log' >> startup.m
+
       - name: Run run-test command
         uses: ./
         with:
@@ -40,25 +43,33 @@ jobs:
             model-coverage-cobertura: test-results/modelcoverage.xml
             test-results-pdf: test-results/pdf-results.pdf
             select-by-folder: sample
+            strict: true
+            use-parallel: true
+            output-detail: Detailed
+            logging-level: Detailed
 
       - name: Verify artifacts generation
         run: |
             (test -f test-results/simulinktest.mldatx) || (echo "File simulinktest.mldatx does not exist" && exit 1)
             (test -f test-results/modelcoverage.xml) || (echo "File modelcoverage.xml does not exist" && exit 1)
             (test -f test-results/pdf-results.pdf) || (echo "File pdf-results.pdf does not exist" && exit 1)
-
-      - name: Set up diary for logging
-        run: echo 'diary console.log' >> startup.m
-
-      - name: Run MATLAB tests with strict checks
-        uses: ./
-        with:
-            strict: true
-            source-folder: sample
-
-      - name: Verify tests ran with strict checks
-        run: |
             grep -q "runner.addPlugin(FailOnWarningsPlugin())" console.log
-            rm console.log
+            grep -q "Starting parallel pool (parpool)" console.log
+            grep -q "TestRunner.withTextOutput('OutputDetail', 3)" console.log
+            grep -q "TestRunner.withTextOutput('LoggingLevel', 3)" console.log
+
+      # - name: Set up diary for logging
+      #   run: echo 'diary console.log' >> startup.m
+
+      # - name: Run MATLAB tests with strict checks
+      #   uses: ./
+      #   with:
+      #       strict: true
+      #       source-folder: sample
+
+      # - name: Verify tests ran with strict checks
+      #   run: |
+      #       grep -q "runner.addPlugin(FailOnWarningsPlugin())" console.log
+      #       rm console.log
 
 
