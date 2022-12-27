@@ -58,18 +58,4 @@ jobs:
             grep -q "'OutputDetail', 3" console.log
             grep -q "'LoggingLevel', 3" console.log
 
-      # - name: Set up diary for logging
-      #   run: echo 'diary console.log' >> startup.m
-
-      # - name: Run MATLAB tests with strict checks
-      #   uses: ./
-      #   with:
-      #       strict: true
-      #       source-folder: sample
-
-      # - name: Verify tests ran with strict checks
-      #   run: |
-      #       grep -q "runner.addPlugin(FailOnWarningsPlugin())" console.log
-      #       rm console.log
-
 
