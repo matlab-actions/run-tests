@@ -33,6 +33,9 @@ jobs:
         with: 
             command: cd('sample'),createSampleModel('temp_model'),sltest.testmanager.createTestsFromModel('sltestfile', 'temp_model');
 
+      - name: Set up diary for logging
+        run: echo 'diary console.log' >> startup.m
+
       - name: Run run-test command
         uses: ./
         with:
@@ -40,11 +43,19 @@ jobs:
             model-coverage-cobertura: test-results/modelcoverage.xml
             test-results-pdf: test-results/pdf-results.pdf
             select-by-folder: sample
+            strict: true
+            use-parallel: true
+            output-detail: Detailed
+            logging-level: Detailed
 
       - name: Verify artifacts generation
         run: |
             (test -f test-results/simulinktest.mldatx) || (echo "File simulinktest.mldatx does not exist" && exit 1)
             (test -f test-results/modelcoverage.xml) || (echo "File modelcoverage.xml does not exist" && exit 1)
             (test -f test-results/pdf-results.pdf) || (echo "File pdf-results.pdf does not exist" && exit 1)
+            grep -q "runner.addPlugin(FailOnWarningsPlugin())" console.log
+            grep -q "parallel pool" console.log
+            grep -q "'OutputDetail', 3" console.log
+            grep -q "'LoggingLevel', 3" console.log
 
 
