@@ -27,6 +27,14 @@ jobs:
         uses: ./
         with:
           source-folder: sample
+          startup-options: -logfile output.log
+
+      - name: Verify option application
+        run: |
+          set -e
+          grep "Running TheTruth" output.log
+          grep "Done TheTruth" output.log
+          grep "1 Passed" output.log
         
       - name: Generate Model
         uses: matlab-actions/run-command@v1
@@ -47,7 +55,6 @@ jobs:
             use-parallel: true
             output-detail: Detailed
             logging-level: Detailed
-            startup-options: -logfile options.log
 
       - name: Verify artifacts generation
         run: |
@@ -58,4 +65,3 @@ jobs:
             grep -q "parallel pool" console.log
             grep -q "'OutputDetail', 3" console.log
             grep -q "'LoggingLevel', 3" console.log
-            cmp console.log options.log
