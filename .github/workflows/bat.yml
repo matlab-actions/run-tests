@@ -26,6 +26,7 @@ jobs:
           products: |
             Simulink
             Simulink_Test
+            Simulink_Coverage
 
       - name: Run MATLAB Tests
         uses: ./
