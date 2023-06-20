@@ -21,7 +21,7 @@ jobs:
         run: npm run ci
 
       - name: Perform 'setup-matlab'
-        uses: matlab-actions/setup-matlab@v2
+        uses: matlab-actions/setup-matlab@v2-beta
 
       - name: Run MATLAB Tests
         uses: ./
