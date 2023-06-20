@@ -47,6 +47,7 @@ jobs:
             use-parallel: true
             output-detail: Detailed
             logging-level: Detailed
+            startup-options: -logfile options.log
 
       - name: Verify artifacts generation
         run: |
@@ -57,5 +58,4 @@ jobs:
             grep -q "parallel pool" console.log
             grep -q "'OutputDetail', 3" console.log
             grep -q "'LoggingLevel', 3" console.log
-
-
+            cmp console.log options.log

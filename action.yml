@@ -64,6 +64,11 @@ inputs:
       Path to write model coverage report in Cobertura XML format
     required: false
     default: ""
+  startup-options:
+    description: >-
+      Startup options for MATLAB
+    required: false
+    default: ""
 runs:
   using: node16
   main: dist/index.js
