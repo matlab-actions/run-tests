@@ -70,6 +70,7 @@ Input                     | Description
 `test-results-simulink-test` | (Optional) Path to export Simulink Test Manager results in MLDATX format. This input requires a Simulink Test license, and is supported in MATLAB R2019a and later.<br/>**Example:** `test-results-simulink-test: test-results/results.mldatx`
 `code-coverage-cobertura`   | (Optional) Path to write code coverage report in Cobertura XML format.<br/>**Example:** `code-coverage-cobertura: code-coverage/coverage.xml`
 `model-coverage-cobertura`  | (Optional) Path to write model coverage report in Cobertura XML format. This input requires a Simulink Coverage™ license, and is supported in MATLAB R2018b and later.<br/>**Example:** `model-coverage-cobertura: model-coverage/coverage.xml`
+`startup-options`         | (Optional) MATLAB startup options. If you specify more than one option, use a space to separate them. For more information about startup options, see [Commonly Used Startup Options](https://www.mathworks.com/help/matlab/matlab_env/commonly-used-startup-options.html).<br/>Using this input to specify the `-batch` or `-r` option is not supported.<br/>**Example:** `startup-options: -nojvm`<br/>**Example:** `startup-options: -nojvm -logfile "output.log"`
 
 ## Notes
 * In MATLAB R2019a and later, the **Run MATLAB Tests** action uses  the `-batch` option to start MATLAB noninteractively. Preferences do not persist across different MATLAB sessions launched with the `-batch` option. To run code that requires the same preferences, use a single action.
