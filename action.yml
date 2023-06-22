@@ -1,4 +1,4 @@
-# Copyright 2020-2022 The MathWorks, Inc.
+# Copyright 2020-2023 The MathWorks, Inc.
 
 name: Run MATLAB Tests
 description: >-
@@ -62,6 +62,11 @@ inputs:
   model-coverage-cobertura:
     description: >-
       Path to write model coverage report in Cobertura XML format
+    required: false
+    default: ""
+  startup-options:
+    description: >-
+      Startup options for MATLAB
     required: false
     default: ""
 runs:
