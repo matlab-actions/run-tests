@@ -1,6 +1,6 @@
 # Action for Running MATLAB Tests
 
-The [Run MATLAB Tests](#run-matlab-tests) action enables you to run MATLAB&reg; and Simulink&reg; tests and generate test and coverage artifacts on a self-hosted or GitHub&reg;-hosted runner. The runner uses the topmost MATLAB version on the system path to execute your workflow.
+The [Run MATLAB Tests](#run-matlab-tests) action enables you to run MATLAB&reg; and Simulink&reg; tests and generate test and coverage artifacts on a self-hosted or GitHub&reg;-hosted runner. The action uses the topmost MATLAB version on the system path.
 
 ## Examples
 Use the **Run MATLAB Tests** action to automatically run tests authored using the MATLAB unit testing framework or Simulink Test&trade;. You can use this action with optional inputs to generate various test and coverage artifacts.
