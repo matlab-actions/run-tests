@@ -6,7 +6,7 @@ The [Run MATLAB Tests](#run-matlab-tests) action enables you to run MATLAB&reg; 
 Use the **Run MATLAB Tests** action to automatically run tests authored using the MATLAB unit testing framework or Simulink Test&trade;. You can use this action with optional inputs to generate various test and coverage artifacts.
 
 ### Run MATLAB Tests on Self-Hosted Runner
-Use a self-hosted runner to run the tests in your [MATLAB project](https://www.mathworks.com/help/matlab/projects.html).
+Use a [self-hosted runner](https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/about-self-hosted-runners) to run the tests in your [MATLAB project](https://www.mathworks.com/help/matlab/projects.html).
 
 ```yaml
 name: Run MATLAB Tests on Self-Hosted Runner
