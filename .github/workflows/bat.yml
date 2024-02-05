@@ -36,7 +36,7 @@ jobs:
           grep "1 Passed" output.log
         
       - name: Generate Model
-        uses: matlab-actions/run-command@v1
+        uses: matlab-actions/run-command@v2
         with: 
             command: cd('sample'),createSampleModel('temp_model'),sltest.testmanager.createTestsFromModel('sltestfile', 'temp_model');
 
