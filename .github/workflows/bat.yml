@@ -61,5 +61,6 @@ jobs:
             (test -f test-results/modelcoverage.xml) || (echo "File modelcoverage.xml does not exist" && exit 1)
             (test -f test-results/pdf-results.pdf) || (echo "File pdf-results.pdf does not exist" && exit 1)
             grep -q "runner.addPlugin(FailOnWarningsPlugin())" console.log
+            grep -q "runInParallel" console.log
             grep -q "'OutputDetail', 3" console.log
             grep -q "'LoggingLevel', 3" console.log
