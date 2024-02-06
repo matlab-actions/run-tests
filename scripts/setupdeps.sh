@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPTGEN_URL='https://ssd.mathworks.com/supportfiles/ci/matlab-script-generator/v0/matlab-script-generator.zip'
-RMC_BASE_URL='https://ssd.mathworks.com/supportfiles/ci/run-matlab-command/v1'
+RMC_BASE_URL='https://ssd.mathworks.com/supportfiles/ci/run-matlab-command/v2'
 SUPPORTED_OS=('win64' 'maci64' 'glnxa64')
 
 # Create dist directory if it doesn't already exist

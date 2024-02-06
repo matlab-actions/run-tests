@@ -1,4 +1,4 @@
-# Copyright 2020-2023 The MathWorks, Inc.
+# Copyright 2020-2024 The MathWorks, Inc.
 
 name: Run MATLAB Tests
 description: >-
@@ -70,5 +70,5 @@ inputs:
     required: false
     default: ""
 runs:
-  using: node16
+  using: node20
   main: dist/index.js
