@@ -23,7 +23,7 @@ jobs:
 ```
 
 ### Generate Artifacts on GitHub-Hosted Runner
-Before you run tests and generate artifacts on a [GitHub-hosted runner](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners), first use the [Setup MATLAB](https://github.com/matlab-actions/setup-matlab/) action. The action sets up your specified MATLAB release (R2021a or later) on a Linux&reg;, Windows&reg;, or macOS&reg; runner. If you do not specify a release, the action sets up the latest release of MATLAB.
+Before you run tests and generate artifacts on a [GitHub-hosted runner](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners), first use the [Setup MATLAB](https://github.com/matlab-actions/setup-matlab/) action. The action sets up your specified MATLAB release (R2021a or later) on a Linux&reg;, Windows&reg;, or macOS runner. If you do not specify a release, the action sets up the latest release of MATLAB.
 
 For example, set up the latest release of MATLAB on a GitHub-hosted runner, and then use the **Run MATLAB Tests** action to run the tests in your MATLAB project and generate test results in JUnit-style XML format and code coverage results in Cobertura XML format.
 
@@ -66,10 +66,10 @@ Input                     | Description
 `test-results-simulink-test` | <p>(Optional) Path to export Simulink Test Manager results in MLDATX format. This input requires a Simulink Test license, and is supported in MATLAB R2019a and later.</p><p>**Example:** `test-results-simulink-test: test-results/results.mldatx`</p>
 `code-coverage-cobertura`   | <p>(Optional) Path to write the code coverage results in Cobertura XML format.</p><p>**Example:** `code-coverage-cobertura: code-coverage/coverage.xml`</p>
 `model-coverage-cobertura`  | <p>(Optional) Path to write the model coverage results in Cobertura XML format. This input requires a Simulink Coverage™ license, and is supported in MATLAB R2018b and later.</p><p>**Example:** `model-coverage-cobertura: model-coverage/coverage.xml`</p>
-`startup-options`         | <p>(Optional) MATLAB startup options. If you specify more than one option, use a space to separate them. For more information about startup options, see [Commonly Used Startup Options](https://www.mathworks.com/help/matlab/matlab_env/commonly-used-startup-options.html).<p/><p>Using this input to specify the `-batch` or `-r` option is not supported.<p/><p>**Example:** `startup-options: -nojvm`<br/>**Example:** `startup-options: -nojvm -logfile output.log`</p>
+`startup-options`         | <p>(Optional) MATLAB startup options, specified as a list of options separated by spaces. For more information about startup options, see [Commonly Used Startup Options](https://www.mathworks.com/help/matlab/matlab_env/commonly-used-startup-options.html).<p/><p>Using this input to specify the `-batch` or `-r` option is not supported.<p/><p>**Example:** `startup-options: -nojvm`<br/>**Example:** `startup-options: -nojvm -logfile output.log`</p>
 
 ## Notes
-* In MATLAB R2019a and later, the **Run MATLAB Tests** action uses  the `-batch` option to start MATLAB noninteractively. Preferences do not persist across different MATLAB sessions launched with the `-batch` option. To run code that requires the same preferences, use a single action.
+* In MATLAB R2019a and later, the **Run MATLAB Tests** action uses  the `-batch` option to start MATLAB. Preferences do not persist across different MATLAB sessions launched with the `-batch` option. To run code that requires the same preferences, use a single action.
 * When you use the **Run MATLAB Tests** action, you execute third-party code that is licensed under separate terms.
 
 ## See Also
