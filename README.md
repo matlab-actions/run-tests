@@ -48,7 +48,7 @@ jobs:
 ## Run MATLAB Tests
 When you define your workflow in the `.github/workflows` directory of your repository, specify the **Run MATLAB Tests** action as `matlab-actions/run-tests@v2`.
 
-By default, MATLAB includes any files in your project that have a `Test` label. If your workflow does not use a MATLAB project, or if it uses a MATLAB release before R2019a, then MATLAB includes all tests in the MATLAB current folder and in any of its subfolders.
+By default, MATLAB includes any files in your project that have a `Test` label. If your workflow does not use a MATLAB project, or if it uses a MATLAB release before R2019a, then MATLAB includes all tests in the MATLAB current folder (returned by the [`pwd`](https://www.mathworks.com/help/matlab/ref/pwd.html) command) and in any of its subfolders.
 
 The **Run MATLAB Tests** action lets you customize your test run using optional inputs. For example, you can add folders to the MATLAB search path, control which tests to run, and generate various artifacts.
 
@@ -69,6 +69,7 @@ Input                     | Description
 `startup-options`         | <p>(Optional) MATLAB startup options, specified as a list of options separated by spaces. For more information about startup options, see [Commonly Used Startup Options](https://www.mathworks.com/help/matlab/matlab_env/commonly-used-startup-options.html).<p/><p>Using this input to specify the `-batch` or `-r` option is not supported.<p/><p>**Example:** `startup-options: -nojvm`<br/>**Example:** `startup-options: -nojvm -logfile output.log`</p>
 
 ## Notes
+* By default, the MATLAB current folder is the same as the root of your repository. To specify a different current folder, use the `-sd` startup option or the `cd` command in your action.
 * In MATLAB R2019a and later, the **Run MATLAB Tests** action uses  the `-batch` option to start MATLAB. Preferences do not persist across different MATLAB sessions launched with the `-batch` option. To run code that requires the same preferences, use a single action.
 * When you use the **Run MATLAB Tests** action, you execute third-party code that is licensed under separate terms.
 
