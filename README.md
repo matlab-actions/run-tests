@@ -48,7 +48,7 @@ jobs:
 ## Run MATLAB Tests
 When you define your workflow in the `.github/workflows` directory of your repository, specify the **Run MATLAB Tests** action as `matlab-actions/run-tests@v2`.
 
-By default, the action includes any files in your project that have a `Test` label. If your workflow does not use a MATLAB project, or if it uses a MATLAB release before R2019a, then the action includes all tests in the root of your repository and in any of its subfolders. The action fails if any of the included tests fails.
+By default, the action includes any files in your project that have a `Test` label. If your workflow does not use a MATLAB project, or if it uses a MATLAB release before R2019a, then the action includes all tests in the root of your repository and in any of its subfolders. The action fails if any of the included tests fail.
 
 The **Run MATLAB Tests** action lets you customize your test run using optional inputs. For example, you can add folders to the MATLAB search path, control which tests to run, and generate various artifacts.
 
