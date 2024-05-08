@@ -62,7 +62,7 @@ jobs:
       - name: Set up products
         uses: matlab-actions/setup-matlab@v2
         with:
-          products: |
+          products: >
             Simulink
             Simulink_Test
             Parallel_Computing_Toolbox
