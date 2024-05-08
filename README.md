@@ -25,7 +25,7 @@ jobs:
 ```
 
 ### Generate Test and Coverage Artifacts
-Using the latest release of MATLAB on a GitHub-hosted runner, run the tests in your MATLAB project and generate test results in JUnit-style XML format and code coverage results in Cobertura XML format. To set up the latest release of MATLAB on the runner, specify the [Setup MATLAB](https://github.com/matlab-actions/setup-matlab/) action action in your workflow. To run the tests and generate the artifacts, specify the **Run MATLAB Tests** action.
+Using the latest release of MATLAB on a GitHub-hosted runner, run the tests in your MATLAB project and generate test results in JUnit-style XML format and code coverage results in Cobertura XML format. To set up the latest release of MATLAB on the runner, specify the [Setup MATLAB](https://github.com/matlab-actions/setup-matlab/) action in your workflow. To run the tests and generate the artifacts, specify the **Run MATLAB Tests** action.
 
 ```yaml
 name: Generate Test and Coverage Artifacts
@@ -135,4 +135,4 @@ Input                     | Description
 - [Continuous Integration with MATLAB and Simulink](https://www.mathworks.com/solutions/continuous-integration.html)
 
 ## Contact Us
-If you have any questions or suggestions, contact MathWorks&reg; at [continuous-integration@mathworks.com](mailto:continuous-integration@mathworks.com).
+If you have any questions or suggestions, contact MathWorks at [continuous-integration@mathworks.com](mailto:continuous-integration@mathworks.com).
