@@ -32,14 +32,14 @@ name: Generate Test and Coverage Artifacts
 on: [push]
 jobs:
   my-job:
-    name: Run MATLAB Tests and Generate Artifacts
+    name: Run MATLAB Tests
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
       - name: Set up MATLAB
         uses: matlab-actions/setup-matlab@v2
-      - name: Run tests and generate artifacts
+      - name: Run tests
         uses: matlab-actions/run-tests@v2
         with:
           test-results-junit: test-results/results.xml
@@ -54,7 +54,7 @@ name: Run Tests in Parallel
 on: [push]
 jobs:
   my-job:
-    name: Run MATLAB and Simulink Tests in Parallel
+    name: Run MATLAB and Simulink Tests
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -83,7 +83,7 @@ To use a MATLAB batch licensing token:
 For example, use the latest release of MATLAB on a GitHub-hosted runner to run the tests in your private project. To install the latest release of MATLAB on the runner, specify the [Setup MATLAB](https://github.com/matlab-actions/setup-matlab/) action in your workflow. To run the tests, specify the **Run MATLAB Tests** action. In this example, `MyToken` is the name of the secret that holds the batch licensing token.
 
 ```YAML
-name: Run Tests Using MATLAB Batch Licensing Token
+name: Use MATLAB Batch Licensing Token
 on: [push]
 env:
   MLM_LICENSE_TOKEN: ${{ secrets.MyToken }}
@@ -109,11 +109,11 @@ The **Run MATLAB Tests** action lets you customize your test run using optional 
 
 Input                     | Description
 ------------------------- | ---------------
-`source-folder`            | <p>(Optional) Location of the folder containing source code, specified as a path relative to the project root folder. The specified folder and its subfolders are added to the top of the MATLAB search path. If you specify `source-folder` and then generate a coverage report, MATLAB uses only the source code in the specified folder and its subfolders to generate the report. You can specify multiple folders using a colon-separated or semicolon-separated list.</p><p>**Example:** `source-folder: source`<br/>**Example:** `source-folder: source/folderA; source/folderB`</p>
-`select-by-folder`          | <p>(Optional) Location of the folder used to select test suite elements, specified as a path relative to the project root folder. To create a test suite, MATLAB uses only the tests in the specified folder and its subfolders. You can specify multiple folders using a colon-separated or semicolon-separated list.</p><p>**Example:** `select-by-folder: test`<br/>**Example:** `select-by-folder: test/folderA; test/folderB`</p>
-`select-by-tag`             | <p>(Optional) Test tag used to select test suite elements. To create a test suite, MATLAB uses only the test elements with the specified tag.</p><p>**Example:** `select-by-tag: Unit`</p>
+`source-folder`            | <p>(Optional) Location of the folder containing source code, specified as a path relative to the project root folder. The specified folder and its subfolders are added to the top of the MATLAB search path. If you specify `source-folder` and then generate a coverage report, the action uses only the source code in the specified folder and its subfolders to generate the report. You can specify multiple folders using a colon-separated or semicolon-separated list.</p><p>**Example:** `source-folder: source`<br/>**Example:** `source-folder: source/folderA; source/folderB`</p>
+`select-by-folder`          | <p>(Optional) Location of the folder used to select test suite elements, specified as a path relative to the project root folder. To create a test suite, the action uses only the tests in the specified folder and its subfolders. You can specify multiple folders using a colon-separated or semicolon-separated list.</p><p>**Example:** `select-by-folder: test`<br/>**Example:** `select-by-folder: test/folderA; test/folderB`</p>
+`select-by-tag`             | <p>(Optional) Test tag used to select test suite elements. To create a test suite, the action uses only the test elements with the specified tag.</p><p>**Example:** `select-by-tag: Unit`</p>
 `strict`                  | <p>(Optional) Option to apply strict checks when running tests, specified as `false` or `true`. By default, the value is `false`. If you specify a value of `true`, the action generates a qualification failure whenever a test issues a warning.</p><p>**Example:** `strict: true`</p>
-`use-parallel`              | <p>(Optional) Option to run tests in parallel, specified as `false` or `true`. By default, the value is `false` and tests run in serial. If the test runner configuration is suited for parallelization, you can specify a value of `true` to run tests in parallel. This input requires a Parallel Computing Toolbox&trade; license.</p><p>**Example:** `use-parallel: true`</p>
+`use-parallel`              | <p>(Optional) Option to run tests in parallel, specified as `false` or `true`. By default, the value is `false` and tests run in serial. If the test runner configuration is suited for parallelization, you can specify a value of `true` to run tests in parallel. This input requires a Parallel Computing Toolbox license.</p><p>**Example:** `use-parallel: true`</p>
 `output-detail`            | <p>(Optional) Amount of event detail displayed for the test run, specified as `none`, `terse`, `concise`, `detailed`, or `verbose`. By default, the action displays failing and logged events at the `detailed` level and test run progress at the `concise` level.<p></p>**Example:** `output-detail: verbose`</p>
 `logging-level`            | <p>(Optional) Maximum verbosity level for logged diagnostics included for the test run, specified as `none`, `terse`, `concise`, `detailed`, or `verbose`. By default, the action includes diagnostics logged at the `terse` level.<p></p>**Example:** `logging-level: detailed`</p> 
 `test-results-pdf`          | <p>(Optional) Location to write the test results in PDF format, specified as a path relative to the project root folder. On macOS platforms, this input is supported in MATLAB R2020b and later.</p><p>**Example:** `test-results-pdf: test-results/results.pdf`</p>
