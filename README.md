@@ -80,7 +80,7 @@ To use a MATLAB batch licensing token:
 1. Set the token as a secret. For more information about secrets, see [Using secrets in GitHub Actions](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions).
 2. Map the secret to an environment variable named `MLM_LICENSE_TOKEN` in your workflow. 
 
-For example, use the latest release of MATLAB on a GitHub-hosted runner to run the tests in your private project. To install the latest release of MATLAB on the runner, specify the [Setup MATLAB](https://github.com/matlab-actions/setup-matlab/) action in your workflow. To run the tests, specify the **Run MATLAB Tests** action. In this example, `MyToken` is the name of the secret that holds the batch licensing token.
+For example, use the latest release of MATLAB on a GitHub-hosted runner to run the tests in your private project. To set up the latest release of MATLAB on the runner, specify the [Setup MATLAB](https://github.com/matlab-actions/setup-matlab/) action in your workflow. To run the tests, specify the **Run MATLAB Tests** action. In this example, `MyToken` is the name of the secret that holds the batch licensing token.
 
 ```YAML
 name: Use MATLAB Batch Licensing Token
@@ -105,7 +105,7 @@ When you define your workflow in the `.github/workflows` directory of your repos
 
 By default, the action includes any files in your project that have a `Test` label. If your workflow does not use a MATLAB project, or if it uses a MATLAB release before R2019a, then the action includes all tests in the root of your repository and in any of its subfolders. The action fails if any of the included tests fail.
 
-The **Run MATLAB Tests** action lets you customize your test run using optional inputs. For example, you can add folders to the MATLAB search path, control which tests to run, and generate various artifacts.
+The **Run MATLAB Tests** action accepts optional inputs. For example, you can add folders to the MATLAB search path, control which tests to run, and generate various artifacts.
 
 Input                     | Description
 ------------------------- | ---------------
@@ -124,8 +124,8 @@ Input                     | Description
 `startup-options`         | <p>(Optional) MATLAB startup options, specified as a list of options separated by spaces. For more information about startup options, see [Commonly Used Startup Options](https://www.mathworks.com/help/matlab/matlab_env/commonly-used-startup-options.html).</p><p>Using this input to specify the `-batch` or `-r` option is not supported.</p><p>**Example:** `startup-options: -nojvm`<br/>**Example:** `startup-options: -nojvm -logfile output.log`</p>
 
 ## Notes
-* By default, when you use the **Run MATLAB Tests** action, the root of your repository serves as the MATLAB startup folder. To run your tests using a different folder, include the `-sd` startup option in the action.
-* In MATLAB R2019a and later, the **Run MATLAB Tests** action uses  the `-batch` option to start MATLAB. Preferences do not persist across different MATLAB sessions launched with the `-batch` option. To run code that requires the same preferences, use a single action.
+* By default, when you use the **Run MATLAB Tests** action, the root of your repository serves as the MATLAB startup folder. To run your tests using a different folder, specify the `-sd` startup option in the action.
+* In MATLAB R2019a and later, the **Run MATLAB Tests** action uses  the `-batch` option to start MATLAB noninteractively. Preferences do not persist across different MATLAB sessions launched with the `-batch` option. To run code that requires the same preferences, use a single action.
 * When you use the **Run MATLAB Tests** action, you execute third-party code that is licensed under separate terms.
 
 ## See Also
