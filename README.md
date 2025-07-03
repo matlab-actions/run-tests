@@ -124,7 +124,7 @@ Input                     | Description
 
 ## Notes
 * By default, when you use the **Run MATLAB Tests** action, the root of your repository serves as the MATLAB startup folder. To run your tests using a different folder, specify the `-sd` startup option in the action.
-* In MATLAB R2019a and later, the **Run MATLAB Tests** action uses  the `-batch` option to start MATLAB noninteractively. Preferences do not persist across different MATLAB sessions launched with the `-batch` option. To run code that requires the same preferences, use a single action.
+* In MATLAB R2019a and later, the **Run MATLAB Tests** action uses  the `-batch` option to start MATLAB noninteractively. MATLAB settings do not persist across different MATLAB sessions launched with the `-batch` option. To run code that requires the same settings, use a single action.
 * When you use the **Run MATLAB Tests** action, you execute third-party code that is licensed under separate terms.
 
 ## See Also
