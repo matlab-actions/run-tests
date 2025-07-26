@@ -27,7 +27,11 @@ jobs:
         uses: ./
 
       - run: |
+          pwd
           ls
+          cd src
+          ls
+          cd resources
 
       # - name: Run MATLAB Tests
       #   uses: ./
