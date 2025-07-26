@@ -18,9 +18,15 @@ jobs:
         uses: matlab-actions/setup-matlab@v2
         with:
           products: |
+            MATLAB_Test
             Simulink
             Simulink_Test
             Simulink_Coverage
+
+      - name: Run MATLAB Command for test results summary
+        uses: matlab-actions/run-command@v2
+        with:
+          command: "import matlab.unittest.TestRunner; addpath(genpath('code')); suite = testsuite(pwd, 'IncludeSubfolders', true); runner = TestRunner.withDefaultPlugins(); results = runner.run(suite); display(results); assertSuccess(results);"
 
       - name: Run MATLAB Tests
         uses: ./

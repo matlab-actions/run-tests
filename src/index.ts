@@ -4,6 +4,8 @@ import * as core from "@actions/core";
 import * as exec from "@actions/exec";
 import { matlab } from "run-matlab-command-action";
 import * as scriptgen from "./scriptgen";
+import * as testResultsSummary from "./testResultsSummary";
+import * as path from "path";
 
 /**
  * Gather action inputs and then run action.
@@ -28,7 +30,9 @@ async function run() {
         LoggingLevel: core.getInput("logging-level"),
     };
 
-    const command = scriptgen.generateCommand(options);
+    // const command = scriptgen.generateCommand(options);
+    const pluginsPath = path.join(__dirname, "src/resources").replace("'","''");
+    const command = "addpath('"+ pluginsPath +"');" + "import matlab.unittest.TestRunner; addpath(genpath('code')); suite = testsuite(pwd, 'IncludeSubfolders', true); runner = TestRunner.withDefaultPlugins(); results = runner.run(suite); display(results); assertSuccess(results);";
     const startupOptions = core.getInput("startup-options").split(" ");
 
     const helperScript = await core.group("Generate script", async () => {
@@ -38,7 +42,11 @@ async function run() {
     });
 
     await core.group("Run command", async () => {
-        await matlab.runCommand(helperScript, platform, architecture, exec.exec, startupOptions);
+        await matlab.runCommand(helperScript, platform, architecture, exec.exec, startupOptions).finally(() => {
+            // buildSummary.processAndDisplayBuildSummary();
+            const { testResults, counts } = testResultsSummary.getTestResults("");
+            testResultsSummary.writeSummary(testResults, counts);
+        });
     });
 }
 
