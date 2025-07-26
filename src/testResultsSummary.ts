@@ -79,9 +79,9 @@ function getTestHeader(testResults: MatlabTestFile[][], counts: TestCounts): str
         <td>${counts.failed}</td>
         <td>${counts.incomplete}</td>
         <td>${counts.notRun}</td>
-        // <td>${calculateTotalDuration(testResults)}</td>
     </tr>
     </table>`;
+    // <td>${calculateTotalDuration(testResults)}</td>
 }
 
 function getDetailedResults(testResults: MatlabTestFile[][]): string {
@@ -149,7 +149,7 @@ export function getTestResults(workspace: string): TestResultsData {
 
     if (existsSync(resultsPath)) {
         try {
-            const testArtifact = JSON.parse(fs.readFileSync(resultsPath, 'utf8'));
+            const testArtifact = JSON.parse(readFileSync(resultsPath, 'utf8'));
             
             for (const jsonTestSessionResults of testArtifact) {
                 const testSessionResults: MatlabTestFile[] = [];
