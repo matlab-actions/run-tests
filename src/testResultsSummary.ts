@@ -66,7 +66,7 @@ export function writeSummary(testResults: MatlabTestFile[][], counts: TestCounts
 function getTestHeader(testResults: MatlabTestFile[][], counts: TestCounts): string {
     return `<table>
     <tr align="center">
-        <th>Total tests</th>
+        <th>Total tests: ${testResults.flat().length}</th>
         <th>Passed ✅</th>
         <th>Failed ❌</th>
         <th>Incomplete ⚠️</th>

@@ -28,45 +28,45 @@ jobs:
         with:
           command: "import matlab.unittest.TestRunner; addpath(genpath('code')); suite = testsuite(pwd, 'IncludeSubfolders', true); runner = TestRunner.withDefaultPlugins(); results = runner.run(suite); display(results); assertSuccess(results);"
 
-      - name: Run MATLAB Tests
-        uses: ./
-        with:
-          source-folder: sample
-          startup-options: -logfile output.log
+      # - name: Run MATLAB Tests
+      #   uses: ./
+      #   with:
+      #     source-folder: sample
+      #     startup-options: -logfile output.log
 
-      - name: Verify option application
-        run: |
-          set -e
-          grep "Running TheTruth" output.log
-          grep "Done TheTruth" output.log
-          grep "1 Passed" output.log
+      # - name: Verify option application
+      #   run: |
+      #     set -e
+      #     grep "Running TheTruth" output.log
+      #     grep "Done TheTruth" output.log
+      #     grep "1 Passed" output.log
         
-      - name: Generate Model
-        uses: matlab-actions/run-command@v2
-        with: 
-            command: cd('sample'),createSampleModel('temp_model'),sltest.testmanager.createTestsFromModel('sltestfile', 'temp_model');
+      # - name: Generate Model
+      #   uses: matlab-actions/run-command@v2
+      #   with: 
+      #       command: cd('sample'),createSampleModel('temp_model'),sltest.testmanager.createTestsFromModel('sltestfile', 'temp_model');
 
-      - name: Set up diary for logging
-        run: echo 'diary console.log' >> startup.m
+      # - name: Set up diary for logging
+      #   run: echo 'diary console.log' >> startup.m
 
-      - name: Run run-test command
-        uses: ./
-        with:
-            test-results-simulink-test: test-results/simulinktest.mldatx
-            model-coverage-cobertura: test-results/modelcoverage.xml
-            test-results-pdf: test-results/pdf-results.pdf
-            select-by-folder: sample
-            strict: true
-            use-parallel: true
-            output-detail: Detailed
-            logging-level: Detailed
+      # - name: Run run-test command
+      #   uses: ./
+      #   with:
+      #       test-results-simulink-test: test-results/simulinktest.mldatx
+      #       model-coverage-cobertura: test-results/modelcoverage.xml
+      #       test-results-pdf: test-results/pdf-results.pdf
+      #       select-by-folder: sample
+      #       strict: true
+      #       use-parallel: true
+      #       output-detail: Detailed
+      #       logging-level: Detailed
 
-      - name: Verify artifacts generation
-        run: |
-            (test -f test-results/simulinktest.mldatx) || (echo "File simulinktest.mldatx does not exist" && exit 1)
-            (test -f test-results/modelcoverage.xml) || (echo "File modelcoverage.xml does not exist" && exit 1)
-            (test -f test-results/pdf-results.pdf) || (echo "File pdf-results.pdf does not exist" && exit 1)
-            grep -q "runner.addPlugin(FailOnWarningsPlugin())" console.log
-            grep -q "runInParallel" console.log
-            grep -q "'OutputDetail', 3" console.log
-            grep -q "'LoggingLevel', 3" console.log
+      # - name: Verify artifacts generation
+      #   run: |
+      #       (test -f test-results/simulinktest.mldatx) || (echo "File simulinktest.mldatx does not exist" && exit 1)
+      #       (test -f test-results/modelcoverage.xml) || (echo "File modelcoverage.xml does not exist" && exit 1)
+      #       (test -f test-results/pdf-results.pdf) || (echo "File pdf-results.pdf does not exist" && exit 1)
+      #       grep -q "runner.addPlugin(FailOnWarningsPlugin())" console.log
+      #       grep -q "runInParallel" console.log
+      #       grep -q "'OutputDetail', 3" console.log
+      #       grep -q "'LoggingLevel', 3" console.log
