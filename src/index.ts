@@ -31,7 +31,7 @@ async function run() {
     };
 
     // const command = scriptgen.generateCommand(options);
-    const pluginsPath = path.join(__dirname, "resources").replace("'","''");
+    const pluginsPath = path.join(__dirname, "plugins").replace("'","''");
     const command = "addpath('"+ pluginsPath +"');" + "import matlab.unittest.TestRunner; addpath(genpath('code')); suite = testsuite(pwd, 'IncludeSubfolders', true); runner = TestRunner.withDefaultPlugins(); results = runner.run(suite); display(results); assertSuccess(results);";
     core.summary.addRaw(command, true);
     const startupOptions = core.getInput("startup-options").split(" ");

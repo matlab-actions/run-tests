@@ -29,9 +29,12 @@ jobs:
       - run: |
           pwd
           ls
-          cd src
+          echo "new command"
+          cd dist
           ls
-          cd resources
+          echo "new command"
+          cd plugins
+          ls
 
       # - name: Run MATLAB Tests
       #   uses: ./
