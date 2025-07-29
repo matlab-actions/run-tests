@@ -93,7 +93,6 @@ function getDetailedResults(testResults: MatlabTestFile[][]): string {
       <th>Duration(s)</th>
     </tr>` +
     testResults.flat().map(file => generateTestFileRow(file)).join('\n') +
-    // ${testResults.flat().map(file => generateTestFileRow(file)).join('\n')}
     `</table>
     </details>`;
 }
@@ -105,9 +104,9 @@ function generateTestFileRow(file: MatlabTestFile): string {
       <td>
         <details>
           <summary><b>${statusEmoji} ${file.name}</b></summary>
-            <ul style="list-style-type: none;">
-              ${file.testCases.map(tc => `<li>${getStatusEmoji(tc.status)} ${tc.name}</li>`).join('\n')}
-            </ul>
+            <ul style="list-style-type: none;">` +
+              file.testCases.map(tc => `<li>` + getStatusEmoji(tc.status) + ` ` + tc.name + `</li>`).join('\n') +
+            `</ul>
         </details>
       <td align="center" valign="top"><b>${file.duration.toFixed(2)}</b>
       </td>
@@ -126,9 +125,9 @@ function getFailedTests(testResults: MatlabTestFile[][]): string {
         <tr>
           <th>Test</th>
           <th>Details</th>
-        </tr>
-        ${failedTests.map(test => generateFailedTestRow(test)).join('\n')}
-        </table>
+        </tr>` + 
+        failedTests.map(test => generateFailedTestRow(test)).join('\n') +
+        `</table>
     </details>`;
 }
 
@@ -139,7 +138,9 @@ function generateFailedTestRow(test: MatlabTestCase): string {
       <td>
         <details>
           <summary>View details</summary>
-          <pre>${test.diagnostics.map(d => d.report).join('\n')}</pre>
+          <pre>` +
+          test.diagnostics.map(d => d.report).join('\n') +
+          `</pre>
         </details>
       </td>
     </tr>`;
