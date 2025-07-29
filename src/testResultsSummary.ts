@@ -138,7 +138,7 @@ function generateFailedTestRow(test: MatlabTestCase): string {
       <td>
         <details>
           <summary>View details</summary>
-          <pre>` +
+          <pre style="font-family: monospace; white-space: pre; overflow-x: auto;">` +
           test.diagnostics.map(d => formatDiagnosticReport(d.report)).join('\n') +
           `</pre>
         </details>
@@ -147,7 +147,6 @@ function generateFailedTestRow(test: MatlabTestCase): string {
 }
 
 function formatDiagnosticReport(report: string): string {
-    // Preserve MATLAB formatting while escaping special characters
     return report
         // HTML special characters
         .replace(/&/g, '&amp;')
@@ -156,6 +155,13 @@ function formatDiagnosticReport(report: string): string {
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#039;')
         .replace(/`/g, '&#096;')
+        // Path separators for all OS
+        .replace(/\\/g, '\\\\')    // Windows backslash
+        .replace(/\//g, '/')       // Unix forward slash
+        // Preserve MATLAB formatting
+        .replace(/\r\n/g, '\n')    // Windows line endings
+        .replace(/\r/g, '\n')      // Mac old-style line endings
+        .replace(/\t/g, '    ')    // Tabs to spaces
         .trim();
 }
 
