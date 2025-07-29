@@ -106,7 +106,7 @@ function generateTestFileRow(file: MatlabTestFile): string {
               <th>Diagnostics</th>
               <th>Duration(s)</th>
             </tr>` +
-            file.testCases.map(tc => generateTestCaseRow(tc)).join('\n') +
+            file.testCases.map(tc => generateTestCaseRow(tc)).join('') +
           `</table>
         </details>
       </td>
@@ -133,7 +133,7 @@ function generateTestCaseRow(testCase: MatlabTestCase): string {
                 <td>-0.167</td>
               </tr>
             </table>
-            <pre style="font-family: monospace; white-space: pre;">` + testCase.diagnostics.map(d => formatDiagnosticReport(d.report)).join('\n') + `</pre>
+            <pre style="font-family: monospace; white-space: pre;">` + testCase.diagnostics.map(d => formatDiagnosticReport(d.report)).join('') + `</pre>
           </details>`
         : '';
 
