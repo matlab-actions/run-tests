@@ -73,12 +73,12 @@ function getTestHeader(testResults: MatlabTestFile[][], stats: TestStatistics): 
         <th>Duration(s) ⌛</th>
     </tr>
     <tr align="center">
-        <td>${stats.total}</td>
-        <td>${stats.passed}</td>
-        <td>${stats.failed}</td>
-        <td>${stats.incomplete}</td>
-        <td>${stats.notRun}</td>
-        <td>${stats.duration.toFixed(2)}</td>
+        <td>` + stats.total + `</td>
+        <td>` + stats.passed + `</td>
+        <td>` + stats.failed + `</td>
+        <td>` + stats.incomplete + `</td>
+        <td>` + stats.notRun + `</td>
+        <td>` + stats.duration.toFixed(2) + `</td>
     </tr>
     </table>`;
 }
