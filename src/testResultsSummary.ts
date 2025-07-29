@@ -50,13 +50,11 @@ interface TestResultsData {
 export function writeSummary(testResults: MatlabTestFile[][], stats: TestStatistics) {
     try {
         const header = getTestHeader(testResults, stats);
-        const failedTests = getFailedTests(testResults);
         const detailedResults = getDetailedResults(testResults);
         
         core.summary
             .addHeading('MATLAB Test Results')
             .addRaw(header, true)
-            .addRaw(failedTests, true)
             .addRaw(detailedResults, true)
             .write();
     } catch (e) {
@@ -86,15 +84,13 @@ function getTestHeader(testResults: MatlabTestFile[][], stats: TestStatistics): 
 }
 
 function getDetailedResults(testResults: MatlabTestFile[][]): string {
-    return `<details><summary><h3>All tests</h3></summary>
-    <table>
+    return `<table>
     <tr>
-      <th>Test</th>
+      <th>Test File</th>
       <th>Duration(s)</th>
-    </tr>` +
-    testResults.flat().map(file => generateTestFileRow(file)).join('\n') +
-    `</table>
-    </details>`;
+    </tr>
+    ${testResults.flat().map(file => generateTestFileRow(file)).join('\n')}
+    </table>`;
 }
 
 function generateTestFileRow(file: MatlabTestFile): string {
@@ -104,60 +100,50 @@ function generateTestFileRow(file: MatlabTestFile): string {
       <td>
         <details>
           <summary><b title="${file.path}">${statusEmoji} ${file.name}</b></summary>
-            <ul style="list-style-type: none;">` +
-              file.testCases.map(tc => `<li>` + getStatusEmoji(tc.status) + ` ` + tc.name + `</li>`).join('\n') +
-            `</ul>
-        </details>
-      <td align="center" valign="top"><b>${file.duration.toFixed(2)}</b>
-      </td>
-    </tr>`;
-}
-
-function getFailedTests(testResults: MatlabTestFile[][]): string {
-    const failedTests = testResults.flat()
-        .flatMap(file => file.testCases)
-        .filter(test => test.status === MatlabTestStatus.FAILED);
-
-    if (failedTests.length === 0) return '';
-
-    return `<details open><summary><h3>Failed tests</h3></summary>
-        <table>
-        <tr>
-          <th>Test</th>
-          <th>Details</th>
-        </tr>` + 
-        failedTests.map(test => generateFailedTestRow(test)).join('\n') +
-        `</table>
-    </details>`;
-}
-
-function generateFailedTestRow(test: MatlabTestCase): string {
-    return `
-    <tr>
-      <td><b>❌ ${test.name}</b></td>
-      <td>
-        <details>
-          <summary>View details</summary>
           <table>
             <tr>
-              <th>Actual</th>
-              <th>Expected</th>
-              <th>Error</th>
-              <th>RelativeError</th>
+              <th>Test</th>
+              <th>Diagnostics</th>
+              <th>Duration(s)</th>
             </tr>
-            <tr>
-              <td>2.5</td>
-              <td>3.0</td>
-              <td>-0.5</td>
-              <td>-0.167</td>
-            </tr>
+            ${file.testCases.map(tc => generateTestCaseRow(tc)).join('\n')}
           </table>
-          <pre style="font-family: monospace; white-space: pre;">${test.diagnostics.map(d => d.report).join('\n')}</pre>
         </details>
       </td>
+      <td align="center" valign="top"><b>${file.duration.toFixed(2)}</b></td>
     </tr>`;
 }
 
+function generateTestCaseRow(testCase: MatlabTestCase): string {
+    const statusEmoji = getStatusEmoji(testCase.status);
+    const diagnosticsColumn = testCase.status === MatlabTestStatus.FAILED 
+        ? `<details>
+            <summary>View details</summary>
+            <table>
+              <tr>
+                <th>Actual</th>
+                <th>Expected</th>
+                <th>Error</th>
+                <th>RelativeError</th>
+              </tr>
+              <tr>
+                <td>2.5</td>
+                <td>3.0</td>
+                <td>-0.5</td>
+                <td>-0.167</td>
+              </tr>
+            </table>
+            <pre style="font-family: monospace; white-space: pre;">${testCase.diagnostics.map(d => formatDiagnosticReport(d.report)).join('\n')}</pre>
+          </details>`
+        : '';
+
+    return `
+    <tr>
+      <td>${statusEmoji} ${testCase.name}</td>
+      <td>${diagnosticsColumn}</td>
+      <td align="center">${testCase.duration.toFixed(2)}</td>
+    </tr>`;
+}
 
 // function formatDiagnosticReport(report: string): string {
 //     return report
