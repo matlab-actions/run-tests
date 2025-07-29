@@ -103,7 +103,7 @@ function generateTestFileRow(file: MatlabTestFile): string {
     <tr>
       <td>
         <details>
-          <summary><b>${statusEmoji} ${file.name}</b></summary>
+          <summary><b title="${file.path}">${statusEmoji} ${file.name}</b></summary>
             <ul style="list-style-type: none;">` +
               file.testCases.map(tc => `<li>` + getStatusEmoji(tc.status) + ` ` + tc.name + `</li>`).join('\n') +
             `</ul>
@@ -139,11 +139,24 @@ function generateFailedTestRow(test: MatlabTestCase): string {
         <details>
           <summary>View details</summary>
           <pre>` +
-          test.diagnostics.map(d => d.report).join('\n') +
+          test.diagnostics.map(d => formatDiagnosticReport(d.report)).join('\n') +
           `</pre>
         </details>
       </td>
     </tr>`;
+}
+
+function formatDiagnosticReport(report: string): string {
+    // Preserve MATLAB formatting while escaping special characters
+    return report
+        // HTML special characters
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;')
+        .replace(/`/g, '&#096;')
+        .trim();
 }
 
 function getStatusEmoji(status: MatlabTestStatus): string {
