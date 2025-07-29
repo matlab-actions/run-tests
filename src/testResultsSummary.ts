@@ -99,18 +99,18 @@ function generateTestFileRow(file: MatlabTestFile): string {
     <tr>
       <td>
         <details>
-          <summary><b title="${file.path}">${statusEmoji} ${file.name}</b></summary>
+          <summary><b title="` + file.path + `">` + statusEmoji + " " + file.name + `</b></summary>
           <table>
             <tr>
               <th>Test</th>
               <th>Diagnostics</th>
               <th>Duration(s)</th>
-            </tr>
-            ${file.testCases.map(tc => generateTestCaseRow(tc)).join('\n')}
-          </table>
+            </tr>` +
+            file.testCases.map(tc => generateTestCaseRow(tc)).join('\n') +
+          `</table>
         </details>
       </td>
-      <td align="center" valign="top"><b>${file.duration.toFixed(2)}</b></td>
+      <td align="center" valign="top"><b>` + file.duration.toFixed(2) + `</b></td>
     </tr>`;
 }
 
@@ -133,15 +133,15 @@ function generateTestCaseRow(testCase: MatlabTestCase): string {
                 <td>-0.167</td>
               </tr>
             </table>
-            <pre style="font-family: monospace; white-space: pre;">${testCase.diagnostics.map(d => formatDiagnosticReport(d.report)).join('\n')}</pre>
+            <pre style="font-family: monospace; white-space: pre;">` + testCase.diagnostics.map(d => formatDiagnosticReport(d.report)).join('\n') + `</pre>
           </details>`
         : '';
 
     return `
     <tr>
-      <td>${statusEmoji} ${testCase.name}</td>
-      <td>${diagnosticsColumn}</td>
-      <td align="center">${testCase.duration.toFixed(2)}</td>
+      <td>` + statusEmoji + " " + testCase.name + `</td>
+      <td>` + diagnosticsColumn + `</td>
+      <td align="center">` + testCase.duration.toFixed(2) + `</td>
     </tr>`;
 }
 
