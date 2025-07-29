@@ -33,22 +33,23 @@ interface MatlabTestFile {
     status: MatlabTestCase['status'];
 }
 
-interface TestCounts {
+interface TestStatistics {
     total: number;
     passed: number;
     failed: number;
     incomplete: number;
     notRun: number;
+    duration: number;
 }
 
 interface TestResultsData {
     testResults: MatlabTestFile[][];
-    counts: TestCounts;
+    stats: TestStatistics;
 }
 
-export function writeSummary(testResults: MatlabTestFile[][], counts: TestCounts) {
+export function writeSummary(testResults: MatlabTestFile[][], stats: TestStatistics) {
     try {
-        const header = getTestHeader(testResults, counts);
+        const header = getTestHeader(testResults, stats);
         const detailedResults = getDetailedResults(testResults);
         const failedTests = getFailedTests(testResults);
         
@@ -63,10 +64,10 @@ export function writeSummary(testResults: MatlabTestFile[][], counts: TestCounts
     }
 }
 
-function getTestHeader(testResults: MatlabTestFile[][], counts: TestCounts): string {
+function getTestHeader(testResults: MatlabTestFile[][], stats: TestStatistics): string {
     return `<table>
     <tr align="center">
-        <th>Total tests: ${testResults.flat().length}</th>
+        <th>Total tests</th>
         <th>Passed ✅</th>
         <th>Failed ❌</th>
         <th>Incomplete ⚠️</th>
@@ -74,14 +75,14 @@ function getTestHeader(testResults: MatlabTestFile[][], counts: TestCounts): str
         <th>Duration(s) ⌛</th>
     </tr>
     <tr align="center">
-        <td>${counts.total}</td>
-        <td>${counts.passed}</td>
-        <td>${counts.failed}</td>
-        <td>${counts.incomplete}</td>
-        <td>${counts.notRun}</td>
+        <td>${stats.total}</td>
+        <td>${stats.passed}</td>
+        <td>${stats.failed}</td>
+        <td>${stats.incomplete}</td>
+        <td>${stats.notRun}</td>
+        <td>${stats.duration.toFixed(2)}</td>
     </tr>
     </table>`;
-    // <td>${calculateTotalDuration(testResults)}</td>
 }
 
 function getDetailedResults(testResults: MatlabTestFile[][]): string {
@@ -90,9 +91,10 @@ function getDetailedResults(testResults: MatlabTestFile[][]): string {
     <tr>
       <th>Test</th>
       <th>Duration(s)</th>
-    </tr>
-    ${testResults.flat().map(file => generateTestFileRow(file)).join('\n')}
-    </table>
+    </tr>` +
+    testResults.flat().map(file => generateTestFileRow(file)).join('\n') +
+    // ${testResults.flat().map(file => generateTestFileRow(file)).join('\n')}
+    `</table>
     </details>`;
 }
 
@@ -142,7 +144,7 @@ function getStatusEmoji(status: MatlabTestStatus): string {
 
 export function getTestResults(workspace: string): TestResultsData {
     const testResults: MatlabTestFile[][] = [];
-    const counts: TestCounts = { total: 0, passed: 0, failed: 0, incomplete: 0, notRun: 0 };
+    const stats: TestStatistics = { total: 0, passed: 0, failed: 0, incomplete: 0, notRun: 0, duration: 0 };
     const runId = process.env.GITHUB_RUN_ID || '';
     const runnerTemp = process.env.RUNNER_TEMP || '';
     const resultsPath = path.join(runnerTemp, `matlabTestResults${runId}.json`);
@@ -159,7 +161,7 @@ export function getTestResults(workspace: string): TestResultsData {
                     jsonTestSessionResults : [jsonTestSessionResults];
 
                 for (const jsonTestCase of testCases) {
-                    processTestCase(testSessionResults, jsonTestCase, map, workspace, counts);
+                    processTestCase(testSessionResults, jsonTestCase, map, workspace, stats);
                 }
 
                 testResults.push(testSessionResults);
@@ -176,7 +178,7 @@ export function getTestResults(workspace: string): TestResultsData {
         }
     }
 
-    return { testResults, counts };
+    return { testResults, stats };
 }
 
 function processTestCase(
@@ -184,7 +186,7 @@ function processTestCase(
     jsonTestCase: any, 
     map: Map<string, MatlabTestFile>,
     workspace: string,
-    counts: TestCounts
+    stats: TestStatistics
 ): void {
     const baseFolder = jsonTestCase.BaseFolder;
     const testResult = jsonTestCase.TestResult;
@@ -216,7 +218,7 @@ function processTestCase(
     testFile.testCases.push(testCase);
     incrementDuration(testFile, testCase.duration);
     updateFileStatus(testFile, testCase);
-    updateCount(testCase, counts);
+    updateStats(testCase, stats);
 }
 
 function incrementDuration(testFile: MatlabTestFile, testCaseDuration: number): void {
@@ -268,12 +270,13 @@ function getRelativePath(workspace: string, baseFolder: string, fileName: string
     return path.join(workspace, relativePath, fileName);
 }
 
-function updateCount(testCase: MatlabTestCase, counts: TestCounts): void {
-    counts.total++;
+function updateStats(testCase: MatlabTestCase, stats: TestStatistics): void {
+    stats.total++;
     switch (testCase.status) {
-        case 'PASSED': counts.passed++; break;
-        case 'FAILED': counts.failed++; break;
-        case 'INCOMPLETE': counts.incomplete++; break;
-        case 'NOT_RUN': counts.notRun++; break;
+        case 'PASSED': stats.passed++; break;
+        case 'FAILED': stats.failed++; break;
+        case 'INCOMPLETE': stats.incomplete++; break;
+        case 'NOT_RUN': stats.notRun++; break;
     }
+    stats.duration += testCase.duration;
 }
