@@ -32,7 +32,7 @@ classdef TestExamples < matlab.unittest.TestCase
 
             % Verify that the two are equal
             testCase.verifyEqual(doyActual,doyExpected)
-            % testCase.fatalAssertEqual(1,2)
+            testCase.fatalAssertEqual(1,2)
             % fatalAssertEqual(7, 20);
         end
 
