@@ -45,8 +45,8 @@ async function run() {
     await core.group("Run command", async () => {
         await matlab.runCommand(helperScript, platform, architecture, exec.exec, startupOptions).finally(() => {
             // buildSummary.processAndDisplayBuildSummary();
-            const { testResults, counts } = testResultsSummary.getTestResults("");
-            testResultsSummary.writeSummary(testResults, counts);
+            const { testResults, stats } = testResultsSummary.getTestResults("");
+            testResultsSummary.writeSummary(testResults, stats);
         });
     });
 }
