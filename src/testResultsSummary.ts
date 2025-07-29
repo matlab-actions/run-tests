@@ -138,32 +138,45 @@ function generateFailedTestRow(test: MatlabTestCase): string {
       <td>
         <details>
           <summary>View details</summary>
-          <pre style="font-family: monospace; white-space: pre; overflow-x: auto;">` +
-          test.diagnostics.map(d => formatDiagnosticReport(d.report)).join('\n') +
-          `</pre>
+          <table>
+            <tr>
+              <th>Actual</th>
+              <th>Expected</th>
+              <th>Error</th>
+              <th>RelativeError</th>
+            </tr>
+            <tr>
+              <td>2.5</td>
+              <td>3.0</td>
+              <td>-0.5</td>
+              <td>-0.167</td>
+            </tr>
+          </table>
+          <pre style="font-family: monospace; white-space: pre;">${test.diagnostics.map(d => d.report).join('\n')}</pre>
         </details>
       </td>
     </tr>`;
 }
 
-function formatDiagnosticReport(report: string): string {
-    return report
-        // HTML special characters
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;')
-        .replace(/`/g, '&#096;')
-        // Path separators for all OS
-        .replace(/\\/g, '\\\\')    // Windows backslash
-        .replace(/\//g, '/')       // Unix forward slash
-        // Preserve MATLAB formatting
-        .replace(/\r\n/g, '\n')    // Windows line endings
-        .replace(/\r/g, '\n')      // Mac old-style line endings
-        .replace(/\t/g, '    ')    // Tabs to spaces
-        .trim();
-}
+
+// function formatDiagnosticReport(report: string): string {
+//     return report
+//         // HTML special characters
+//         .replace(/&/g, '&amp;')
+//         .replace(/</g, '&lt;')
+//         .replace(/>/g, '&gt;')
+//         .replace(/"/g, '&quot;')
+//         .replace(/'/g, '&#039;')
+//         .replace(/`/g, '&#096;')
+//         // Path separators for all OS
+//         .replace(/\\/g, '\\\\')    // Windows backslash
+//         .replace(/\//g, '/')       // Unix forward slash
+//         // Preserve MATLAB formatting
+//         .replace(/\r\n/g, '\n')    // Windows line endings
+//         .replace(/\r/g, '\n')      // Mac old-style line endings
+//         .replace(/\t/g, '    ')    // Tabs to spaces
+//         .trim();
+// }
 
 function getStatusEmoji(status: MatlabTestStatus): string {
     switch (status) {
