@@ -50,14 +50,14 @@ interface TestResultsData {
 export function writeSummary(testResults: MatlabTestFile[][], stats: TestStatistics) {
     try {
         const header = getTestHeader(testResults, stats);
-        const detailedResults = getDetailedResults(testResults);
         const failedTests = getFailedTests(testResults);
+        const detailedResults = getDetailedResults(testResults);
         
         core.summary
             .addHeading('MATLAB Test Results')
             .addRaw(header, true)
-            .addRaw(detailedResults, true)
             .addRaw(failedTests, true)
+            .addRaw(detailedResults, true)
             .write();
     } catch (e) {
         console.error('An error occurred while adding the test results to the summary:', e);
@@ -121,16 +121,28 @@ function getFailedTests(testResults: MatlabTestFile[][]): string {
 
     if (failedTests.length === 0) return '';
 
-    return `<details><summary><h3>Failed tests</h3></summary>
-        ${failedTests.map(test => generateFailedTestDetails(test)).join('\n')}
+    return `<details open><summary><h3>Failed tests</h3></summary>
+        <table>
+        <tr>
+          <th>Test</th>
+          <th>Details</th>
+        </tr>
+        ${failedTests.map(test => generateFailedTestRow(test)).join('\n')}
+        </table>
     </details>`;
 }
 
-function generateFailedTestDetails(test: MatlabTestCase): string {
-    return `<h4><b>❌ <u>${test.name} failed</u></b></h4>
-        <details><summary>View stack trace</summary></br>
-        <pre>${test.diagnostics.map(d => d.report).join('\n')}</pre>
-        </details>`;
+function generateFailedTestRow(test: MatlabTestCase): string {
+    return `
+    <tr>
+      <td><b>❌ ${test.name}</b></td>
+      <td>
+        <details>
+          <summary>View details</summary>
+          <pre>${test.diagnostics.map(d => d.report).join('\n')}</pre>
+        </details>
+      </td>
+    </tr>`;
 }
 
 function getStatusEmoji(status: MatlabTestStatus): string {
