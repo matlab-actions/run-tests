@@ -89,7 +89,7 @@ function getDetailedResults(testResults: MatlabTestFile[][]): string {
       <th>Test File</th>
       <th>Duration(s)</th>
     </tr>` +
-    testResults.flat().map(file => generateTestFileRow(file)).join('\n') +
+    testResults.flat().map(file => generateTestFileRow(file)).join('') +
     `</table>`;
 }
 
