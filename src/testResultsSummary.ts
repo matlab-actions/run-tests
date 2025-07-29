@@ -55,6 +55,7 @@ export function writeSummary(testResults: MatlabTestFile[][], stats: TestStatist
         core.summary
             .addHeading('MATLAB Test Results')
             .addRaw(header, true)
+            .addHeading('All tests', 3)
             .addRaw(detailedResults, true)
             .write();
     } catch (e) {
@@ -99,7 +100,7 @@ function generateTestFileRow(file: MatlabTestFile): string {
     <tr>
       <td>
         <details>
-          <summary><b title="` + file.path + `">` + statusEmoji + " " + file.name + `</b></summary>
+          <summary><b title="` + file.path + `">` + statusEmoji + ` ` + file.name + `</b></summary>
           <table>
             <tr>
               <th>Test</th>
@@ -139,7 +140,7 @@ function generateTestCaseRow(testCase: MatlabTestCase): string {
 
     return `
     <tr>
-      <td>` + statusEmoji + " " + testCase.name + `</td>
+      <td>` + statusEmoji + ` ` + testCase.name + `</td>
       <td>` + diagnosticsColumn + `</td>
       <td align="center">` + testCase.duration.toFixed(2) + `</td>
     </tr>`;
