@@ -57,6 +57,8 @@ export function writeSummary(testResults: MatlabTestFile[][], stats: TestStatist
             .addRaw(header, true)
             .addHeading('All tests', 3)
             .addRaw(detailedResults, true)
+            .addRaw(`<b>Assertion failed</b> in TestExamples/testNonLeapYear and it did not run to completion.\n    ---------------------\n    Framework Diagnostic:\n    ---------------------\n    assertEqual failed.\n    --> The numeric values are not equal using \"isequaln\".\n    --> Failure table:\n            Actual    Expected    Error    RelativeError\n            ______    ________    _____    _____________\n                                                        \n              1          2         -1          -0.5     \n    \n    Actual Value:\n         1\n    Expected Value:\n         2\n    ------------------\n    Stack Information:\n    ------------------\n    In C:\\Users\\kapilg\\jenkins visualization\\test-results\\jenkins-matlab-plugin\\work\\workspace\\visualization\\tests\\TestExamples.m (TestExamples.testNonLeapYear) at 43`, true)
+            .addRaw(`<table><tr><td><b>Assertion failed</b> in TestExamples/testNonLeapYear and it did not run to completion.\n    ---------------------\n    Framework Diagnostic:\n    ---------------------\n    assertEqual failed.\n    --> The numeric values are not equal using \"isequaln\".\n    --> Failure table:\n            Actual    Expected    Error    RelativeError\n            ______    ________    _____    _____________\n                                                        \n              1          2         -1          -0.5     \n    \n    Actual Value:\n         1\n    Expected Value:\n         2\n    ------------------\n    Stack Information:\n    ------------------\n    In C:\\Users\\kapilg\\jenkins visualization\\test-results\\jenkins-matlab-plugin\\work\\workspace\\visualization\\tests\\TestExamples.m (TestExamples.testNonLeapYear) at 43</td></tr></table>`, true)
             .write();
     } catch (e) {
         console.error('An error occurred while adding the test results to the summary:', e);
@@ -121,8 +123,8 @@ function generateTestCaseRow(testCase: MatlabTestCase): string {
         ? testCase.diagnostics.map(diagnostic => 
             `<details>` +
                 `<summary>` + diagnostic.event + `</summary>` +
-                `<p>` + diagnostic.report + `</p>` +
-                `<pre style="white-space: pre-line;">` + diagnostic.report + `</pre>` +
+                `<p style="white-space: pre-wrap;">` + diagnostic.report + `</p>` +
+                `<pre style="white-space: pre-wrap;">` + diagnostic.report + `</pre>` +
             `</details>`
         ).join('')
         : '';
@@ -130,7 +132,7 @@ function generateTestCaseRow(testCase: MatlabTestCase): string {
     return `<tr>` +
         `<td>` + statusEmoji + ` ` + testCase.name + `</td>` +
         `<td>` + diagnosticsColumn + `</td>` +
-        `<td align="center">` + testCase.duration.toFixed(2) + `</td>` +
+        `<td align="center"><b>` + testCase.duration.toFixed(2) + `</b></td>` +
         `</tr>`;
 }
 
