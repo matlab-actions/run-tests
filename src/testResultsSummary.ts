@@ -149,6 +149,7 @@ function formatDiagnosticReport(report: string): string {
         .replace(/\r\n/g, '\n')    // Windows line endings
         .replace(/\r/g, '\n')      // Mac old-style line endings
         .replace(/\t/g, '    ')    // Tabs to spaces
+        .replace(/\n\n/g, '<br><br>')
         .trim();
 }
 
