@@ -124,7 +124,7 @@ function generateTestCaseRow(testCase: MatlabTestCase): string {
         ? testCase.diagnostics.map(diagnostic => 
             `<details>` +
                 `<summary>` + diagnostic.event + `</summary>` +
-                `<p style="white-space: pre-wrap;">` + diagnostic.report + `</p>` +
+                `<p style="white-space: pre-wrap;">` + formatDiagnosticReport(diagnostic.report) + `</p>` +
                 `<pre style="white-space: pre-wrap;">` + diagnostic.report + `</pre>` +
             `</details>`
         ).join('')
@@ -137,25 +137,25 @@ function generateTestCaseRow(testCase: MatlabTestCase): string {
         `</tr>`;
 }
 
-// function formatDiagnosticReport(report: string): string {
-//     return report
-//         // HTML special characters
-//         .replace(/&/g, '&amp;')
-//         .replace(/</g, '&lt;')
-//         .replace(/>/g, '&gt;')
-//         .replace(/"/g, '&quot;')
-//         .replace(/'/g, '&#039;')
-//         .replace(/`/g, '&#096;')
-//         // Path separators for all OS
-//         .replace(/\\/g, '\\\\')    // Windows backslash
-//         .replace(/\//g, '/')       // Unix forward slash
-//         // Preserve MATLAB formatting
-//         .replace(/\r\n/g, '\n')    // Windows line endings
-//         .replace(/\r/g, '\n')      // Mac old-style line endings
-//         .replace(/\t/g, '    ')    // Tabs to spaces
-//         .replace(/\n\n/g, '<br><br>')
-//         .trim();
-// }
+function formatDiagnosticReport(report: string): string {
+    return report
+        // HTML special characters
+        // .replace(/&/g, '&amp;')
+        // .replace(/</g, '&lt;')
+        // .replace(/>/g, '&gt;')
+        // .replace(/"/g, '&quot;')
+        // .replace(/'/g, '&#039;')
+        // .replace(/`/g, '&#096;')
+        // // Path separators for all OS
+        // .replace(/\\/g, '\\\\')    // Windows backslash
+        // .replace(/\//g, '/')       // Unix forward slash
+        // // Preserve MATLAB formatting
+        // .replace(/\r\n/g, '\n')    // Windows line endings
+        // .replace(/\r/g, '\n')      // Mac old-style line endings
+        // .replace(/\t/g, '    ')    // Tabs to spaces
+        .replace(/\n\n/g, '<br><br>')
+        .trim();
+}
 
 function getStatusEmoji(status: MatlabTestStatus): string {
     switch (status) {
