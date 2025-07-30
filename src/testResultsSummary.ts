@@ -121,6 +121,7 @@ function generateTestCaseRow(testCase: MatlabTestCase): string {
         ? testCase.diagnostics.map(diagnostic => 
             `<details>` +
                 `<summary>` + diagnostic.event + `</summary>` +
+                `<p>` + diagnostic.report + `</p>` +
                 `<pre style="white-space: pre-line;">` + diagnostic.report + `</pre>` +
             `</details>`
         ).join('')
