@@ -5,6 +5,7 @@ import * as core from "@actions/core";
 
 // doesn't have id
 // number instead of float
+// check with multiple runs in same step (what happens to duration?)
 
 export enum MatlabTestStatus {
     PASSED = 'PASSED',
@@ -55,12 +56,6 @@ export function writeSummary(testResults: MatlabTestFile[][], stats: TestStatist
         core.summary
             .addHeading('MATLAB Test Results')
             .addRaw(header, true)
-            // .addRaw(`<b>Assertion failed</b> in TestExamples/testNonLeapYear and it did not run to completion.\n    ---------------------\n    Framework Diagnostic:\n    ---------------------\n    assertEqual failed.\n    --> The numeric values are not equal using \"isequaln\".\n    --> Failure table:\n            Actual    Expected    Error    RelativeError\n            ______    ________    _____    _____________\n                                                        abc              1          2         -1          -0.5     \n    \n    Actual Value:\n         1\n    Expected Value:\n         2\n    ------------------\n    Stack Information:\n    ------------------\n    In C:\\Users\\kapilg\\jenkins visualization\\test-results\\jenkins-matlab-plugin\\work\\workspace\\visualization\\tests\\TestExamples.m (TestExamples.testNonLeapYear) at 43`, true)
-            // .addRaw(formatDiagnosticReport(`<b>Assertion failed</b> in TestExamples/testNonLeapYear and it did not run to completion.\n    ---------------------\n    Framework Diagnostic:\n    ---------------------\n    assertEqual failed.\n    --> The numeric values are not equal using \"isequaln\".\n    --> Failure table:\n            Actual    Expected    Error    RelativeError\n            ______    ________    _____    _____________\n                                                        abc              1          2         -1          -0.5     \n    \n    Actual Value:\n         1\n    Expected Value:\n         2\n    ------------------\n    Stack Information:\n    ------------------\n    In C:\\Users\\kapilg\\jenkins visualization\\test-results\\jenkins-matlab-plugin\\work\\workspace\\visualization\\tests\\TestExamples.m (TestExamples.testNonLeapYear) at 43`), true)
-            // .addRaw(`<pre>Assertion failed in TestExamples/testNonLeapYear and it did not run to completion.\n    ---------------------\n    Framework Diagnostic:\n    ---------------------\n    assertEqual failed.\n    --> The numeric values are not equal using \"isequaln\".\n    --> Failure table:\n            Actual    Expected    Error    RelativeError\n            ______    ________    _____    _____________\n                                                        \n              1          2         -1          -0.5     \n    \n    Actual Value:\n         1\n    Expected Value:\n         2\n    ------------------\n    Stack Information:\n    ------------------\n    In C:\\Users\\kapilg\\jenkins visualization\\test-results\\jenkins-matlab-plugin\\work\\workspace\\visualization\\tests\\TestExamples.m (TestExamples.testNonLeapYear) at 43</pre>`, true)
-            // .addRaw(formatDiagnosticReport(`<pre>Assertion failed in TestExamples/testNonLeapYear and it did not run to completion.\n    ---------------------\n    Framework Diagnostic:\n    ---------------------\n    assertEqual failed.\n    --> The numeric values are not equal using \"isequaln\".\n    --> Failure table:\n            Actual    Expected    Error    RelativeError\n            ______    ________    _____    _____________\n                                                        \n              1          2         -1          -0.5     \n    \n    Actual Value:\n         1\n    Expected Value:\n         2\n    ------------------\n    Stack Information:\n    ------------------\n    In C:\\Users\\kapilg\\jenkins visualization\\test-results\\jenkins-matlab-plugin\\work\\workspace\\visualization\\tests\\TestExamples.m (TestExamples.testNonLeapYear) at 43</pre>`), true)
-            // .addRaw(`<pre>` + formatDiagnosticReport(`Assertion failed in TestExamples/testNonLeapYear and it did not run to completion.\n    ---------------------\n    Framework Diagnostic:\n    ---------------------\n    assertEqual failed.\n    --> The numeric values are not equal using \"isequaln\".\n    --> Failure table:\n            Actual    Expected    Error    RelativeError\n            ______    ________    _____    _____________\n                                                        \n              1          2         -1          -0.5     \n    \n    Actual Value:\n         1\n    Expected Value:\n         2\n    ------------------\n    Stack Information:\n    ------------------\n    In C:\\Users\\kapilg\\jenkins visualization\\test-results\\jenkins-matlab-plugin\\work\\workspace\\visualization\\tests\\TestExamples.m (TestExamples.testNonLeapYear) at 43`) + `</pre>`, true)
-            // .addRaw(`<table><tr><td><b>Assertion failed</b> in TestExamples/testNonLeapYear and it did not run to completion.\n    ---------------------\n    Framework Diagnostic:\n    ---------------------\n    assertEqual failed.\n    --> The numeric values are not equal using \"isequaln\".\n    --> Failure table:\n            Actual    Expected    Error    RelativeError\n            ______    ________    _____    _____________\n                                                        \n              1          2         -1          -0.5     \n    \n    Actual Value:\n         1\n    Expected Value:\n         2\n    ------------------\n    Stack Information:\n    ------------------\n    In C:\\Users\\kapilg\\jenkins visualization\\test-results\\jenkins-matlab-plugin\\work\\workspace\\visualization\\tests\\TestExamples.m (TestExamples.testNonLeapYear) at 43</td></tr></table>`, true)
             .addHeading('All tests', 3)
             .addRaw(detailedResults, true)
             .write();
@@ -71,64 +66,62 @@ export function writeSummary(testResults: MatlabTestFile[][], stats: TestStatist
 
 function getTestHeader(testResults: MatlabTestFile[][], stats: TestStatistics): string {
     return `<table>
-    <tr align="center">
-        <th>Total tests</th>
-        <th>Passed ✅</th>
-        <th>Failed ❌</th>
-        <th>Incomplete ⚠️</th>
-        <th>Not Run 🚫</th>
-        <th>Duration(s) ⌛</th>
-    </tr>
-    <tr align="center">
-        <td>` + stats.total + `</td>
-        <td>` + stats.passed + `</td>
-        <td>` + stats.failed + `</td>
-        <td>` + stats.incomplete + `</td>
-        <td>` + stats.notRun + `</td>
-        <td>` + stats.duration.toFixed(2) + `</td>
-    </tr>
-    </table>`;
+                <tr align="center">
+                    <th>Total tests</th>
+                    <th>Passed ✅</th>
+                    <th>Failed ❌</th>
+                    <th>Incomplete ⚠️</th>
+                    <th>Not Run 🚫</th>
+                    <th>Duration(s) ⌛</th>
+                </tr>
+                <tr align="center">
+                    <td>` + stats.total + `</td>
+                    <td>` + stats.passed + `</td>
+                    <td>` + stats.failed + `</td>
+                    <td>` + stats.incomplete + `</td>
+                    <td>` + stats.notRun + `</td>
+                    <td>` + stats.duration.toFixed(2) + `</td>
+                </tr>
+            </table>`;
 }
 
 function getDetailedResults(testResults: MatlabTestFile[][]): string {
     return `<table>
-    <tr>
-      <th>Test File</th>
-      <th>Duration(s)</th>
-    </tr>` +
-    testResults.flat().map(file => generateTestFileRow(file)).join('') +
-    `</table>`;
+                <tr>
+                    <th>Test File</th>
+                    <th>Duration(s)</th>
+                </tr>` +
+                testResults.flat().map(file => generateTestFileRow(file)).join('') +
+            `</table>`;
 }
 
 function generateTestFileRow(file: MatlabTestFile): string {
     const statusEmoji = getStatusEmoji(file.status);
-    return `
-    <tr>
-      <td>
-        <details>
-          <summary><b title="` + file.path + `">` + statusEmoji + ` ` + file.name + `</b></summary>
-          <table>
-            <tr>
-              <th>Test</th>
-              <th>Diagnostics</th>
-              <th>Duration(s)</th>
-            </tr>` +
-            file.testCases.map(tc => generateTestCaseRow(tc)).join('') +
-          `</table>
-        </details>
-      </td>
-      <td align="center" valign="top"><b>` + file.duration.toFixed(2) + `</b></td>
-    </tr>`;
+    return `<tr>
+                <td>
+                    <details>
+                        <summary><b title="` + file.path + `">` + statusEmoji + ` ` + file.name + `</b></summary>
+                        <table>
+                            <tr>
+                            <th>Test</th>
+                            <th>Diagnostics</th>
+                            <th>Duration(s)</th>
+                            </tr>` +
+                            file.testCases.map(tc => generateTestCaseRow(tc)).join('') +
+                        `</table>
+                    </details>
+                </td>
+                <td align="center" valign="top"><b>` + file.duration.toFixed(2) + `</b></td>
+            </tr>`;
 }
 
 function generateTestCaseRow(testCase: MatlabTestCase): string {
     const statusEmoji = getStatusEmoji(testCase.status);
-    const diagnosticsColumn = testCase.status === MatlabTestStatus.FAILED 
+    const diagnosticsColumn = testCase.diagnostics.length > 0
         ? testCase.diagnostics.map(diagnostic => 
             `<details>` +
                 `<summary>` + diagnostic.event + `</summary>` +
-                // `<p style="white-space: pre-wrap;">` + formatDiagnosticReport(diagnostic.report) + `</p>` +
-                `<pre style="white-space: pre-wrap;">` + formatDiagnosticReport(diagnostic.report) + `</pre>` +
+                `<pre style="font-family: monospace; white-space: pre;">` + formatDiagnosticReport(diagnostic.report) + `</pre>` +
             `</details>`
         ).join('')
         : '';
@@ -136,8 +129,8 @@ function generateTestCaseRow(testCase: MatlabTestCase): string {
     return `<tr>` +
         `<td>` + statusEmoji + ` ` + testCase.name + `</td>` +
         `<td>` + diagnosticsColumn + `</td>` +
-        `<td align="center"><b>` + testCase.duration.toFixed(2) + `</b></td>` +
-        `</tr>`;
+        `<td align="center">` + testCase.duration.toFixed(2) + `</td>` +
+    `</tr>`;
 }
 
 function formatDiagnosticReport(report: string): string {
