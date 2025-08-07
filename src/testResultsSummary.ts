@@ -53,7 +53,7 @@ export function writeSummary(testResults: MatlabTestFile[][], stats: TestStatist
         const detailedResults = getDetailedResults(testResults);
         
         core.summary
-            .addHeading('MATLAB Test Results: ' + process.env.GITHUB_ACTION)
+            .addHeading('MATLAB Test Results (' + process.env.GITHUB_ACTION + ')')
             .addRaw(header, true)
             .addHeading('All tests', 3)
             .addRaw(detailedResults, true)
@@ -152,10 +152,6 @@ function getStatusEmoji(status: MatlabTestStatus): string {
 }
 
 export function getTestResults(): TestResultsData {
-    const workspace = process.env.GITHUB_WORKSPACE || '';
-    core.summary
-            .addHeading('Workspace:' + workspace)
-            .write();
     const testResults: MatlabTestFile[][] = [];
     const stats: TestStatistics = { total: 0, passed: 0, failed: 0, incomplete: 0, notRun: 0, duration: 0 };
     const runId = process.env.GITHUB_RUN_ID || '';
@@ -174,7 +170,7 @@ export function getTestResults(): TestResultsData {
                     jsonTestSessionResults : [jsonTestSessionResults];
 
                 for (const jsonTestCase of testCases) {
-                    processTestCase(testSessionResults, jsonTestCase, map, workspace, stats);
+                    processTestCase(testSessionResults, jsonTestCase, map, stats);
                 }
 
                 testResults.push(testSessionResults);
@@ -198,7 +194,6 @@ function processTestCase(
     testSessionResults: MatlabTestFile[], 
     jsonTestCase: any, 
     map: Map<string, MatlabTestFile>,
-    workspace: string,
     stats: TestStatistics
 ): void {
     const baseFolder = jsonTestCase.BaseFolder;
@@ -211,8 +206,7 @@ function processTestCase(
     if (!testFile) {
         testFile = {
             name: testFileName,
-            path: getRelativePath(workspace, baseFolder, testFileName),
-            // path: "",
+            path: '',
             testCases: [],
             duration: 0,
             status: MatlabTestStatus.NOT_RUN
@@ -220,6 +214,8 @@ function processTestCase(
         map.set(filePath, testFile);
         testSessionResults.push(testFile);
     }
+
+    testFile.path = path.join(path.relative(process.env.GITHUB_WORKSPACE || '', baseFolder), testFileName);
 
     const testCase: MatlabTestCase = {
         name: testCaseName,
@@ -276,11 +272,6 @@ function processDiagnostics(diagnostics: any): MatlabTestDiagnostics[] {
     }
 
     return results;
-}
-
-function getRelativePath(workspace: string, baseFolder: string, fileName: string): string {
-    const relativePath = path.relative(workspace, baseFolder);
-    return path.join(relativePath, fileName);
 }
 
 function updateStats(testCase: MatlabTestCase, stats: TestStatistics): void {
