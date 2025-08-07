@@ -97,10 +97,13 @@ function getDetailedResults(testResults: MatlabTestFile[][]): string {
 
 function generateTestFileRow(file: MatlabTestFile): string {
     const statusEmoji = getStatusEmoji(file.status);
+    // Always use a linux-style path for display
+    const displayPath = file.path.replace(/\\/g, '/');
+    
     return `<tr>
                 <td>
                     <details>
-                        <summary><b title="` + file.path + `">` + statusEmoji + ` ` + file.name + `</b></summary>
+                        <summary><b title="` + displayPath + `">` + statusEmoji + ` ` + file.name + `</b></summary>
                         <table>
                             <tr>
                             <th>Test</th>
