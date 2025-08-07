@@ -121,7 +121,7 @@ function generateTestCaseRow(testCase: MatlabTestCase): string {
         ? testCase.diagnostics.map(diagnostic => 
             `<details>` +
                 `<summary>` + diagnostic.event + `</summary>` +
-                `<pre style="font-family: monospace; white-space: pre;">` + formatDiagnosticReport(diagnostic.report) + `</pre>` +
+                `<pre style="font-family: monospace; white-space: pre;">` + diagnostic.report.replace(/\n/g, '<br>').trim() + `</pre>` +
             `</details>`
         ).join('')
         : '';
@@ -133,25 +133,12 @@ function generateTestCaseRow(testCase: MatlabTestCase): string {
     `</tr>`;
 }
 
-function formatDiagnosticReport(report: string): string {
-    return report
-        // HTML special characters
-        // .replace(/&/g, '&amp;')
-        // .replace(/</g, '&lt;')
-        // .replace(/>/g, '&gt;')
-        // .replace(/"/g, '&quot;')
-        // .replace(/'/g, '&#039;')
-        // .replace(/`/g, '&#096;')
-        // // Path separators for all OS
-        // .replace(/\\/g, '\\\\')    // Windows backslash
-        // .replace(/\//g, '/')       // Unix forward slash
-        // // Preserve MATLAB formatting
-        // .replace(/\r\n/g, '\n')    // Windows line endings
-        // .replace(/\r/g, '\n')      // Mac old-style line endings
-        // .replace(/\t/g, '    ')    // Tabs to spaces
-        .replace(/\n/g, '<br>')
-        .trim();
-}
+// Replace characters for HTML display
+// function formatDiagnosticReport(report: string): string {
+//     return report
+//         .replace(/\n/g, '<br>')
+//         .trim();
+// }
 
 function getStatusEmoji(status: MatlabTestStatus): string {
     switch (status) {
@@ -218,8 +205,8 @@ function processTestCase(
     if (!testFile) {
         testFile = {
             name: testFileName,
-            // path: getRelativePath(workspace, baseFolder, testFileName),
-            path: "",
+            path: getRelativePath(workspace, baseFolder, testFileName),
+            // path: "",
             testCases: [],
             duration: 0,
             status: MatlabTestStatus.NOT_RUN
@@ -287,7 +274,7 @@ function processDiagnostics(diagnostics: any): MatlabTestDiagnostics[] {
 
 function getRelativePath(workspace: string, baseFolder: string, fileName: string): string {
     const relativePath = path.relative(workspace, baseFolder);
-    return path.join(workspace, relativePath, fileName);
+    return path.join(relativePath, fileName);
 }
 
 function updateStats(testCase: MatlabTestCase, stats: TestStatistics): void {
