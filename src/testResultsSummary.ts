@@ -151,7 +151,11 @@ function getStatusEmoji(status: MatlabTestStatus): string {
     }
 }
 
-export function getTestResults(workspace: string): TestResultsData {
+export function getTestResults(): TestResultsData {
+    const workspace = process.env.GITHUB_WORKSPACE || '';
+    core.summary
+            .addHeading('Workspace:' + workspace)
+            .write();
     const testResults: MatlabTestFile[][] = [];
     const stats: TestStatistics = { total: 0, passed: 0, failed: 0, incomplete: 0, notRun: 0, duration: 0 };
     const runId = process.env.GITHUB_RUN_ID || '';
