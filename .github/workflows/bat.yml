@@ -29,6 +29,9 @@ jobs:
       - name: Run MATLAB tests for test results summary
         uses: ./
 
+      - name: Run MATLAB tests for test results summary
+        uses: ./
+
       - run: |
           pwd
           ls

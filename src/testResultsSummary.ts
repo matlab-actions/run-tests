@@ -4,7 +4,6 @@ import * as path from 'path';
 import * as core from "@actions/core";
 
 // doesn't have id
-// number instead of float
 // check with multiple runs in same step (what happens to duration?)
 
 export enum MatlabTestStatus {
@@ -54,7 +53,7 @@ export function writeSummary(testResults: MatlabTestFile[][], stats: TestStatist
         const detailedResults = getDetailedResults(testResults);
         
         core.summary
-            .addHeading('MATLAB Test Results')
+            .addHeading('MATLAB Test Results: ' + process.env.GITHUB_ACTION)
             .addRaw(header, true)
             .addHeading('All tests', 3)
             .addRaw(detailedResults, true)
@@ -99,7 +98,7 @@ function generateTestFileRow(file: MatlabTestFile): string {
     const statusEmoji = getStatusEmoji(file.status);
     // Always use a linux-style path for display
     const displayPath = file.path.replace(/\\/g, '/');
-    
+
     return `<tr>
                 <td>
                     <details>
