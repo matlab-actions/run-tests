@@ -3,9 +3,6 @@ import { readFileSync, unlinkSync, existsSync } from 'fs';
 import * as path from 'path';
 import * as core from "@actions/core";
 
-// doesn't have id
-// check with multiple runs in same step (what happens to duration?)
-
 export enum MatlabTestStatus {
     PASSED = 'PASSED',
     FAILED = 'FAILED',
@@ -134,13 +131,6 @@ function generateTestCaseRow(testCase: MatlabTestCase): string {
         `<td align="center">` + testCase.duration.toFixed(2) + `</td>` +
     `</tr>`;
 }
-
-// Replace characters for HTML display
-// function formatDiagnosticReport(report: string): string {
-//     return report
-//         .replace(/\n/g, '<br>')
-//         .trim();
-// }
 
 function getStatusEmoji(status: MatlabTestStatus): string {
     switch (status) {
