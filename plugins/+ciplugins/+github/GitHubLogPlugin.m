@@ -4,13 +4,13 @@ classdef GitHubLogPlugin < matlab.unittest.plugins.TestRunnerPlugin
     methods (Access=protected)
         function runTestClass(plugin, pluginData)
             % Add GitHub workflow command for starting a test output group
-            disp("::group::Class " + pluginData.TestSuite.Name);
+            disp("::group::Class " + pluginData.Name);
 
             % Invoke the superclass method
             runTestClass@matlab.unittest.plugins.TestRunnerPlugin(plugin, pluginData);
 
             % End the test output group
-           disp("::endgroup::");
+           disp("\n::endgroup::");
         end
 
         function runTest(plugin, pluginData)
@@ -21,7 +21,7 @@ classdef GitHubLogPlugin < matlab.unittest.plugins.TestRunnerPlugin
             runTest@matlab.unittest.plugins.TestRunnerPlugin(plugin, pluginData);
 
             % End the test output group
-           disp("::endgroup::");
+           disp("\n::endgroup::");
         end
     end
 end
