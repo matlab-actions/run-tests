@@ -35,19 +35,18 @@ async function run() {
     const command = "addpath('"+ pluginsPath +"');" + "import matlab.unittest.TestRunner; addpath(genpath('sample')); suite = testsuite(pwd, 'IncludeSubfolders', true); runner = TestRunner.withDefaultPlugins(); results = runner.run(suite); results = runner.run(suite); display(results); assertSuccess(results);";
     const startupOptions = core.getInput("startup-options").split(" ");
 
-    const helperScript = await core.group("Generate script", async () => {
+    // const helperScript = await core.group("Generate script", async () => {
         const helperScript = await matlab.generateScript(workspaceDir, command);
         core.info("Successfully generated script");
-        return helperScript;
-    });
+    //     return helperScript;
+    // });
 
-    await core.group("Run command", async () => {
+    // await core.group("Run command", async () => {
         await matlab.runCommand(helperScript, platform, architecture, exec.exec, startupOptions).finally(() => {
-            // buildSummary.processAndDisplayBuildSummary();
             const { testResults, stats } = testResultsSummary.getTestResults();
             testResultsSummary.writeSummary(testResults, stats);
         });
-    });
+    // });
 }
 
 run().catch((e) => {
