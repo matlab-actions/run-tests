@@ -27,7 +27,7 @@ jobs:
         with:
           source-folder: sample
           startup-options: -logfile output.log
-          code-coverage-html: test-results/code-coverage.xml
+          code-coverage-html: test-results/code-coverageHTML
 
       - name: Verify option application
         run: |
