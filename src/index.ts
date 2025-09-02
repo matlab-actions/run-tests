@@ -16,6 +16,7 @@ async function run() {
     const options: scriptgen.RunTestsOptions = {
         JUnitTestResults: core.getInput("test-results-junit"),
         CoberturaCodeCoverage: core.getInput("code-coverage-cobertura"),
+        HTMLCodeCoverage: core.getInput("code-coverage-html"),
         SourceFolder: core.getInput("source-folder"),
         PDFTestReport: core.getInput("test-results-pdf"),
         SimulinkTestResults: core.getInput("test-results-simulink-test"),

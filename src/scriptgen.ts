@@ -9,6 +9,7 @@ import * as path from "path";
 export interface RunTestsOptions {
     JUnitTestResults?: string;
     CoberturaCodeCoverage?: string;
+    HTMLCodeCoverage?: string;
     SourceFolder?: string;
     PDFTestReport?: string;
     SimulinkTestResults?: string;
@@ -32,6 +33,7 @@ export function generateCommand(options: RunTestsOptions): string {
         testScript = genscript('Test',
             'JUnitTestResults','${options.JUnitTestResults || ""}',
             'CoberturaCodeCoverage','${options.CoberturaCodeCoverage || ""}',
+            'HTMLCodeCoverage','${options.HTMLCodeCoverage || ""}',
             'SourceFolder','${options.SourceFolder || ""}',
             'PDFTestReport','${options.PDFTestReport || ""}',
             'SimulinkTestResults','${options.SimulinkTestResults || ""}',
