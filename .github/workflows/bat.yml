@@ -27,6 +27,7 @@ jobs:
         with:
           source-folder: sample
           startup-options: -logfile output.log
+          code-coverage-html: test-results/code-coverage.xml
 
       - name: Verify option application
         run: |
@@ -64,3 +65,9 @@ jobs:
             grep -q "runInParallel" console.log
             grep -q "'OutputDetail', 3" console.log
             grep -q "'LoggingLevel', 3" console.log
+      
+      - name: Upload test-results
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: test-results/
