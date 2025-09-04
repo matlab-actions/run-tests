@@ -159,6 +159,10 @@ export function getTestResults(): TestResultsData {
     const runnerTemp = process.env.RUNNER_TEMP || '';
     const resultsPath = path.join(runnerTemp, `matlabTestResults${runId}.json`);
 
+    console.log('GITHUB_RUN_ID:', runId);
+    console.log('RUNNER_TEMP:', runnerTemp);
+    console.log(`Looking for test results summary file at: ${resultsPath}`);
+
     if (existsSync(resultsPath)) {
         try {
             const testArtifact = JSON.parse(readFileSync(resultsPath, 'utf8'));

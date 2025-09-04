@@ -71,6 +71,7 @@ describe('Artifact Processing Tests', () => {
     function copyTestDataFile(osName: string) {
         const sourceFilePath = path.join(__dirname, 'test-data', 'testResultsArtifacts', 't1', osName, 'matlabTestResults.json');
         const destinationFilePath = path.join(process.env.RUNNER_TEMP!, 'matlabTestResults.json');
+        console.log(`Copying test data from ${sourceFilePath} to ${destinationFilePath}`);
         
         try {
             fs.copyFileSync(sourceFilePath, destinationFilePath);
