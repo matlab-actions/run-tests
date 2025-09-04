@@ -4,7 +4,10 @@ on: [push]
 jobs:
   bat:
     name: Build and Test
-    runs-on: [ubuntu-22.04, windows-2022, macos-12]
+    strategy:
+      matrix:
+        os: [ubuntu-22.04, windows-2022, macos-12]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
 
