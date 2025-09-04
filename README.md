@@ -4,7 +4,7 @@ The [Run MATLAB Tests](#run-matlab-tests) action enables you to run MATLAB&reg; 
 - To use a self-hosted runner, set up a computer with MATLAB on its path and register the runner with GitHub Actions. (On self-hosted UNIX&reg; runners, you can also use the **Setup MATLAB** action instead of having MATLAB already installed.) The runner uses the topmost MATLAB release on the system path to execute your workflow.
 
 ## Examples
-Use the **Run MATLAB Tests** action to automatically run tests authored using the MATLAB unit testing framework or Simulink Test&trade;. You can use this action with optional inputs to generate various test and coverage artifacts.
+Use the **Run MATLAB Tests** action to automatically run tests authored using the MATLAB unit testing framework or Simulink Test&trade;. To use the action, you need MATLAB R2013b or a later release. Some features might require newer MATLAB releases or additional toolboxes.
 
 ### Run Tests in MATLAB Project
 On a self-hosted runner that has MATLAB installed, run the tests in your [MATLAB project](https://www.mathworks.com/help/matlab/projects.html). To run the tests, specify the **Run MATLAB Tests** action in your workflow.
