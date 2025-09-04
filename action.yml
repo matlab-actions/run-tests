@@ -44,6 +44,11 @@ inputs:
       Path to write test results report in PDF format
     required: false
     default: ""
+  test-results-html:
+    description: >-
+      Path to write test results report in HTML format
+    required: false
+    default: ""
   test-results-junit:
     description: >-
       Path to write test results report in JUnit XML format

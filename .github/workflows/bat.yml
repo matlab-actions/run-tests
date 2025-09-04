@@ -27,7 +27,6 @@ jobs:
         with:
           source-folder: sample
           startup-options: -logfile output.log
-          code-coverage-html: test-results/code-coverageHTML
 
       - name: Verify option application
         run: |
@@ -50,6 +49,7 @@ jobs:
             test-results-simulink-test: test-results/simulinktest.mldatx
             model-coverage-cobertura: test-results/modelcoverage.xml
             test-results-pdf: test-results/pdf-results.pdf
+            code-coverage-html: test-results/code-coverageHTML
             select-by-folder: sample
             strict: true
             use-parallel: true
