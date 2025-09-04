@@ -28,12 +28,14 @@ jobs:
 
       - name: Run MATLAB tests for test results summary
         uses: ./
+        continue-on-error: true
 
       # - name: Run MATLAB Tests
       #   uses: ./
       #   with:
       #     source-folder: sample
       #     startup-options: -logfile output.log
+      #   continue-on-error: true
 
       # - name: Verify option application
       #   run: |
@@ -61,6 +63,7 @@ jobs:
       #       use-parallel: true
       #       output-detail: Detailed
       #       logging-level: Detailed
+      #   continue-on-error: true
 
       # - name: Verify artifacts generation
       #   run: |

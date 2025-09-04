@@ -33,7 +33,6 @@ describe('summaryGeneration', () => {
 
         // Get OS information and set paths
         const os = require('os').platform().toLowerCase();
-        console.log('Detected OS:', os);
         let osName = "";
         let workspaceParent = "";
         
@@ -56,8 +55,6 @@ describe('summaryGeneration', () => {
         const artifactFileName = 'matlabTestResults.json';
         const sourceFilePath = path.join(__dirname, 'test-data', 'testResultsArtifacts', 't1', osName, artifactFileName);
         const destinationFilePath = path.join(process.env.RUNNER_TEMP, artifactFileName);
-        console.log('Copying test data from:', sourceFilePath);
-        console.log('Copying test data to:', destinationFilePath);
 
         try {
             fs.copyFileSync(sourceFilePath, destinationFilePath);
