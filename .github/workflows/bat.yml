@@ -49,6 +49,7 @@ jobs:
             test-results-simulink-test: test-results/simulinktest.mldatx
             model-coverage-cobertura: test-results/modelcoverage.xml
             test-results-pdf: test-results/pdf-results.pdf
+            code-coverage-cobertura: test-results/code-coverageCobertura
             code-coverage-html: test-results/code-coverageHTML
             select-by-folder: sample
             strict: true
