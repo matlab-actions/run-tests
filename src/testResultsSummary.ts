@@ -3,8 +3,6 @@ import { readFileSync, unlinkSync, existsSync } from 'fs';
 import * as path from 'path';
 import * as core from "@actions/core";
 
-// keep failed test group open by default
-
 export enum MatlabTestStatus {
     PASSED = 'PASSED',
     FAILED = 'FAILED',
@@ -104,6 +102,7 @@ function generateTestFileRow(file: MatlabTestFile): string {
                         <summary>
                             <b title="` + displayPath + `">` + statusEmoji + ` ` + file.name + `</b>
                         </summary>
+                        <br>
                         <table>
                             <tr>
                             <th>Test</th>

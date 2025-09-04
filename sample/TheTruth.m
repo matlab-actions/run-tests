@@ -6,7 +6,7 @@ classdef TheTruth < matlab.unittest.TestCase
         end
 
         function testAssumptionFailure(testCase)
-            testCase.assumeTrue(1+1, 11);
+            testCase.assumeEqual(1+1, 11);
         end
 
         function testVerificationFailure(testCase)
