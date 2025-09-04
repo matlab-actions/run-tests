@@ -4,6 +4,9 @@ import { readFileSync, unlinkSync, existsSync } from 'fs';
 import * as path from 'path';
 import * as core from "@actions/core";
 
+// help section
+// sltest
+
 export enum MatlabTestStatus {
     PASSED = 'PASSED',
     FAILED = 'FAILED',
