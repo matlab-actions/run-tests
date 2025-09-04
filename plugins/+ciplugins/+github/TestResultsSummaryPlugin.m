@@ -14,6 +14,7 @@ classdef TestResultsSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
 
             % If test results artifact exists, update the same file
             testArtifactFile = fullfile(getenv("RUNNER_TEMP"),"matlabTestResults" + getenv("GITHUB_RUN_ID") + ".json");
+            disp(testArtifactFile);
             if isfile(testArtifactFile)
                 testResults = {jsondecode(fileread(testArtifactFile))};
             else
