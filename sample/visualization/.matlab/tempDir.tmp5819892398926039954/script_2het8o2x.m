@@ -1,2 +1,0 @@
-cd(getenv('MW_ORIG_WORKING_FOLDER'));
-import matlab.unittest.TestRunner;  addpath(genpath('code')); addpath(genpath('tests'));  suite = testsuite(pwd, 'IncludeSubfolders', true);  runner = TestRunner.withDefaultPlugins();  results = runner.run(suite); display(results);  assertSuccess(results);
