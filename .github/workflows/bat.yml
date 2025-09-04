@@ -30,13 +30,14 @@ jobs:
         uses: ./
         continue-on-error: true
 
-      # - name: Run MATLAB Tests
-      #   uses: ./
-      #   with:
-      #     source-folder: sample
-      #     startup-options: -logfile output.log
-      #   continue-on-error: true
+      - name: Run MATLAB Tests
+        uses: ./
+        with:
+          source-folder: sample
+          startup-options: -logfile output.log
+        continue-on-error: true
 
+      # Once new scriptgen version is live, verifications will be uncommentted before release
       # - name: Verify option application
       #   run: |
       #     set -e
@@ -44,27 +45,28 @@ jobs:
       #     grep "Done TheTruth" output.log
       #     grep "1 Passed" output.log
         
-      # - name: Generate Model
-      #   uses: matlab-actions/run-command@v2
-      #   with: 
-      #       command: cd('sample'),createSampleModel('temp_model'),sltest.testmanager.createTestsFromModel('sltestfile', 'temp_model');
+      - name: Generate Model
+        uses: matlab-actions/run-command@v2
+        with: 
+            command: cd('sample'),createSampleModel('temp_model'),sltest.testmanager.createTestsFromModel('sltestfile', 'temp_model');
 
-      # - name: Set up diary for logging
-      #   run: echo 'diary console.log' >> startup.m
+      - name: Set up diary for logging
+        run: echo 'diary console.log' >> startup.m
 
-      # - name: Run run-test command
-      #   uses: ./
-      #   with:
-      #       test-results-simulink-test: test-results/simulinktest.mldatx
-      #       model-coverage-cobertura: test-results/modelcoverage.xml
-      #       test-results-pdf: test-results/pdf-results.pdf
-      #       select-by-folder: sample
-      #       strict: true
-      #       use-parallel: true
-      #       output-detail: Detailed
-      #       logging-level: Detailed
-      #   continue-on-error: true
+      - name: Run run-test command
+        uses: ./
+        with:
+            test-results-simulink-test: test-results/simulinktest.mldatx
+            model-coverage-cobertura: test-results/modelcoverage.xml
+            test-results-pdf: test-results/pdf-results.pdf
+            select-by-folder: sample
+            strict: true
+            use-parallel: true
+            output-detail: Detailed
+            logging-level: Detailed
+        continue-on-error: true
 
+      # Once new scriptgen version is live, verifications will be updated before release
       # - name: Verify artifacts generation
       #   run: |
       #       (test -f test-results/simulinktest.mldatx) || (echo "File simulinktest.mldatx does not exist" && exit 1)

@@ -1,4 +1,5 @@
 // Copyright 2025 The MathWorks, Inc.
+
 import { readFileSync, unlinkSync, existsSync } from 'fs';
 import * as path from 'path';
 import * as core from "@actions/core";
@@ -60,7 +61,7 @@ export function writeSummary(testResults: MatlabTestFile[][], stats: TestStatist
     }
 }
 
-function getTestHeader(testResults: MatlabTestFile[][], stats: TestStatistics): string {
+export function getTestHeader(testResults: MatlabTestFile[][], stats: TestStatistics): string {
     return `<table>
                 <tr align="center">
                     <th>Total tests</th>
@@ -81,7 +82,7 @@ function getTestHeader(testResults: MatlabTestFile[][], stats: TestStatistics): 
             </table>`;
 }
 
-function getDetailedResults(testResults: MatlabTestFile[][]): string {
+export function getDetailedResults(testResults: MatlabTestFile[][]): string {
     return `<table>
                 <tr>
                     <th>Test File</th>
@@ -113,7 +114,9 @@ function generateTestFileRow(file: MatlabTestFile): string {
                         `</table>
                     </details>
                 </td>
-                <td align="center" valign="top"><b>` + file.duration.toFixed(2) + `</b></td>
+                <td align="center" valign="top">` +
+                    `<b>` + file.duration.toFixed(2) + `</b>` +
+                `</td>
             </tr>`;
 }
 
@@ -123,7 +126,9 @@ function generateTestCaseRow(testCase: MatlabTestCase): string {
         ? testCase.diagnostics.map(diagnostic => 
             `<details>` +
                 `<summary>` + diagnostic.event + `</summary>` +
-                `<pre style="font-family: monospace; white-space: pre;">` + diagnostic.report.replace(/\n/g, '<br>').trim() + `</pre>` +
+                `<pre style="font-family: monospace; white-space: pre;">` +
+                    diagnostic.report.replace(/\n/g, '<br>').trim() +
+                `</pre>` +
             `</details>`
         ).join('')
         : '';
@@ -135,7 +140,7 @@ function generateTestCaseRow(testCase: MatlabTestCase): string {
     `</tr>`;
 }
 
-function getStatusEmoji(status: MatlabTestStatus): string {
+export function getStatusEmoji(status: MatlabTestStatus): string {
     switch (status) {
         case MatlabTestStatus.PASSED: return '✅';
         case MatlabTestStatus.FAILED: return '❌';
@@ -170,7 +175,6 @@ export function getTestResults(): TestResultsData {
             }
         } catch (e) {
             console.error('An error occurred while reading the test results summary file ${resultsPath}:', e);
-            // return;
         } finally {
             try {
                 unlinkSync(resultsPath);
