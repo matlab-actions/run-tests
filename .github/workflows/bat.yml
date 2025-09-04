@@ -1,22 +1,37 @@
 name: Build and Test
 on: [push]
+permissions:
+  contents: read
 
 jobs:
   bat:
     name: Build and Test
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: 20
       - name: Perform npm tasks
         run: npm run ci
+      - uses: actions/upload-artifact@v4
+        with:
+          name: built-action
+          path: |
+            **/*
+            !node_modules/
 
+  integ:
+    needs: bat
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest, macos-14]
+    steps:
+      - uses: actions/download-artifact@v5
+        with:
+          name: built-action
       - name: Perform 'setup-matlab'
         uses: matlab-actions/setup-matlab@v2
         with:
@@ -25,54 +40,44 @@ jobs:
             Simulink
             Simulink_Test
             Simulink_Coverage
-
-      - name: Run MATLAB tests for test results summary
-        uses: ./
-        continue-on-error: true
-
       - name: Run MATLAB Tests
         uses: ./
         with:
           source-folder: sample
           startup-options: -logfile output.log
         continue-on-error: true
-
-      # Once new scriptgen version is live, verifications will be uncommentted before release
       # - name: Verify option application
       #   run: |
       #     set -e
       #     grep "Running TheTruth" output.log
       #     grep "Done TheTruth" output.log
       #     grep "1 Passed" output.log
-        
+      #   shell: bash
       - name: Generate Model
         uses: matlab-actions/run-command@v2
         with: 
-            command: cd('sample'),createSampleModel('temp_model'),sltest.testmanager.createTestsFromModel('sltestfile', 'temp_model');
-
+          command: cd('sample'),createSampleModel('temp_model'),sltest.testmanager.createTestsFromModel('sltestfile', 'temp_model');
       - name: Set up diary for logging
         run: echo 'diary console.log' >> startup.m
-
       - name: Run run-test command
         uses: ./
         with:
-            test-results-simulink-test: test-results/simulinktest.mldatx
-            model-coverage-cobertura: test-results/modelcoverage.xml
-            test-results-pdf: test-results/pdf-results.pdf
-            select-by-folder: sample
-            strict: true
-            use-parallel: true
-            output-detail: Detailed
-            logging-level: Detailed
+          test-results-simulink-test: test-results/simulinktest.mldatx
+          model-coverage-cobertura: test-results/modelcoverage.xml
+          test-results-pdf: test-results/pdf-results.pdf
+          select-by-folder: sample
+          strict: true
+          use-parallel: true
+          output-detail: Detailed
+          logging-level: Detailed
         continue-on-error: true
-
-      # Once new scriptgen version is live, verifications will be updated before release
       # - name: Verify artifacts generation
       #   run: |
-      #       (test -f test-results/simulinktest.mldatx) || (echo "File simulinktest.mldatx does not exist" && exit 1)
-      #       (test -f test-results/modelcoverage.xml) || (echo "File modelcoverage.xml does not exist" && exit 1)
-      #       (test -f test-results/pdf-results.pdf) || (echo "File pdf-results.pdf does not exist" && exit 1)
-      #       grep -q "runner.addPlugin(FailOnWarningsPlugin())" console.log
-      #       grep -q "runInParallel" console.log
-      #       grep -q "'OutputDetail', 3" console.log
-      #       grep -q "'LoggingLevel', 3" console.log
+      #     (test -f test-results/simulinktest.mldatx) || (echo "File simulinktest.mldatx does not exist" && exit 1)
+      #     (test -f test-results/modelcoverage.xml) || (echo "File modelcoverage.xml does not exist" && exit 1)
+      #     (test -f test-results/pdf-results.pdf) || (echo "File pdf-results.pdf does not exist" && exit 1)
+      #     grep -q "runner.addPlugin(FailOnWarningsPlugin())" console.log
+      #     grep -q "runInParallel" console.log
+      #     grep -q "'OutputDetail', 3" console.log
+      #     grep -q "'LoggingLevel', 3" console.log
+      #   shell: bash
