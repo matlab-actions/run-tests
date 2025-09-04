@@ -17,10 +17,19 @@ describe('summaryGeneration', () => {
     let testResults: testResultsSummary.MatlabTestFile[][];
     let stats: testResultsSummary.TestStatistics;
 
+    let originalRunnerTemp: string | undefined;
+    let originalGithubRunId: string | undefined;
+    let originalGithubWorkspace: string | undefined;
+
     beforeAll(() => {
-        // Set environment variables before all tests
-        // process.env.RUNNER_TEMP = './';
-        // process.env.GITHUB_RUN_ID = '';
+        // Store original values before modifying them
+        originalRunnerTemp = process.env.RUNNER_TEMP;
+        originalGithubRunId = process.env.GITHUB_RUN_ID;
+        originalGithubWorkspace = process.env.GITHUB_WORKSPACE;
+
+        // Set environment variables for tests
+        process.env.RUNNER_TEMP = path.join(__dirname, '..');
+        process.env.GITHUB_RUN_ID = '';
 
         // Get OS information and set paths
         const os = require('os').platform().toLowerCase();
@@ -45,10 +54,10 @@ describe('summaryGeneration', () => {
         // Copy test data file to the expected location
         const artifactFileName = 'matlabTestResults.json';
         const sourceFilePath = path.join(__dirname, 'test-data', 'testResultsArtifacts', 't1', osName, artifactFileName);
-        const destinationFilePath = path.join(__dirname, '..', artifactFileName);
+        const destinationFilePath = path.join(process.env.RUNNER_TEMP, artifactFileName);
         console.log('Copying test data from:', sourceFilePath);
         console.log('Copying test data to:', destinationFilePath);
-        
+
         try {
             fs.copyFileSync(sourceFilePath, destinationFilePath);
         } catch (err) {
@@ -62,10 +71,10 @@ describe('summaryGeneration', () => {
     });
 
     afterAll(() => {
-        // Clean up environment variables after all tests
-    //     delete process.env.RUNNER_TEMP;
-    //     delete process.env.GITHUB_RUN_ID;
-        delete process.env.GITHUB_WORKSPACE;
+        // Restore original environment variable values
+        process.env.RUNNER_TEMP = originalRunnerTemp;
+        process.env.GITHUB_RUN_ID = originalGithubRunId;
+        process.env.GITHUB_WORKSPACE = originalGithubWorkspace;
     });
 
     it('should return correct test results data for valid JSON', () => {        
