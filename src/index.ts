@@ -21,6 +21,7 @@ async function run() {
         PDFTestReport: core.getInput("test-results-pdf"),
         SimulinkTestResults: core.getInput("test-results-simulink-test"),
         CoberturaModelCoverage: core.getInput("model-coverage-cobertura"),
+        HTMLModelCoverage: core.getInput("model-coverage-html"),
         SelectByTag: core.getInput("select-by-tag"),
         SelectByFolder: core.getInput("select-by-folder"),
         Strict: core.getBooleanInput("strict"),

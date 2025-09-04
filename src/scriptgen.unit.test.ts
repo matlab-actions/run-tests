@@ -12,6 +12,7 @@ describe("command generation", () => {
             PDFTestReport: "",
             SimulinkTestResults: "",
             CoberturaModelCoverage: "",
+            HTMLModelCoverage: "",
             SelectByTag: "",
             SelectByFolder: "",
             Strict: false,
@@ -30,6 +31,7 @@ describe("command generation", () => {
         expect(actual.includes("'PDFTestReport',''")).toBeTruthy();
         expect(actual.includes("'SimulinkTestResults',''")).toBeTruthy();
         expect(actual.includes("'CoberturaModelCoverage',''")).toBeTruthy();
+        expect(actual.includes("'HTMLModelCoverage',''")).toBeTruthy();
         expect(actual.includes("'SelectByTag',''")).toBeTruthy();
         expect(actual.includes("'SelectByFolder',''")).toBeTruthy();
         expect(actual.includes("'Strict',false")).toBeTruthy();
@@ -39,7 +41,7 @@ describe("command generation", () => {
 
         const expected = `genscript('Test', 'JUnitTestResults','', 'CoberturaCodeCoverage','', 'HTMLCodeCoverage','', 
         'SourceFolder','', 'PDFTestReport','', 'SimulinkTestResults','', 
-        'CoberturaModelCoverage','', 'SelectByTag','', 'SelectByFolder','', 
+        'CoberturaModelCoverage','', 'HTMLModelCoverage','', 'SelectByTag','', 'SelectByFolder','', 
         'Strict',false, 'UseParallel',false, 'OutputDetail','', 'LoggingLevel','')`
         .replace(/\s+/g, "");
         expect(actual.replace(/\s+/g, "").includes(expected)).toBeTruthy();
@@ -54,6 +56,7 @@ describe("command generation", () => {
             PDFTestReport: "test-results/pdf-results.pdf",
             SimulinkTestResults: "test-results/simulinkTest.mldatx",
             CoberturaModelCoverage: "test-results/modelcoverage.xml",
+            HTMLModelCoverage: "test-results/modelcoverage.html",
             SelectByTag: "FeatureA",
             SelectByFolder: "test/tools;test/toolbox",
             Strict: true,
@@ -80,6 +83,9 @@ describe("command generation", () => {
         expect(
             actual.includes("'CoberturaModelCoverage','test-results/modelcoverage.xml'")
         ).toBeTruthy();
+        expect(
+            actual.includes("'HTMLModelCoverage','test-results/modelcoverage.html'")
+        ).toBeTruthy();
         expect(actual.includes("'SelectByTag','FeatureA'")).toBeTruthy();
         expect(actual.includes("'SelectByFolder','test/tools;test/toolbox'")).toBeTruthy();
         expect(actual.includes("'Strict',true")).toBeTruthy();
@@ -90,7 +96,7 @@ describe("command generation", () => {
         const expected = `genscript('Test', 'JUnitTestResults','test-results/results.xml', 
         'CoberturaCodeCoverage','code-coverage/coverage.xml','HTMLCodeCoverage','code-coverage/HTMLcoverage.html', 'SourceFolder','source',
          'PDFTestReport','test-results/pdf-results.pdf', 'SimulinkTestResults','test-results/simulinkTest.mldatx',
-          'CoberturaModelCoverage','test-results/modelcoverage.xml', 'SelectByTag','FeatureA', 
+          'CoberturaModelCoverage','test-results/modelcoverage.xml', 'HTMLModelCoverage','test-results/modelcoverage.html', 'SelectByTag','FeatureA', 
           'SelectByFolder','test/tools;test/toolbox', 'Strict',true, 'UseParallel',true, 'OutputDetail','Detailed', 
           'LoggingLevel','Detailed' )`.replace(/\s+/g, "");
         expect(actual.replace(/\s+/g, "").includes(expected)).toBeTruthy();
