@@ -6,7 +6,7 @@ jobs:
     name: Build and Test
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, windows-2025, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -15,7 +15,24 @@ jobs:
         with:
           node-version: 20
       - name: Perform npm tasks
-        run: npm run ci
+        run: |
+          npm run ci
+          echo "Checking if binaries were downloaded..."
+          ls -la dist/bin/ || dir dist\bin\ /s
+        shell: bash
+
+      - name: Check binary permissions (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          if (Test-Path "dist\bin\win64\run-matlab-command.exe") {
+            Write-Host "Binary exists, checking permissions..."
+            Get-Acl "dist\bin\win64\run-matlab-command.exe" | Format-List
+          } else {
+            Write-Host "Binary does not exist!"
+            Write-Host "Contents of dist\bin\:"
+            Get-ChildItem -Recurse dist\bin\ -ErrorAction SilentlyContinue
+          }
+        shell: pwsh
 
       - name: Perform 'setup-matlab'
         uses: matlab-actions/setup-matlab@v2
