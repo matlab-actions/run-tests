@@ -3,6 +3,8 @@ import { readFileSync, unlinkSync, existsSync } from 'fs';
 import * as path from 'path';
 import * as core from "@actions/core";
 
+// keep failed test group open by default
+
 export enum MatlabTestStatus {
     PASSED = 'PASSED',
     FAILED = 'FAILED',
@@ -22,7 +24,7 @@ interface MatlabTestCase {
     diagnostics: MatlabTestDiagnostics[];
 }
 
-interface MatlabTestFile {
+export interface MatlabTestFile {
     name: string;
     path: string;
     testCases: MatlabTestCase[];
@@ -30,7 +32,7 @@ interface MatlabTestFile {
     status: MatlabTestCase['status'];
 }
 
-interface TestStatistics {
+export interface TestStatistics {
     total: number;
     passed: number;
     failed: number;
@@ -64,10 +66,10 @@ function getTestHeader(testResults: MatlabTestFile[][], stats: TestStatistics): 
     return `<table>
                 <tr align="center">
                     <th>Total tests</th>
-                    <th>Passed ✅</th>
-                    <th>Failed ❌</th>
-                    <th>Incomplete ⚠️</th>
-                    <th>Not Run 🚫</th>
+                    <th>Passed ` + getStatusEmoji(MatlabTestStatus.PASSED) + `</th>
+                    <th>Failed ` + getStatusEmoji(MatlabTestStatus.FAILED) + `</th>
+                    <th>Incomplete ` + getStatusEmoji(MatlabTestStatus.INCOMPLETE) + `</th>
+                    <th>Not Run ` + getStatusEmoji(MatlabTestStatus.NOT_RUN) + `</th>
                     <th>Duration(s) ⌛</th>
                 </tr>
                 <tr align="center">
@@ -98,8 +100,10 @@ function generateTestFileRow(file: MatlabTestFile): string {
 
     return `<tr>
                 <td>
-                    <details>
-                        <summary><b title="` + displayPath + `">` + statusEmoji + ` ` + file.name + `</b></summary>
+                    <details` + (file.status !== MatlabTestStatus.PASSED ? ` open` : ``) + `>
+                        <summary>
+                            <b title="` + displayPath + `">` + statusEmoji + ` ` + file.name + `</b>
+                        </summary>
                         <table>
                             <tr>
                             <th>Test</th>

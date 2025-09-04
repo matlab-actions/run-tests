@@ -4,7 +4,7 @@ on: [push]
 jobs:
   bat:
     name: Build and Test
-    runs-on: ubuntu-22.04
+    runs-on: [ubuntu-22.04, windows-2022, macos-12]
     steps:
       - uses: actions/checkout@v4
 
