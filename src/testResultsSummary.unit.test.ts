@@ -33,10 +33,11 @@ describe('summaryGeneration', () => {
 
         // Get OS information and set paths
         const os = require('os').platform().toLowerCase();
+        console.log('Detected OS:', os);
         let osName = "";
         let workspaceParent = "";
         
-        if (os.includes("win")) {
+        if (os.includes("win") && !os.includes("darwin")) {
             osName = "windows";
             workspaceParent = "C:\\";
         } else if (os.includes("linux") || os.includes("unix") || os.includes("aix")) {
