@@ -50,6 +50,7 @@ jobs:
           grep "Running TheTruth" output.log
           grep "Done TheTruth" output.log
           grep "1 Passed" output.log
+        shell: bash
       - name: Generate Model
         uses: matlab-actions/run-command@v2
         with: 
@@ -76,3 +77,4 @@ jobs:
             grep -q "runInParallel" console.log
             grep -q "'OutputDetail', 3" console.log
             grep -q "'LoggingLevel', 3" console.log
+        shell: bash
