@@ -62,7 +62,7 @@ describe('Artifact Processing Tests', () => {
 
     function getOSInfo() {
         const os = require('os').platform().toLowerCase();
-        if (os.includes("win")) return { osName: "windows", workspaceParent: "C:\\" };
+        if (os.includes("win") && !os.includes("darwin")) return { osName: "windows", workspaceParent: "C:\\" };
         if (os.includes("linux") || os.includes("unix") || os.includes("aix")) return { osName: "linux", workspaceParent: "/home/user/" };
         if (os.includes("darwin")) return { osName: "mac", workspaceParent: "/Users/username/" };
         throw new Error(`Unsupported OS: ${os}`);
