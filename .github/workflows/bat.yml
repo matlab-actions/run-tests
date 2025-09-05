@@ -52,6 +52,7 @@ jobs:
             code-coverage-cobertura: test-results/coverage.xml
             code-coverage-html: test-results/code-coverageHTML
             test-results-junit: test-results/results.xml
+            mode-coverage-html: test-results/modelcoverage.html
             select-by-folder: sample
             strict: true
             use-parallel: true
