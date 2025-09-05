@@ -51,7 +51,7 @@ jobs:
             test-results-pdf: test-results/pdf-results.pdf
             test-results-junit: test-results/results.xml
             code-coverage-cobertura: test-results/coverage.xml
-            code-coverage-html: test-results/code-coverageHTML
+            code-coverage-html: test-results/codecoverageHTML
             model-coverage-html: test-results/modelcoverageHTML
             test-results-html: test-results/resultsHTML
             select-by-folder: sample
@@ -67,7 +67,7 @@ jobs:
             (test -f test-results/pdf-results.pdf) || (echo "File pdf-results.pdf does not exist" && exit 1)
             (test -f test-results/results.xml) || (echo "File results.xml does not exist" && exit 1)
             (test -f test-results/coverage.xml) || (echo "File coverage.xml does not exist" && exit 1)
-            (test -d test-results/code-coverageHTML) || (echo "Directory code-coverageHTML does not exist" && exit 1)
+            (test -d test-results/codecoverageHTML) || (echo "Directory codecoverageHTML does not exist" && exit 1)
             (test -d test-results/modelcoverageHTML) || (echo "Directory modelcoverageHTML does not exist" && exit 1)
             (test -d test-results/resultsHTML) || (echo "Directory resultsHTML does not exist" && exit 1)
             grep -q "runner.addPlugin(FailOnWarningsPlugin())" console.log
@@ -75,8 +75,3 @@ jobs:
             grep -q "'OutputDetail', 3" console.log
             grep -q "'LoggingLevel', 3" console.log
       
-      - name: Upload test-results
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-results
-          path: test-results/
