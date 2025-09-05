@@ -53,7 +53,7 @@ describe("command generation", () => {
         const options: scriptgen.RunTestsOptions = {
             JUnitTestResults: "test-results/results.xml",
             CoberturaCodeCoverage: "code-coverage/coverage.xml",
-            HTMLCodeCoverage: "code-coverage/HTMLcoverage.html",
+            HTMLCodeCoverage: "code-coverage/coverage.html",
             SourceFolder: "source",
             PDFTestReport: "test-results/pdf-results.pdf",
             HTMLTestReport: "test-results/html-results.html",
@@ -76,7 +76,7 @@ describe("command generation", () => {
             actual.includes("'CoberturaCodeCoverage','code-coverage/coverage.xml'")
         ).toBeTruthy();
         expect(
-            actual.includes("'HTMLCodeCoverage','code-coverage/HTMLcoverage.html'")
+            actual.includes("'HTMLCodeCoverage','code-coverage/coverage.html'")
         ).toBeTruthy();
         expect(actual.includes("'SourceFolder','source'")).toBeTruthy();
         expect(actual.includes("'PDFTestReport','test-results/pdf-results.pdf'")).toBeTruthy();
@@ -97,12 +97,23 @@ describe("command generation", () => {
         expect(actual.includes("'OutputDetail','Detailed'")).toBeTruthy();
         expect(actual.includes("'LoggingLevel','Detailed'")).toBeTruthy();
 
-        const expected = `genscript('Test', 'JUnitTestResults','test-results/results.xml', 
-        'CoberturaCodeCoverage','code-coverage/coverage.xml','HTMLCodeCoverage','code-coverage/HTMLcoverage.html', 'SourceFolder','source',
-         'PDFTestReport','test-results/pdf-results.pdf', 'HTMLTestReport','test-results/html-results.html', 'SimulinkTestResults','test-results/simulinkTest.mldatx',
-          'CoberturaModelCoverage','test-results/modelcoverage.xml', 'HTMLModelCoverage','test-results/modelcoverage.html', 'SelectByTag','FeatureA', 
-          'SelectByFolder','test/tools;test/toolbox', 'Strict',true, 'UseParallel',true, 'OutputDetail','Detailed', 
-          'LoggingLevel','Detailed' )`.replace(/\s+/g, "");
+        const expected = `genscript('Test', 
+        'JUnitTestResults','test-results/results.xml', 
+        'CoberturaCodeCoverage','code-coverage/coverage.xml',
+        'HTMLCodeCoverage','code-coverage/coverage.html', 
+        'SourceFolder','source',
+        'PDFTestReport','test-results/pdf-results.pdf', 
+        'HTMLTestReport','test-results/html-results.html', 
+        'SimulinkTestResults','test-results/simulinkTest.mldatx',
+        'CoberturaModelCoverage','test-results/modelcoverage.xml', 
+        'HTMLModelCoverage','test-results/modelcoverage.html', 
+        'SelectByTag','FeatureA', 
+        'SelectByFolder','test/tools;test/toolbox', 
+        'Strict',true, 
+        'UseParallel',true, 
+        'OutputDetail','Detailed', 
+        'LoggingLevel','Detailed' )`
+        .replace(/\s+/g, "");
         expect(actual.replace(/\s+/g, "").includes(expected)).toBeTruthy();
     });
 });
