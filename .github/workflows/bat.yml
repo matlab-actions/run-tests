@@ -67,9 +67,9 @@ jobs:
             (test -f test-results/pdf-results.pdf) || (echo "File pdf-results.pdf does not exist" && exit 1)
             (test -f test-results/results.xml) || (echo "File results.xml does not exist" && exit 1)
             (test -f test-results/coverage.xml) || (echo "File coverage.xml does not exist" && exit 1)
-            (test -f test-results/code-coverageHTML) || (echo "File code-coverageHTML does not exist" && exit 1)
-            (test -f test-results/modelcoverageHTML) || (echo "File modelcoverageHTML does not exist" && exit 1)
-            (test -f test-results/resultsHTML) || (echo "File resultsHTML does not exist" && exit 1)
+            (test -d test-results/code-coverageHTML) || (echo "Directory code-coverageHTML does not exist" && exit 1)
+            (test -d test-results/modelcoverageHTML) || (echo "Directory modelcoverageHTML does not exist" && exit 1)
+            (test -d test-results/resultsHTML) || (echo "Directory resultsHTML does not exist" && exit 1)
             grep -q "runner.addPlugin(FailOnWarningsPlugin())" console.log
             grep -q "runInParallel" console.log
             grep -q "'OutputDetail', 3" console.log
