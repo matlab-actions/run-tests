@@ -138,8 +138,24 @@ describe('Artifact Processing Tests', () => {
         testResultsSummary.writeSummary(testResults, stats);
 
         expect(core.summary.addHeading).toHaveBeenCalledTimes(2);
-        expect(core.summary.addHeading).toHaveBeenNthCalledWith(1, 'MATLAB Test Results (' + process.env.GITHUB_ACTION + ')');
+        expect(core.summary.addHeading).toHaveBeenNthCalledWith(
+            1, 
+            expect.stringContaining('MATLAB Test Results')
+        );
+        expect(core.summary.addHeading).toHaveBeenNthCalledWith(
+            1, 
+            expect.stringContaining('<a href="https://github.com/matlab-actions/run-tests/blob/main/README.md"')
+        );
+        expect(core.summary.addHeading).toHaveBeenNthCalledWith(
+            1, 
+            expect.stringContaining('target="_blank"')
+        );
+        expect(core.summary.addHeading).toHaveBeenNthCalledWith(
+            1, 
+            expect.stringContaining('ℹ️</a>')
+        );
         expect(core.summary.addHeading).toHaveBeenNthCalledWith(2, 'All tests', 3);
+
         expect(core.summary.addRaw).toHaveBeenCalledTimes(2);
         expect(core.summary.write).toHaveBeenCalledTimes(1);
     });

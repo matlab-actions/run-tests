@@ -48,7 +48,7 @@ interface TestResultsData {
 export function writeSummary(testResults: MatlabTestFile[][], stats: TestStatistics) {
     try {
         const helpLink = `<a href="https://github.com/matlab-actions/run-tests/blob/main/README.md"` +
-            `target="_blank" title="View documentation">ℹ️</a>`;
+            ` target="_blank" title="View documentation">ℹ️</a>`;
         const header = getTestHeader(testResults, stats);
         const detailedResults = getDetailedResults(testResults);
         
