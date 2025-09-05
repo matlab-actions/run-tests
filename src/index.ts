@@ -32,7 +32,7 @@ async function run() {
 
     // Once new scriptgen version is live, line 34-44 will be updated before release
     // const command = scriptgen.generateCommand(options);
-    const pluginsPath = path.join(__dirname, "plugins").replace("'","''");
+    const pluginsPath = path.join(__dirname, "plugins").relpaceAll("'","''");
     const command = "addpath('"+ pluginsPath +"');" +
         "import matlab.unittest.TestRunner;" +
         "addpath(genpath('sample'));" +

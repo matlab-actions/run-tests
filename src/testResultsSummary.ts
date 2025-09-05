@@ -47,11 +47,13 @@ interface TestResultsData {
 
 export function writeSummary(testResults: MatlabTestFile[][], stats: TestStatistics) {
     try {
+        const helpLink = `<a href="https://github.com/matlab-actions/run-tests/blob/main/README.md"` +
+            `target="_blank" title="View documentation">ℹ️</a>`;
         const header = getTestHeader(testResults, stats);
         const detailedResults = getDetailedResults(testResults);
         
         core.summary
-            .addHeading('MATLAB Test Results (' + process.env.GITHUB_ACTION + ')')
+            .addHeading('MATLAB Test Results (' + process.env.GITHUB_ACTION + ') ' + helpLink)
             .addRaw(header, true)
             .addHeading('All tests', 3)
             .addRaw(detailedResults, true)
