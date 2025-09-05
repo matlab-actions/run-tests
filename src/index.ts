@@ -4,6 +4,8 @@ import * as core from "@actions/core";
 import * as exec from "@actions/exec";
 import { matlab } from "run-matlab-command-action";
 import * as scriptgen from "./scriptgen";
+import * as testResultsSummary from "./testResultsSummary";
+import * as path from "path";
 
 /**
  * Gather action inputs and then run action.
@@ -28,17 +30,25 @@ async function run() {
         LoggingLevel: core.getInput("logging-level"),
     };
 
-    const command = scriptgen.generateCommand(options);
+    const pluginsPath = path.join(__dirname, "plugins").replaceAll("'","''");
+    const command = "addpath('"+ pluginsPath +"'); " + scriptgen.generateCommand(options);
+    // TODO: Remove these lines before merging to main branch
+    //     "import matlab.unittest.TestRunner;" +
+    //     "addpath(genpath('sample'));" +
+    //     "suite = testsuite(pwd, 'IncludeSubfolders', true);" +
+    //     "runner = TestRunner.withDefaultPlugins();" +
+    //     "results = runner.run(suite);" +
+    //     "results = runner.run(suite);" +
+    //     "display(results);" +
+    //     "assertSuccess(results);";
     const startupOptions = core.getInput("startup-options").split(" ");
 
-    const helperScript = await core.group("Generate script", async () => {
-        const helperScript = await matlab.generateScript(workspaceDir, command);
-        core.info("Successfully generated script");
-        return helperScript;
-    });
+    const helperScript = await matlab.generateScript(workspaceDir, command);
+    core.info("Successfully generated test script!");
 
-    await core.group("Run command", async () => {
-        await matlab.runCommand(helperScript, platform, architecture, exec.exec, startupOptions);
+    await matlab.runCommand(helperScript, platform, architecture, exec.exec, startupOptions).finally(() => {
+        const { testResults, stats } = testResultsSummary.getTestResults();
+        testResultsSummary.writeSummary(testResults, stats);
     });
 }
 
