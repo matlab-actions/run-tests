@@ -30,18 +30,17 @@ async function run() {
         LoggingLevel: core.getInput("logging-level"),
     };
 
-    // Once new scriptgen version is live, line 34-44 will be updated before release
-    // const command = scriptgen.generateCommand(options);
     const pluginsPath = path.join(__dirname, "plugins").replaceAll("'","''");
-    const command = "addpath('"+ pluginsPath +"');" +
-        "import matlab.unittest.TestRunner;" +
-        "addpath(genpath('sample'));" +
-        "suite = testsuite(pwd, 'IncludeSubfolders', true);" +
-        "runner = TestRunner.withDefaultPlugins();" +
-        "results = runner.run(suite);" +
-        "results = runner.run(suite);" +
-        "display(results);" +
-        "assertSuccess(results);";
+    const command = "addpath('"+ pluginsPath +"'); " + scriptgen.generateCommand(options);
+    // TODO: Remove these lines before merging to main branch
+    //     "import matlab.unittest.TestRunner;" +
+    //     "addpath(genpath('sample'));" +
+    //     "suite = testsuite(pwd, 'IncludeSubfolders', true);" +
+    //     "runner = TestRunner.withDefaultPlugins();" +
+    //     "results = runner.run(suite);" +
+    //     "results = runner.run(suite);" +
+    //     "display(results);" +
+    //     "assertSuccess(results);";
     const startupOptions = core.getInput("startup-options").split(" ");
 
     const helperScript = await matlab.generateScript(workspaceDir, command);

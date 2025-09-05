@@ -46,13 +46,13 @@ jobs:
           source-folder: sample
           startup-options: -logfile output.log
         continue-on-error: true
-      # - name: Verify option application
-      #   run: |
-      #     set -e
-      #     grep "Running TheTruth" output.log
-      #     grep "Done TheTruth" output.log
-      #     grep "1 Passed" output.log
-      #   shell: bash
+      - name: Verify option application
+        run: |
+          set -e
+          grep "Running TheTruth" output.log
+          grep "Done TheTruth" output.log
+          grep "1 Passed" output.log
+        shell: bash
       - name: Generate Model
         uses: matlab-actions/run-command@v2
         with: 
@@ -71,13 +71,13 @@ jobs:
           output-detail: Detailed
           logging-level: Detailed
         continue-on-error: true
-      # - name: Verify artifacts generation
-      #   run: |
-      #     (test -f test-results/simulinktest.mldatx) || (echo "File simulinktest.mldatx does not exist" && exit 1)
-      #     (test -f test-results/modelcoverage.xml) || (echo "File modelcoverage.xml does not exist" && exit 1)
-      #     (test -f test-results/pdf-results.pdf) || (echo "File pdf-results.pdf does not exist" && exit 1)
-      #     grep -q "runner.addPlugin(FailOnWarningsPlugin())" console.log
-      #     grep -q "runInParallel" console.log
-      #     grep -q "'OutputDetail', 3" console.log
-      #     grep -q "'LoggingLevel', 3" console.log
-      #   shell: bash
+      - name: Verify artifacts generation
+        run: |
+          (test -f test-results/simulinktest.mldatx) || (echo "File simulinktest.mldatx does not exist" && exit 1)
+          (test -f test-results/modelcoverage.xml) || (echo "File modelcoverage.xml does not exist" && exit 1)
+          (test -f test-results/pdf-results.pdf) || (echo "File pdf-results.pdf does not exist" && exit 1)
+          grep -q "runner.addPlugin(FailOnWarningsPlugin())" console.log
+          grep -q "runInParallel" console.log
+          grep -q "'OutputDetail', 3" console.log
+          grep -q "'LoggingLevel', 3" console.log
+        shell: bash

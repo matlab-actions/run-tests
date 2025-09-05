@@ -1,6 +1,9 @@
 #!/bin/bash
 
-SCRIPTGEN_URL='https://ssd.mathworks.com/supportfiles/ci/matlab-script-generator/v0/matlab-script-generator.zip'
+# Temporarily using a snapshot build of scriptgen until the official release is available
+# TODO: Before merging to main branch, Update to official release URL when available
+# SCRIPTGEN_URL='https://ssd.mathworks.com/supportfiles/ci/matlab-script-generator/v0/matlab-script-generator.zip'
+SCRIPTGEN_URL='https://mw-ci-static-dev.s3.us-east-1.amazonaws.com/matlab-script-generator/v0/matlab-script-generator-0.13.0-SNAPSHOT.zip'
 RMC_BASE_URL='https://ssd.mathworks.com/supportfiles/ci/run-matlab-command/v2'
 SUPPORTED_OS=('win64' 'maci64' 'maca64' 'glnxa64')
 
