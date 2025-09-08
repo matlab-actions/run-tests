@@ -41,17 +41,17 @@ inputs:
     default: ""
   test-results-pdf:
     description: >-
-      Path to write test results report in PDF format
+      Path to write test results in PDF format
     required: false
     default: ""
   test-results-html:
     description: >-
-      Path to write test results report in HTML format
+      Path to write test results in HTML format
     required: false
     default: ""
   test-results-junit:
     description: >-
-      Path to write test results report in JUnit XML format
+      Path to write test results in JUnit-style XML format
     required: false
     default: ""
   test-results-simulink-test:
@@ -66,7 +66,7 @@ inputs:
     default: ""
   code-coverage-html:
     description: >-
-      Path to write code coverage report in HTML format
+      Path to write code coverage results in HTML format
     required: false
     default: ""
   model-coverage-cobertura:
@@ -76,7 +76,7 @@ inputs:
     default: ""
   model-coverage-html:
     description: >-
-      Path to write model coverage report in HTML format
+      Path to write model coverage results in HTML format
     required: false
     default: ""
   startup-options:

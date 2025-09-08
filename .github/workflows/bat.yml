@@ -65,9 +65,9 @@ jobs:
             test-results-pdf: test-results/pdf-results.pdf
             test-results-junit: test-results/results.xml
             code-coverage-cobertura: test-results/coverage.xml
-            code-coverage-html: test-results/coverage.html
-            model-coverage-html: test-results/modelcoverage.html
-            test-results-html: test-results/html-results.html
+            code-coverage-html: test-results/coverageHTML
+            model-coverage-html: test-results/modelcoverageHTML
+            test-results-html: test-results/resultsHTML
             select-by-folder: sample
             strict: true
             use-parallel: true
