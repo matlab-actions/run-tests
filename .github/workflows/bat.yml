@@ -80,8 +80,8 @@ jobs:
             (test -f test-results/pdf-results.pdf) || (echo "File pdf-results.pdf does not exist" && exit 1)
             (test -f test-results/results.xml) || (echo "File results.xml does not exist" && exit 1)
             (test -f test-results/coverage.xml) || (echo "File coverage.xml does not exist" && exit 1)
-            (test -d test-results/coverage.html) || (echo "Directory coverageHTML does not exist" && exit 1)
-            (test -d test-results/modelcoverage.html) || (echo "Directory modelcoverageHTML does not exist" && exit 1)
+            (test -d test-results/coverageHTML) || (echo "Directory coverageHTML does not exist" && exit 1)
+            (test -d test-results/modelcoverageHTML) || (echo "Directory modelcoverageHTML does not exist" && exit 1)
             (test -d test-results/resultsHTML) || (echo "Directory resultsHTML does not exist" && exit 1)
             grep -q "runner.addPlugin(FailOnWarningsPlugin())" console.log
             grep -q "runInParallel" console.log
