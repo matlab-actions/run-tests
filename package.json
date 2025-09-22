@@ -21,7 +21,7 @@
     "dependencies": {
         "@actions/core": "^1.11.1",
         "@actions/exec": "^1.1.1",
-        "run-matlab-command-action": "github:matlab-actions/run-command#v2.2.1"
+        "run-matlab-command-action": "github:matlab-actions/run-command#v2.3.0"
     },
     "devDependencies": {
         "@types/jest": "^30.0.0",
