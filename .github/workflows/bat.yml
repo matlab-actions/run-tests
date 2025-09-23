@@ -90,4 +90,4 @@ jobs:
             grep -q "runInParallel" console.log
             grep -q "'OutputDetail', 3" console.log
             grep -q "'LoggingLevel', 3" console.log
-      
+        shell: bash
