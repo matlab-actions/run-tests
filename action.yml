@@ -41,27 +41,42 @@ inputs:
     default: ""
   test-results-pdf:
     description: >-
-      Path to write test results report in PDF format
+      File path to write test results in PDF format
+    required: false
+    default: ""
+  test-results-html:
+    description: >-
+      Folder path to write test results in HTML format
     required: false
     default: ""
   test-results-junit:
     description: >-
-      Path to write test results report in JUnit XML format
+      File path to write test results in JUnit-style XML format
     required: false
     default: ""
   test-results-simulink-test:
     description: >-
-      Path to export Simulink Test Manager results in MLDATX format
+      File path to export Simulink Test Manager results in MLDATX format
     required: false
     default: ""
   code-coverage-cobertura:
     description: >-
-      Path to write code coverage report in Cobertura XML format
+      File path to write code coverage results in Cobertura XML format
+    required: false
+    default: ""
+  code-coverage-html:
+    description: >-
+      Folder path to write code coverage results in HTML format
     required: false
     default: ""
   model-coverage-cobertura:
     description: >-
-      Path to write model coverage report in Cobertura XML format
+      File path to write model coverage results in Cobertura XML format
+    required: false
+    default: ""
+  model-coverage-html:
+    description: >-
+      Folder path to write model coverage results in HTML format
     required: false
     default: ""
   startup-options:
