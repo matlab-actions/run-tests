@@ -122,6 +122,18 @@ Input                     | Description
 `model-coverage-cobertura`  | <p>(Optional) Location to write the model coverage results in Cobertura XML format, specified as a path relative to the project root folder. This input requires a Simulink Coverage™ license and is supported in MATLAB R2018b and later.</p><p>**Example:** `model-coverage-cobertura: model-coverage/coverage.xml`</p>
 `startup-options`         | <p>(Optional) MATLAB startup options, specified as a list of options separated by spaces. For more information about startup options, see [Commonly Used Startup Options](https://www.mathworks.com/help/matlab/matlab_env/commonly-used-startup-options.html).</p><p>Using this input to specify the `-batch` or `-r` option is not supported.</p><p>**Example:** `startup-options: -nojvm`<br/>**Example:** `startup-options: -nojvm -logfile output.log`</p>
 
+## View Test Results
+Starting in R2024b, if you have a MATLAB Test&trade; license, you can view the results of tests executed using the **Run MATLAB Tests** action on the workflow run summary page. After your workflow runs, the page displays the number of tests in the test suite, as well as the number of tests that passed, failed, were incomplete (due to assumption failure), and did not run (due to fatal assertion failure). Additionally, the **All tests** table on the page includes a row for each executed test file. Each table row displays the status of a test file, its name, and the time it took to run. You can point to a filename in the table to identify its path within your project.
+
+<img width="2540" height="1283" alt="Test run summary including three passed tests and one incomplete test from a single test file. The expanded row in the All tests table displays a table of test results for the test file. The row corresponding to each test in the inner table includes the test status, test procedure name, diagnostics, and duration." src="https://github.com/user-attachments/assets/63ed7b15-ceaf-4e1d-ba8f-7ed952937907" />
+
+You can interact with the **All tests** table using the expanders to the left of test filenames and diagnostics. In an expanded table row, individual test results from the corresponding test file appear in a table under the test filename. The row corresponding to each test includes the test status, test procedure name, test diagnostics, and the time it took to run. 
+
+> [!TIP]
+> If you have a MATLAB Test license, you can also view your MATLAB and Simulink test results on the workflow run summary page by taking either of these actions:
+> - Run tests with a [`matlab.buildtool.tasks.TestTask`](https://www.mathworks.com/help/matlab/ref/matlab.buildtool.tasks.testtask-class.html) instance using the [Run MATLAB Build](https://github.com/matlab-actions/run-build/) action.
+> - Run tests with a default test runner using the [Run MATLAB Command](https://github.com/matlab-actions/run-command/) action. You can create a default test runner using the [`matlab.unittest.TestRunner.withDefaultPlugins`](https://www.mathworks.com/help/matlab/ref/matlab.unittest.testrunner.withdefaultplugins.html) method.
+
 ## Notes
 * By default, when you use the **Run MATLAB Tests** action, the root of your repository serves as the MATLAB startup folder. To run your tests using a different folder, specify the `-sd` startup option in the action.
 * In MATLAB R2019a and later, the **Run MATLAB Tests** action uses  the `-batch` option to start MATLAB noninteractively. MATLAB settings do not persist across different MATLAB sessions launched with the `-batch` option. To run code that requires the same settings, use a single action.
