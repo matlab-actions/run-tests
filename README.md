@@ -130,7 +130,7 @@ Starting in R2024b, if you have a MATLAB Test&trade; license, you can view the r
 
 <img width="2540" height="1283" alt="Workflow run summary page showing three passed tests and one incomplete test from a single test file. The expanded row in the All tests table displays a table of test results for the test file." src="https://github.com/user-attachments/assets/63ed7b15-ceaf-4e1d-ba8f-7ed952937907" />
 
-You can interact with the **All tests** table using the expanders to the left of test filenames and diagnostics. In an expanded table row, individual test results from the corresponding test file appear in a table under the test filename. Each row of the inner table shows the test status, test procedure name, test diagnostics, and the time it took to run. 
+You can interact with the **All tests** table using the expanders to the left of test filenames and diagnostics. In an expanded table row, individual test results from the corresponding test file appear in a table under the test filename. Each row of the inner table shows the status, procedure name, diagnostics, and duration of a test in the file. 
 
 > [!TIP]
 > With a MATLAB Test license, you also see your MATLAB and Simulink test results on the workflow run summary page when you take any of these actions:
