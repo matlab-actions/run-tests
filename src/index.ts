@@ -1,10 +1,10 @@
-// Copyright 2020-2023 The MathWorks, Inc.
+// Copyright 2020-2025 The MathWorks, Inc.
 
 import * as core from "@actions/core";
 import * as exec from "@actions/exec";
 import { matlab } from "run-matlab-command-action";
 import * as scriptgen from "./scriptgen";
-import * as testResultsSummary from "./testResultsSummary";
+import { testResultsSummary } from "common-utils";
 import * as path from "path";
 
 /**
@@ -32,23 +32,14 @@ async function run() {
 
     const pluginsPath = path.join(__dirname, "plugins").replaceAll("'","''");
     const command = "addpath('"+ pluginsPath +"'); " + scriptgen.generateCommand(options);
-    // TODO: Remove these lines before merging to main branch
-    //     "import matlab.unittest.TestRunner;" +
-    //     "addpath(genpath('sample'));" +
-    //     "suite = testsuite(pwd, 'IncludeSubfolders', true);" +
-    //     "runner = TestRunner.withDefaultPlugins();" +
-    //     "results = runner.run(suite);" +
-    //     "results = runner.run(suite);" +
-    //     "display(results);" +
-    //     "assertSuccess(results);";
     const startupOptions = core.getInput("startup-options").split(" ");
 
     const helperScript = await matlab.generateScript(workspaceDir, command);
     core.info("Successfully generated test script!");
 
     await matlab.runCommand(helperScript, platform, architecture, exec.exec, startupOptions).finally(() => {
-        const { testResults, stats } = testResultsSummary.getTestResults();
-        testResultsSummary.writeSummary(testResults, stats);
+        const testResultsData = testResultsSummary.getTestResults(process.env.RUNNER_TEMP || '', process.env.GITHUB_RUN_ID || '', workspaceDir);
+        testResultsSummary.writeSummary(testResultsData, process.env.GITHUB_ACTION || '');
     });
 }
 
