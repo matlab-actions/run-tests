@@ -8,7 +8,7 @@ import { testResultsSummary } from "common-utils";
 import * as path from "path";
 
 /**
- * Gather action inputs and then run action.
+ * Gather action inputs and then run action
  */
 async function run() {
     const platform = process.platform;
@@ -18,10 +18,13 @@ async function run() {
     const options: scriptgen.RunTestsOptions = {
         JUnitTestResults: core.getInput("test-results-junit"),
         CoberturaCodeCoverage: core.getInput("code-coverage-cobertura"),
+        HTMLCodeCoverage: core.getInput("code-coverage-html"),
         SourceFolder: core.getInput("source-folder"),
         PDFTestReport: core.getInput("test-results-pdf"),
+        HTMLTestReport: core.getInput("test-results-html"),
         SimulinkTestResults: core.getInput("test-results-simulink-test"),
         CoberturaModelCoverage: core.getInput("model-coverage-cobertura"),
+        HTMLModelCoverage: core.getInput("model-coverage-html"),
         SelectByTag: core.getInput("select-by-tag"),
         SelectByFolder: core.getInput("select-by-folder"),
         Strict: core.getBooleanInput("strict"),

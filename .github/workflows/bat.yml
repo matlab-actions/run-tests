@@ -62,22 +62,34 @@ jobs:
       - name: Run run-test command
         uses: ./
         with:
-          test-results-simulink-test: test-results/simulinktest.mldatx
-          model-coverage-cobertura: test-results/modelcoverage.xml
-          test-results-pdf: test-results/pdf-results.pdf
-          select-by-folder: sample
-          strict: true
-          use-parallel: true
-          output-detail: Detailed
-          logging-level: Detailed
-        continue-on-error: true
+            test-results-simulink-test: test-results/simulinktest.mldatx
+            model-coverage-cobertura: test-results/modelcoverage.xml
+            test-results-pdf: test-results/pdf-results.pdf
+            test-results-junit: test-results/results.xml
+            code-coverage-cobertura: test-results/coverage.xml
+            code-coverage-html: test-results/coverageHTML
+            model-coverage-html: test-results/modelcoverageHTML
+            test-results-html: test-results/resultsHTML
+            select-by-folder: sample
+            strict: true
+            use-parallel: true
+            output-detail: Detailed
+            logging-level: Detailed
       - name: Verify artifacts generation
         run: |
-          (test -f test-results/simulinktest.mldatx) || (echo "File simulinktest.mldatx does not exist" && exit 1)
-          (test -f test-results/modelcoverage.xml) || (echo "File modelcoverage.xml does not exist" && exit 1)
-          (test -f test-results/pdf-results.pdf) || (echo "File pdf-results.pdf does not exist" && exit 1)
-          grep -q "runner.addPlugin(FailOnWarningsPlugin())" console.log
-          grep -q "runInParallel" console.log
-          grep -q "'OutputDetail', 3" console.log
-          grep -q "'LoggingLevel', 3" console.log
+            (test -f test-results/simulinktest.mldatx) || (echo "File simulinktest.mldatx does not exist" && exit 1)
+            (test -f test-results/modelcoverage.xml) || (echo "File modelcoverage.xml does not exist" && exit 1)
+            (test -f test-results/pdf-results.pdf) || (echo "File pdf-results.pdf does not exist" && exit 1)
+            (test -f test-results/results.xml) || (echo "File results.xml does not exist" && exit 1)
+            (test -f test-results/coverage.xml) || (echo "File coverage.xml does not exist" && exit 1)
+            (test -d test-results/coverageHTML) || (echo "Directory coverageHTML does not exist" && exit 1)
+            (test -f test-results/coverageHTML/*.html) || (echo "No HTML file found" && exit 1)
+            (test -d test-results/modelcoverageHTML) || (echo "Directory modelcoverageHTML does not exist" && exit 1)
+            (test -f test-results/modelcoverageHTML/*.html) || (echo "No HTML file found" && exit 1)
+            (test -d test-results/resultsHTML) || (echo "Directory resultsHTML does not exist" && exit 1)
+            (test -f test-results/resultsHTML/*.html) || (echo "No HTML file found" && exit 1)
+            grep -q "runner.addPlugin(FailOnWarningsPlugin())" console.log
+            grep -q "runInParallel" console.log
+            grep -q "'OutputDetail', 3" console.log
+            grep -q "'LoggingLevel', 3" console.log
         shell: bash

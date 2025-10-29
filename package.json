@@ -1,7 +1,7 @@
 {
     "name": "run-matlab-tests-action",
     "author": "The MathWorks, Inc.",
-    "version": "2.1.2",
+    "version": "2.2.0",
     "description": "",
     "main": "lib/index.js",
     "scripts": {
@@ -21,8 +21,8 @@
     "dependencies": {
         "@actions/core": "^1.11.1",
         "@actions/exec": "^1.1.1",
-        "run-matlab-command-action": "github:matlab-actions/run-command#v2.2.1",
-        "common-utils": "github:matlab-actions/common-utils#kapilg/refactor"
+        "common-utils": "github:matlab-actions/common-utils#kapilg/refactor",
+        "run-matlab-command-action": "github:matlab-actions/run-command#v2.3.0"
     },
     "devDependencies": {
         "@types/jest": "^30.0.0",
