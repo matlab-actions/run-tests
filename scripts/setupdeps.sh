@@ -1,5 +1,7 @@
 #!/bin/bash
 
+ls
+
 source ./node_modules/common-utils/scripts/setupdeps.sh
 
 SCRIPTGEN_URL='https://ssd.mathworks.com/supportfiles/ci/matlab-script-generator/v0/matlab-script-generator.zip'

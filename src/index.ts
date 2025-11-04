@@ -4,6 +4,7 @@ import * as core from "@actions/core";
 import * as exec from "@actions/exec";
 import { matlab } from "run-matlab-command-action";
 import * as scriptgen from "./scriptgen";
+// TODO: update common-utils version when new version is released
 import { testResultsSummary } from "common-utils";
 import * as path from "path";
 
