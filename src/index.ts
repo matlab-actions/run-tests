@@ -1,9 +1,11 @@
-// Copyright 2020-2023 The MathWorks, Inc.
+// Copyright 2020-2025 The MathWorks, Inc.
 
 import * as core from "@actions/core";
 import * as exec from "@actions/exec";
-import { matlab } from "run-matlab-command-action";
 import * as scriptgen from "./scriptgen";
+// TODO: update common-utils version when new version is released
+import { testResultsSummary, matlab } from "common-utils";
+import * as path from "path";
 
 /**
  * Gather action inputs and then run action
@@ -12,6 +14,9 @@ async function run() {
     const platform = process.platform;
     const architecture = process.arch;
     const workspaceDir = process.cwd();
+    const runnerTemp = process.env.RUNNER_TEMP || '';
+    const runId = process.env.GITHUB_RUN_ID || '';
+    const actionName = process.env.GITHUB_ACTION || '';
 
     const options: scriptgen.RunTestsOptions = {
         JUnitTestResults: core.getInput("test-results-junit"),
@@ -31,17 +36,18 @@ async function run() {
         LoggingLevel: core.getInput("logging-level"),
     };
 
-    const command = scriptgen.generateCommand(options);
+    const pluginsPath = path.join(__dirname, "plugins").replaceAll("'","''");
+    const command = "addpath('"+ pluginsPath +"'); " + scriptgen.generateCommand(options);
     const startupOptions = core.getInput("startup-options").split(" ");
 
-    const helperScript = await core.group("Generate script", async () => {
-        const helperScript = await matlab.generateScript(workspaceDir, command);
-        core.info("Successfully generated script");
-        return helperScript;
-    });
+    const helperScript = await matlab.generateScript(workspaceDir, command);
+    core.info("Successfully generated test script!");
 
-    await core.group("Run command", async () => {
-        await matlab.runCommand(helperScript, platform, architecture, exec.exec, startupOptions);
+    await matlab.runCommand(helperScript, platform, architecture, exec.exec, startupOptions).finally(() => {
+        const testResultsData = testResultsSummary.getTestResults(runnerTemp, runId, workspaceDir);
+        if(testResultsData) {
+            testResultsSummary.writeSummary(testResultsData, actionName);
+        }
     });
 }
 
