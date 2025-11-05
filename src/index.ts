@@ -15,6 +15,9 @@ async function run() {
     const platform = process.platform;
     const architecture = process.arch;
     const workspaceDir = process.cwd();
+    const runnerTemp = process.env.RUNNER_TEMP || '';
+    const runId = process.env.GITHUB_RUN_ID || '';
+    const actionName = process.env.GITHUB_ACTION || '';
 
     const options: scriptgen.RunTestsOptions = {
         JUnitTestResults: core.getInput("test-results-junit"),
@@ -42,8 +45,8 @@ async function run() {
     core.info("Successfully generated test script!");
 
     await matlab.runCommand(helperScript, platform, architecture, exec.exec, startupOptions).finally(() => {
-        const testResultsData = testResultsSummary.getTestResults(process.env.RUNNER_TEMP || '', process.env.GITHUB_RUN_ID || '', workspaceDir);
-        testResultsSummary.writeSummary(testResultsData, process.env.GITHUB_ACTION || '');
+        const testResultsData = testResultsSummary.getTestResults(runnerTemp, runId, workspaceDir);
+        testResultsSummary.writeSummary(testResultsData, actionName);
     });
 }
 

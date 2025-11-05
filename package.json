@@ -21,7 +21,7 @@
     "dependencies": {
         "@actions/core": "^1.11.1",
         "@actions/exec": "^1.1.1",
-        "common-utils": "github:matlab-actions/common-utils#kapilg/refactor",
+        "common-utils": "https://github.com/matlab-actions/common-utils#kapilg/refactor",
         "run-matlab-command-action": "github:matlab-actions/run-command#v2.3.0"
     },
     "devDependencies": {
