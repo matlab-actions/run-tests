@@ -53,12 +53,17 @@ jobs:
           grep "Done TheTruth" output.log
           grep "1 Passed" output.log
         shell: bash
+      - name: Generate Model
+        uses: matlab-actions/run-command@v2
+        with: 
+            command: cd('sample'),createSampleModel('temp_model'),sltest.testmanager.createTestsFromModel('sltestfile', 'temp_model');
       - name: Set up diary for logging
         run: echo 'diary console.log' >> startup.m
-      - name: Run run-test command with artifact generation
+      - name: Run run-test command
         continue-on-error: true
         uses: ./
         with:
+            test-results-simulink-test: test-results/simulinktest.mldatx
             model-coverage-cobertura: test-results/modelcoverage.xml
             test-results-pdf: test-results/pdf-results.pdf
             test-results-junit: test-results/results.xml
@@ -73,6 +78,7 @@ jobs:
             logging-level: Detailed
       - name: Verify artifacts generation
         run: |
+            (test -f test-results/simulinktest.mldatx) || (echo "File simulinktest.mldatx does not exist" && exit 1)
             (test -f test-results/modelcoverage.xml) || (echo "File modelcoverage.xml does not exist" && exit 1)
             (test -f test-results/pdf-results.pdf) || (echo "File pdf-results.pdf does not exist" && exit 1)
             (test -f test-results/results.xml) || (echo "File results.xml does not exist" && exit 1)
@@ -87,18 +93,4 @@ jobs:
             grep -q "runInParallel" console.log
             grep -q "'OutputDetail', 3" console.log
             grep -q "'LoggingLevel', 3" console.log
-        shell: bash
-      - name: Generate Model
-        uses: matlab-actions/run-command@v2
-        with: 
-          command: cd('sample'),createSampleModel('temp_model'),sltest.testmanager.createTestsFromModel('sltestfile', 'temp_model');
-      # Separate test run for SL test results till genscript supports informal testrunner with this parameter
-      - name: Run run-test command with Simulink Test artifact generation
-        continue-on-error: true
-        uses: ./
-        with:
-            test-results-simulink-test: test-results/simulinktest.mldatx
-      - name: Verify artifacts generation
-        run: |
-            (test -f test-results/simulinktest.mldatx) || (echo "File simulinktest.mldatx does not exist" && exit 1)
         shell: bash
