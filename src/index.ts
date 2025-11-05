@@ -44,8 +44,10 @@ async function run() {
     core.info("Successfully generated test script!");
 
     await matlab.runCommand(helperScript, platform, architecture, exec.exec, startupOptions).finally(() => {
-        const testResultsData = testResultsSummary.getTestResults(runnerTemp, runId, actionName, workspaceDir);
-        testResultsSummary.writeSummary(testResultsData, actionName);
+        const testResultsData = testResultsSummary.getTestResults(runnerTemp, runId, workspaceDir);
+        if(testResultsData) {
+            testResultsSummary.writeSummary(testResultsData, actionName);
+        }
     });
 }
 
