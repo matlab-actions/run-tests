@@ -41,11 +41,11 @@ jobs:
             Simulink_Test
             Simulink_Coverage
       - name: Run MATLAB Tests
+        continue-on-error: true
         uses: ./
         with:
           source-folder: sample
           startup-options: -logfile output.log
-        continue-on-error: true
       - name: Verify option application
         run: |
           set -e
@@ -60,6 +60,7 @@ jobs:
       - name: Set up diary for logging
         run: echo 'diary console.log' >> startup.m
       - name: Run run-test command
+        continue-on-error: true
         uses: ./
         with:
             test-results-simulink-test: test-results/simulinktest.mldatx
