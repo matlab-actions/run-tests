@@ -2,10 +2,9 @@
 
 import * as core from "@actions/core";
 import * as exec from "@actions/exec";
-import { matlab } from "run-matlab-command-action";
 import * as scriptgen from "./scriptgen";
 // TODO: update common-utils version when new version is released
-import { testResultsSummary } from "common-utils";
+import { testResultsSummary, matlab } from "common-utils";
 import * as path from "path";
 
 /**
@@ -45,7 +44,7 @@ async function run() {
     core.info("Successfully generated test script!");
 
     await matlab.runCommand(helperScript, platform, architecture, exec.exec, startupOptions).finally(() => {
-        const testResultsData = testResultsSummary.getTestResults(runnerTemp, runId, workspaceDir);
+        const testResultsData = testResultsSummary.getTestResults(runnerTemp, runId, actionName, workspaceDir);
         testResultsSummary.writeSummary(testResultsData, actionName);
     });
 }
