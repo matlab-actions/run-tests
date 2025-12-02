@@ -33,14 +33,25 @@ async function run() {
         LoggingLevel: core.getInput("logging-level"),
     };
 
-    const pluginsPath = path.join(__dirname, "plugins").replaceAll("'","''");
-    const command = "addpath('"+ pluginsPath +"'); " + scriptgen.generateCommand(options);
+    const command = scriptgen.generateCommand(options);
     const startupOptions = core.getInput("startup-options").split(" ");
 
     const helperScript = await matlab.generateScript(workspaceDir, command);
+    const execOptions = {
+        env: {
+            ...process.env,
+            MW_BATCH_LICENSING_ONLINE:'true', // Remove when online batch licensing is the default
+        }
+    };
     core.info("Successfully generated test script!");
 
-    await matlab.runCommand(helperScript, platform, architecture, exec.exec, startupOptions).finally(() => {
+    await matlab.runCommand(
+        helperScript,
+        platform,
+        architecture,
+        (cmd, args) => exec.exec(cmd, args, execOptions),
+        startupOptions
+    ).finally(() => {
         const runnerTemp = process.env.RUNNER_TEMP || '';
         const runId = process.env.GITHUB_RUN_ID || '';
         const actionName = process.env.GITHUB_ACTION || '';
