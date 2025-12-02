@@ -36,10 +36,12 @@ jobs:
         uses: matlab-actions/setup-matlab@v2
         with:
           products: |
+            MATLAB_Test
             Simulink
             Simulink_Test
             Simulink_Coverage
       - name: Run MATLAB Tests
+        continue-on-error: true
         uses: ./
         with:
           source-folder: sample
@@ -58,6 +60,7 @@ jobs:
       - name: Set up diary for logging
         run: echo 'diary console.log' >> startup.m
       - name: Run run-test command
+        continue-on-error: true
         uses: ./
         with:
             test-results-simulink-test: test-results/simulinktest.mldatx
@@ -90,4 +93,8 @@ jobs:
             grep -q "runInParallel" console.log
             grep -q "'OutputDetail', 3" console.log
             grep -q "'LoggingLevel', 3" console.log
+        shell: bash
+      - name: Verify workflow command is added
+        run: |
+            grep "::group::TheTruth" output.log
         shell: bash

@@ -13,7 +13,7 @@
         "package": "ncc build --minify",
         "test": "jest",
         "all": "npm test && npm run build && npm run package",
-        "ci": "npm run clean && npm run deps && npm ci && npm run all"
+        "ci": "npm run clean && npm ci && npm run deps && npm run all"
     },
     "files": [
         "lib/"
@@ -21,14 +21,16 @@
     "dependencies": {
         "@actions/core": "^1.11.1",
         "@actions/exec": "^1.1.1",
-        "run-matlab-command-action": "github:matlab-actions/run-command#v2.3.0"
+        "common-utils": "github:matlab-actions/common-utils#v1.0.0"
     },
     "devDependencies": {
         "@types/jest": "^30.0.0",
+        "@types/jsdom": "^21.1.7",
         "@types/node": "^24.3.0",
         "@vercel/ncc": "^0.38.3",
         "jest": "^30.0.5",
         "jest-circus": "^30.0.5",
+        "jsdom": "^26.1.0",
         "prettier": "3.6.2",
         "ts-jest": "^29.4.1",
         "typescript": "^5.9.2"
