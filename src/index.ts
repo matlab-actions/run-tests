@@ -3,9 +3,7 @@
 import * as core from "@actions/core";
 import * as exec from "@actions/exec";
 import * as scriptgen from "./scriptgen";
-// TODO: update common-utils version when new version is released
 import { matlab, testResultsSummary } from "common-utils";
-import * as path from "path";
 
 /**
  * Gather action inputs and then run action
