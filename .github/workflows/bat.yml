@@ -94,3 +94,7 @@ jobs:
             grep -q "'OutputDetail', 3" console.log
             grep -q "'LoggingLevel', 3" console.log
         shell: bash
+      - name: Verify workflow command is added
+        run: |
+            grep "::group::TheTruth" console.log
+        shell: bash
