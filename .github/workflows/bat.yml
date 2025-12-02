@@ -96,5 +96,5 @@ jobs:
         shell: bash
       - name: Verify workflow command is added
         run: |
-            grep "::group::TheTruth" console.log
+            grep "::group::TheTruth" output.log
         shell: bash
