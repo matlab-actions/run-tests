@@ -5,7 +5,6 @@ import * as exec from "@actions/exec";
 import * as scriptgen from "./scriptgen";
 // TODO: update common-utils version when new version is released
 import { matlab, testResultsSummary } from "common-utils";
-import * as path from "path";
 
 /**
  * Gather action inputs and then run action
@@ -33,8 +32,7 @@ async function run() {
         LoggingLevel: core.getInput("logging-level"),
     };
 
-    const pluginsPath = path.join(__dirname, "plugins").replaceAll("'","''");
-    const command = "addpath('"+ pluginsPath +"'); " + scriptgen.generateCommand(options);
+    const command = scriptgen.generateCommand(options);
     const startupOptions = core.getInput("startup-options").split(" ");
 
     const helperScript = await matlab.generateScript(workspaceDir, command);
@@ -44,11 +42,9 @@ async function run() {
         const runnerTemp = process.env.RUNNER_TEMP || '';
         const runId = process.env.GITHUB_RUN_ID || '';
         const actionName = process.env.GITHUB_ACTION || '';
-        
-        const testResultsData = testResultsSummary.getTestResults(runnerTemp, runId, workspaceDir);
-        if(testResultsData) {
-            testResultsSummary.writeSummary(testResultsData, actionName);
-        }
+
+        testResultsSummary.processAndAddTestSummary(runnerTemp, runId, actionName, workspaceDir);
+        core.summary.write();
     });
 }
 

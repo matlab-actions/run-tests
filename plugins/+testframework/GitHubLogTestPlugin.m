@@ -1,4 +1,4 @@
-classdef GitHubLogPlugin < matlab.unittest.plugins.TestRunnerPlugin
+classdef GitHubLogTestPlugin < matlab.unittest.plugins.TestRunnerPlugin
     % Copyright 2025 The MathWorks, Inc.
     
     methods (Access=protected)
