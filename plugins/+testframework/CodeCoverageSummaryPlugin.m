@@ -28,8 +28,8 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
             end
             
             result = plugin.CoverageFormat.Result;
-            disp("result is ");
-            disp(result);
+            %disp("result is ");
+            %disp(result);
             % Get coverage summaries for all metrics
             %[statementCoverage, statementDetails] = coverageSummary(result, "statement");
             statementCoverage = coverageSummary(result, "statement");
@@ -40,8 +40,8 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
             
             % Create coverage summary structure
             coverageDetails = struct();
-            disp("statement coverage");
-            disp(statementCoverage);
+            %disp("statement coverage");
+            %disp(statementCoverage);
             coverageDetails.StatementCoverage = aggregateCoverage(statementCoverage);
             coverageDetails.FunctionCoverage = aggregateCoverage(functionCoverage);
             coverageDetails.DecisionCoverage = aggregateCoverage(decisionCoverage);
