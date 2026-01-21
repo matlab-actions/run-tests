@@ -39,13 +39,35 @@ export function writeCoverageSummary() {
         // Use the latest coverage data (last element in array)
         const latestCoverage = coverageData[coverageData.length - 1];
         
-        const coverageTable = createCoverageTable(latestCoverage);
-        
+        // Create the summary using the proper GitHub Actions summary API
         core.summary
-            .addHeading("Overall Coverage")
-            .addRaw(coverageTable, true)
+            .addHeading("Overall Coverage", 2)
+            .addTable([
+                // Header row
+                [
+                    {data: 'Coverage Type', header: true},
+                    {data: 'Percentage', header: true},
+                    {data: 'Covered/Total', header: true}
+                ],
+                // Data rows
+                ['Statement', 
+                 `${latestCoverage.StatementCoverage.Percentage.toFixed(2)}%`,
+                 `${latestCoverage.StatementCoverage.Executed}/${latestCoverage.StatementCoverage.Total}`],
+                ['Function',
+                 `${latestCoverage.FunctionCoverage.Percentage.toFixed(2)}%`,
+                 `${latestCoverage.FunctionCoverage.Executed}/${latestCoverage.FunctionCoverage.Total}`],
+                ['Decision',
+                 `${latestCoverage.DecisionCoverage.Percentage.toFixed(2)}%`,
+                 `${latestCoverage.DecisionCoverage.Executed}/${latestCoverage.DecisionCoverage.Total}`],
+                ['Condition',
+                 `${latestCoverage.ConditionCoverage.Percentage.toFixed(2)}%`,
+                 `${latestCoverage.ConditionCoverage.Executed}/${latestCoverage.ConditionCoverage.Total}`],
+                ['MC/DC',
+                 `${latestCoverage.MCDCCoverage.Percentage?.toFixed(2) || '0.00'}%`,
+                 `${latestCoverage.MCDCCoverage.Executed}/${latestCoverage.MCDCCoverage.Total}`]
+            ])
             .write();
-            
+        
         // Clean up the file after reading
         try {
             unlinkSync(coveragePath);
@@ -57,43 +79,3 @@ export function writeCoverageSummary() {
     }
 }
 
-function createCoverageTable(coverage: CoverageData): string {
-    return `
-        <table>
-            <thead>
-                <tr>
-                    <th>Coverage Type</th>
-                    <th>Percentage</th>
-                    <th>Covered/Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Statement</td>
-                    <td>${coverage.StatementCoverage.Percentage.toFixed(2)}%</td>
-                    <td>${coverage.StatementCoverage.Executed}/${coverage.StatementCoverage.Total}</td>
-                </tr>
-                <tr>
-                    <td>Function</td>
-                    <td>${coverage.FunctionCoverage.Percentage.toFixed(2)}%</td>
-                    <td>${coverage.FunctionCoverage.Executed}/${coverage.FunctionCoverage.Total}</td>
-                </tr>
-                <tr>
-                    <td>Decision</td>
-                    <td>${coverage.DecisionCoverage.Percentage.toFixed(2)}%</td>
-                    <td>${coverage.DecisionCoverage.Executed}/${coverage.DecisionCoverage.Total}</td>
-                </tr>
-                <tr>
-                    <td>Condition</td>
-                    <td>${coverage.ConditionCoverage.Percentage.toFixed(2)}%</td>
-                    <td>${coverage.ConditionCoverage.Executed}/${coverage.ConditionCoverage.Total}</td>
-                </tr>
-                <tr>
-                    <td>MCDC</td>
-                    <td>${coverage.MCDCCoverage.Percentage?.toFixed(2) || '0.00'}%</td>
-                    <td>${coverage.MCDCCoverage.Executed}/${coverage.MCDCCoverage.Total}</td>
-                </tr>
-            </tbody>
-        </table>
-    `;
-}
