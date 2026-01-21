@@ -20,7 +20,7 @@ classdef CodeCoverageSummaryPluginService < matlab.buildtool.internal.services.c
             
                 
                 %addpath("C:\Users\tagupta\Downloads\common-utils\plugins\sourceFolder");
-                sourceFolder = fullfile(pwd, 'plugins', 'sourceFolder');
+                sourceFolder = fullfile(pwd, 'sample');
                 %coveragePlugin = matlab.unittest.plugins.CodeCoveragePlugin.forFolder(...
                 %    "../../../../../sourceFolder", 'Producing', format, 'MetricLevel', 'mcdc');
                 coveragePlugin = matlab.unittest.plugins.CodeCoveragePlugin.forFolder(...
