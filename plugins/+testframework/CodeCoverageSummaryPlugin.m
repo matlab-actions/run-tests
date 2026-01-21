@@ -110,13 +110,14 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
                 coverageArtifactFile = fullfile(pwd, "matlabCoverageResults.json");
             end
             
-            % If coverage results artifact exists, update the same file
-            if isfile(coverageArtifactFile)
-                coverageResults = {jsondecode(fileread(coverageArtifactFile))};
-            else
-                coverageResults = {};
-            end
-            coverageResults{end+1} = coverageDetails;
+            // % If coverage results artifact exists, update the same file
+            // if isfile(coverageArtifactFile)
+            //     coverageResults = {jsondecode(fileread(coverageArtifactFile))};
+            // else
+            //     coverageResults = {};
+            // end
+            // coverageResults{end+1} = coverageDetails;
+            coverageResults = {coverageDetails};
             
             JsonCoverageResults = jsonencode(coverageResults, "PrettyPrint", true);
             [fID, msg] = fopen(coverageArtifactFile, "w");
