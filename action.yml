@@ -84,6 +84,11 @@ inputs:
       Startup options for MATLAB
     required: false
     default: ""
+  code-coverage-summary-view:
+    description: >
+      Enable code coverage summary view in GitHub Actions
+    required: false
+    default: false
 runs:
   using: node20
   main: dist/index.js

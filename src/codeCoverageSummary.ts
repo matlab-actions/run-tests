@@ -20,6 +20,14 @@ interface CoverageData {
 // function to write coverage summary
 export function writeCoverageSummary() {
     try {
+        // Check if the flag is enabled
+        const coverageSummaryEnabled = core.getBooleanInput('code-coverage-summary-view');
+        
+        if (!coverageSummaryEnabled) {
+            console.log("Code coverage summary view is disabled");
+            return;
+        }
+
         const runnerTemp = process.env.RUNNER_TEMP || "";
         const runId = process.env.GITHUB_RUN_ID || "";
         const coveragePath = path.join(runnerTemp, `matlabCoverageResults${runId}.json`);

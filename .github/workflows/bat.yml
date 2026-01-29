@@ -46,6 +46,7 @@ jobs:
         with:
           source-folder: sample
           startup-options: -logfile output.log
+          code-coverage-summary-view: true  # Enable coverage summary for this test
       - name: Verify option application
         run: |
           set -e
