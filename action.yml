@@ -88,7 +88,7 @@ inputs:
     description: >
       Enable code coverage summary view in GitHub Actions
     required: false
-    default: true
+    default: false
 runs:
   using: node20
   main: dist/index.js

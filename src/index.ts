@@ -31,6 +31,8 @@ async function run() {
         LoggingLevel: core.getInput("logging-level"),
     };
 
+    const codeCoverageSummaryView = core.getInput("code-coverage-summary-view");
+
     const command = scriptgen.generateCommand(options);
     const startupOptions = core.getInput("startup-options").split(" ");
 
@@ -39,6 +41,7 @@ async function run() {
         env: {
             ...process.env,
             MW_BATCH_LICENSING_ONLINE:'true', // Remove when online batch licensing is the default
+            INPUT_CODE_COVERAGE_SUMMARY_VIEW: codeCoverageSummaryView || 'false'
         }
     };
     core.info("Successfully generated test script!");
