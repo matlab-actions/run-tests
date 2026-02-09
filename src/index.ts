@@ -5,6 +5,7 @@ import * as exec from "@actions/exec";
 import * as scriptgen from "./scriptgen";
 import { matlab, testResultsSummary } from "common-utils";
 import {writeCoverageSummary} from "./codeCoverageSummary";
+import { createCoverageCheck } from "./checkSummary";
 /**
  * Gather action inputs and then run action
  */
@@ -62,6 +63,8 @@ async function run() {
 
         writeCoverageSummary();
         core.summary.write();
+
+        createCoverageCheck();
     });
 }
 

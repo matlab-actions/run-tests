@@ -1,7 +1,8 @@
 name: Build and Test
-on: [push]
+on: [push, pull_request]
 permissions:
   contents: read
+  checks: write
 
 jobs:
   bat:
@@ -46,7 +47,9 @@ jobs:
         with:
           source-folder: sample
           startup-options: -logfile output.log
-          code-coverage-summary-view: false
+          code-coverage-summary-view: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Verify option application
         run: |
           set -e
