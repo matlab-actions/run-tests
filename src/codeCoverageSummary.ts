@@ -49,7 +49,7 @@ export function writeCoverageSummary() {
         
         // Create the summary using the proper GitHub Actions summary API
         core.summary
-            .addHeading("Overall Coverage", 2)
+            .addHeading("MATLAB Code Coverage", 2)
             .addTable([
                 // Header row
                 [
