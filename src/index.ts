@@ -64,7 +64,7 @@ async function run() {
         writeCoverageSummary();
         core.summary.write();
 
-        createCoverageCheck();
+        // createCoverageCheck();
     });
 }
 
