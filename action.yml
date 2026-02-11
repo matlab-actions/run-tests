@@ -89,6 +89,10 @@ inputs:
       Enable code coverage summary view in GitHub Actions
     required: false
     default: false
+  github-token:
+    description: 'GitHub token for creating checks'
+    required: false
+    default: ''
 runs:
   using: node20
   main: dist/index.js
