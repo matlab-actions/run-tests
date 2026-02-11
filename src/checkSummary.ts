@@ -1,5 +1,5 @@
 import * as core from "@actions/core";
-import * as github from "@actions/github";
+import { getOctokit, context } from "@actions/github";
 import { readFileSync, existsSync } from "fs";
 import * as path from "path";
 
@@ -25,8 +25,8 @@ export async function createCoverageCheck() {
             return;
         }
 
-        const octokit = github.getOctokit(token);
-        const context = github.context;
+        const octokit = getOctokit(token);
+        //const context = github.context;
         
         // Get coverage data
         const runnerTemp = process.env.RUNNER_TEMP || "";
