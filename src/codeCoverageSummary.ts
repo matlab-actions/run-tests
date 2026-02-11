@@ -137,7 +137,7 @@ export function writeCoverageSummary() {
 
 function writeSummaryTable(latestCoverage: CoverageData) {
     // Your existing summary table code
-    core.summary.addHeading("Code Coverage Summary", 2);
+    core.summary.addHeading("MATLAB Code Coverage", 2);
     
     const headers = [
         { data: "Coverage Type", header: true },
@@ -178,6 +178,8 @@ async function createGitHubCheck(latestCoverage: CoverageData) {
         core.info("Creating GitHub check with coverage data...");
         
         const octokit = getOctokit(token);
+        console.log("tOKEN");
+        console.log(token);
         const overallPercentage = calculateOverallCoverage(latestCoverage);
         
         const checkName = 'MATLAB Code Coverage';
