@@ -196,7 +196,7 @@ async function createGitHubCheck(latestCoverage: CoverageData) {
             output: {
                 title: `Code Coverage: ${overallPercentage.toFixed(2)}%`,
                 summary: summary,
-                text: generateDetailedReport(latestCoverage)
+                //text: generateDetailedReport(latestCoverage)
             }
         });
         
