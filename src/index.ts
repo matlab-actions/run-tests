@@ -59,7 +59,7 @@ async function run() {
         const actionName = process.env.GITHUB_ACTION || '';
 
         testResultsSummary.processAndAddTestSummary(runnerTemp, runId, actionName, workspaceDir);
-        core.summary.write();
+        // core.summary.write();
 
         writeCoverageSummary();
         core.summary.write();
