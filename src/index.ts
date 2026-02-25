@@ -4,7 +4,7 @@ import * as core from "@actions/core";
 import * as exec from "@actions/exec";
 import * as scriptgen from "./scriptgen";
 import { matlab, testResultsSummary } from "common-utils";
-import {writeCoverageSummary} from "./codeCoverageSummary";
+//import {writeCoverageSummary} from "./codeCoverageSummary";
 import { processAndAddTestSummary} from "./tempTestSummary";
 import { createCoverageCheck } from "./checkSummary";
 /**
