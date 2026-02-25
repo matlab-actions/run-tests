@@ -318,9 +318,9 @@ export function writeCoverageSummary() {
     writeSummaryTable(latestCoverage);
     
     // Also create the GitHub check
-    createGitHubCheck(latestCoverage).catch(error => {
-        core.error(`Error creating GitHub check: ${error}`);
-    });
+    //createGitHubCheck(latestCoverage).catch(error => {
+    //    core.error(`Error creating GitHub check: ${error}`);
+    //});
 }
 
 function writeSummaryTable(latestCoverage: CoverageData) {
