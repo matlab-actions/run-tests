@@ -63,7 +63,7 @@ async function run() {
         processAndAddTestSummary(runnerTemp, runId, actionName, workspaceDir);
         // core.summary.write();
 
-        writeCoverageSummary();
+        //writeCoverageSummary();
         core.summary.write();
 
         // createCoverageCheck();
