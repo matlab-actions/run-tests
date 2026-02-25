@@ -1,8 +1,8 @@
 // Copyright 2025 The MathWorks, Inc.
-
 import { readFileSync, unlinkSync, existsSync } from "fs";
 import * as path from "path";
 import * as core from "@actions/core";
+import { getCoverageData, generateCoverageTableHTML } from "./codeCoverageSummary";
 
 export enum MatlabTestStatus {
     PASSED = "PASSED",
@@ -93,6 +93,7 @@ export function getTestResults(
                 NotRun: 0,
                 Duration: 0,
             };
+
             testResultsData = {
                 TestResults: testResults,
                 Stats: stats,
@@ -143,11 +144,24 @@ export function addSummary(
         const header = getTestHeader(testResultsData.Stats);
         const detailedResults = getDetailedResults(testResultsData.TestResults);
 
+        // Start building the summary
         core.summary
             .addHeading("MATLAB Test Results (" + actionName + ") " + helpLink)
-            .addRaw(header, true)
+            .addRaw(header, true);
+
+        // Add coverage table if available
+        const coverageData = getCoverageData();
+        if (coverageData) {
+            core.summary
+                .addHeading("MATLAB Code Coverage", 3)
+                .addRaw(generateCoverageTableHTML(coverageData), true);
+        }
+
+        // Add detailed test results
+        core.summary
             .addHeading("All tests", 3)
             .addRaw(detailedResults, true);
+
     } catch (e) {
         console.error("An error occurred while adding the test results to the summary:", e);
     }
@@ -275,7 +289,6 @@ function processTestCase(
 ): void {
     const baseFolder = jsonTestCase.BaseFolder;
     const testResult = jsonTestCase.TestResult;
-
     const [testFileName, testCaseName] = testResult.Name.split("/");
     const filePath = path.join(baseFolder, testFileName);
 
@@ -322,7 +335,6 @@ function determineTestStatus(testResult: MatlabTestResultJson): MatlabTestStatus
 
 function processDiagnostics(diagnostics: MatlabTestDiagnostics | MatlabTestDiagnostics[] | undefined): MatlabTestDiagnostics[] {
     if (!diagnostics) return [];
-
     return Array.isArray(diagnostics) ? diagnostics : [diagnostics];
 }
 
