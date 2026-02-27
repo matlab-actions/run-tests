@@ -6,7 +6,6 @@ import * as scriptgen from "./scriptgen";
 import { matlab, testResultsSummary } from "common-utils";
 //import {writeCoverageSummary} from "./codeCoverageSummary";
 import { processAndAddTestSummary} from "./tempTestSummary";
-import { createCoverageCheck } from "./checkSummary";
 /**
  * Gather action inputs and then run action
  */
