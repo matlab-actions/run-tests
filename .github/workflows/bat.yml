@@ -55,39 +55,6 @@ jobs:
           source-folder: sample
           startup-options: -logfile output.log
           code-coverage-summary-view: true
-  #       # env:
-  #         # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #     - name: Upload coverage data
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: coverage-data-${{ matrix.os }}
-  #         path: |
-  #           matlabCoverageResults*.json
-  #         if-no-files-found: warn  
-  # coverage-summary:
-  #   needs: integ
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     contents: read
-  #     checks: write
-  #   steps:
-  #     - uses: actions/download-artifact@v5
-  #       with:
-  #         name: built-action
-      
-  #     # Download all coverage artifacts
-  #     - name: Download all coverage artifacts
-  #       uses: actions/download-artifact@v5
-  #       with:
-  #         pattern: coverage-data-*
-  #         path: coverage-artifacts
-      
-  #     # Process and aggregate coverage data
-  #     - name: Aggregate and display coverage
-  #       uses: ./
-  #       with:
-  #         # Add a new input to indicate this is aggregation mode
-  #         aggregate-coverage: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # - name: Verify option application
