@@ -25,7 +25,7 @@ classdef CodeCoverageSummaryPluginService < matlab.buildtool.internal.services.c
  
                 sourceFolder = fullfile(pwd, 'sample');
                 coveragePlugin = matlab.unittest.plugins.CodeCoveragePlugin.forFolder(...
-                    sourceFolder, 'Producing', format, 'MetricLevel', 'statement');
+                    sourceFolder, 'Producing', format, 'MetricLevel', 'mcdc');
 
                 plugins(end+1) = coveragePlugin;
                 
