@@ -109,55 +109,45 @@ export function getCoverageData(): CoverageData | null {
     return coverageData[coverageData.length - 1];
 }
 
-function formatMetric(metric: CoverageMetric): string {
-    if (isNaN(metric.Percentage) || metric.Total === 0) {
-        return 'N/A';
-    }
-    return metric.Percentage.toFixed(2) + '%';
-}
-
-function formatCoveredTotal(metric: CoverageMetric): string {
-    if (isNaN(metric.Percentage) || metric.Total === 0) {
-        return 'N/A';
-    }
-    return `${metric.Executed}/${metric.Total}`;
+function formatPercentage(percentage: number): string {
+    return percentage.toFixed(2) + '%';
 }
 
 export function generateCoverageTableHTML(coverage: CoverageData): string {
     const metricLevel = coverage.MetricLevel || 'mcdc';
-    const showDecision = ['decision', 'condition', 'mcdc'].includes(metricLevel);
-    const showCondition = ['condition', 'mcdc'].includes(metricLevel);
-    const showMCDC = metricLevel === 'mcdc';
+    
+    // Determine which columns to show based on metric level
+    const columns = [
+        { name: 'Statement', data: coverage.StatementCoverage, show: true },
+        { name: 'Function', data: coverage.FunctionCoverage, show: true },
+        { name: 'Decision', data: coverage.DecisionCoverage, show: ['decision', 'condition', 'mcdc'].includes(metricLevel) },
+        { name: 'Condition', data: coverage.ConditionCoverage, show: ['condition', 'mcdc'].includes(metricLevel) },
+        { name: 'MC/DC', data: coverage.MCDCCoverage, show: metricLevel === 'mcdc' }
+    ];
 
-    let headerRow = `<tr align="center"><th>Metric</th><th>Statement</th><th>Function</th>`;
-    let percentageRow = `<tr align="center"><td><b>Percentage</b></td>` +
-        `<td>${formatMetric(coverage.StatementCoverage)}</td>` +
-        `<td>${formatMetric(coverage.FunctionCoverage)}</td>`;
-    let coveredTotalRow = `<tr align="center"><td><b>Covered/Total</b></td>` +
-        `<td>${formatCoveredTotal(coverage.StatementCoverage)}</td>` +
-        `<td>${formatCoveredTotal(coverage.FunctionCoverage)}</td>`;
+    // Filter to only include columns that should be shown
+    const visibleColumns = columns.filter(col => col.show);
 
-    if (showDecision) {
-        headerRow += `<th>Decision</th>`;
-        percentageRow += `<td>${formatMetric(coverage.DecisionCoverage)}</td>`;
-        coveredTotalRow += `<td>${formatCoveredTotal(coverage.DecisionCoverage)}</td>`;
-    }
+    // Build header row
+    let headerRow = '<tr align="center"><th>Metric</th>';
+    visibleColumns.forEach(col => {
+        headerRow += `<th>${col.name}</th>`;
+    });
+    headerRow += '</tr>';
 
-    if (showCondition) {
-        headerRow += `<th>Condition</th>`;
-        percentageRow += `<td>${formatMetric(coverage.ConditionCoverage)}</td>`;
-        coveredTotalRow += `<td>${formatCoveredTotal(coverage.ConditionCoverage)}</td>`;
-    }
+    // Build percentage row
+    let percentageRow = '<tr align="center"><td><b>Percentage</b></td>';
+    visibleColumns.forEach(col => {
+        percentageRow += `<td>${formatPercentage(col.data.Percentage)}</td>`;
+    });
+    percentageRow += '</tr>';
 
-    if (showMCDC) {
-        headerRow += `<th>MC/DC</th>`;
-        percentageRow += `<td>${formatMetric(coverage.MCDCCoverage)}</td>`;
-        coveredTotalRow += `<td>${formatCoveredTotal(coverage.MCDCCoverage)}</td>`;
-    }
-
-    headerRow += `</tr>`;
-    percentageRow += `</tr>`;
-    coveredTotalRow += `</tr>`;
+    // Build covered/total row
+    let coveredTotalRow = '<tr align="center"><td><b>Covered/Total</b></td>';
+    visibleColumns.forEach(col => {
+        coveredTotalRow += `<td>${col.data.Executed}/${col.data.Total}</td>`;
+    });
+    coveredTotalRow += '</tr>';
 
     return (
         `<table>
