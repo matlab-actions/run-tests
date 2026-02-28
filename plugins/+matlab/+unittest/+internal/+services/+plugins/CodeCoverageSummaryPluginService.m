@@ -11,6 +11,21 @@ classdef CodeCoverageSummaryPluginService < matlab.buildtool.internal.services.c
             end
             % Check if MATLAB Test license is available
             if license('test', 'matlab_test') && coverageSummaryEnabled
+                
+            % Get metric level from environment variable
+                metricLevel = getenv('INPUT_CODE_COVERAGE_METRIC_LEVEL');
+                if isempty(metricLevel)
+                    metricLevel = 'mcdc';
+                end
+                
+                % Validate metric level
+                validMetricLevels = {'statement', 'decision', 'condition', 'mcdc'};
+                if ~ismember(lower(metricLevel), validMetricLevels)
+                    warning('CodeCoverageSummaryPlugin:InvalidMetricLevel', ...
+                        'Invalid metric level "%s". Using default "mcdc".', metricLevel);
+                    metricLevel = 'mcdc';
+                end
+                
                 % Create a shared CoverageResult format object
                 format = matlab.unittest.plugins.codecoverage.CoverageResult;
                 
@@ -25,7 +40,7 @@ classdef CodeCoverageSummaryPluginService < matlab.buildtool.internal.services.c
  
                 sourceFolder = fullfile(pwd, 'sample');
                 coveragePlugin = matlab.unittest.plugins.CodeCoveragePlugin.forFolder(...
-                    sourceFolder, 'Producing', format, 'MetricLevel', 'mcdc');
+                    sourceFolder, 'Producing', format, 'MetricLevel', lower(metricLevel));
 
                 plugins(end+1) = coveragePlugin;
                 

@@ -33,6 +33,13 @@ async function run() {
     };
 
     const codeCoverageSummaryView = core.getInput("code-coverage-summary-view");
+    const codeCoverageMetricLevel = core.getInput("code-coverage-metric-level") || 'mcdc';
+    
+    // Validate metric level
+    const validMetricLevels = ['statement', 'decision', 'condition', 'mcdc'];
+    if (!validMetricLevels.includes(codeCoverageMetricLevel.toLowerCase())) {
+        core.warning(`Invalid metric level '${codeCoverageMetricLevel}'. Using default 'mcdc'.`);
+    }
 
     const command = scriptgen.generateCommand(options);
     const startupOptions = core.getInput("startup-options").split(" ");
@@ -42,7 +49,8 @@ async function run() {
         env: {
             ...process.env,
             MW_BATCH_LICENSING_ONLINE:'true', // Remove when online batch licensing is the default
-            INPUT_CODE_COVERAGE_SUMMARY_VIEW: codeCoverageSummaryView || 'false'
+            INPUT_CODE_COVERAGE_SUMMARY_VIEW: codeCoverageSummaryView || 'false',
+            INPUT_CODE_COVERAGE_METRIC_LEVEL: codeCoverageMetricLevel.toLowerCase()
         }
     };
     core.info("Successfully generated test script!");

@@ -3,12 +3,17 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
     
     properties (Access=private)
         CoverageFormat
+        MetricLevel
     end
     
     methods
-        function plugin = CodeCoverageSummaryPlugin(coverageFormat)
-            % Constructor: accepts CoverageResult format object
+        function plugin = CodeCoverageSummaryPlugin(coverageFormat, metricLevel)
             plugin.CoverageFormat = coverageFormat;
+            if nargin < 2
+                plugin.MetricLevel = 'mcdc';
+            else
+                plugin.MetricLevel = lower(metricLevel);
+            end
         end
     end
     
@@ -28,78 +33,41 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
             end
             
             result = plugin.CoverageFormat.Result;
-            %disp("result is ");
-            %disp(result);
-            % Get coverage summaries for all metrics
-            %[statementCoverage, statementDetails] = coverageSummary(result, "statement");
-            statementCoverage = coverageSummary(result, "statement");
-            functionCoverage = coverageSummary(result, "function");
-            decisionCoverage = coverageSummary(result, "decision");
-            conditionCoverage = coverageSummary(result, "condition");
-            mcdcCoverage = coverageSummary(result, "mcdc");
             
             % Create coverage summary structure
             coverageDetails = struct();
-            %disp("statement coverage");
-            %disp(statementCoverage);
+            coverageDetails.MetricLevel = plugin.MetricLevel;
+            
+            % Always get statement and function coverage (available for all levels)
+            statementCoverage = coverageSummary(result, "statement");
+            functionCoverage = coverageSummary(result, "function");
+            
             coverageDetails.StatementCoverage = aggregateCoverage(statementCoverage);
             coverageDetails.FunctionCoverage = aggregateCoverage(functionCoverage);
-            coverageDetails.DecisionCoverage = aggregateCoverage(decisionCoverage);
-            coverageDetails.ConditionCoverage = aggregateCoverage(conditionCoverage);
-            coverageDetails.MCDCCoverage = aggregateCoverage(mcdcCoverage);
-
-
-            % % Add all coverage metrics
-            % coverageDetails.StatementCoverage = struct(...
-            %     'Executed', statementExec, ...
-            %     'Total', statementTotal, ...
-            %     'Percentage', calculatePercentage(statementCoverage) ...
-            % );
-            % 
-            % coverageDetails.FunctionCoverage = struct(...
-            %     'Executed', functionCoverage(1), ...
-            %     'Total', functionCoverage(2), ...
-            %     'Percentage', calculatePercentage(functionCoverage) ...
-            % );
-            % 
-            % coverageDetails.DecisionCoverage = struct(...
-            %     'Executed', decisionCoverage(1), ...
-            %     'Total', decisionCoverage(2), ...
-            %     'Percentage', calculatePercentage(decisionCoverage) ...
-            % );
-            % 
-            % coverageDetails.ConditionCoverage = struct(...
-            %     'Executed', conditionCoverage(1), ...
-            %     'Total', conditionCoverage(2), ...
-            %     'Percentage', calculatePercentage(conditionCoverage) ...
-            % );
-            % 
-            % coverageDetails.MCDCCoverage = struct(...
-            %     'Executed', mcdcCoverage(1), ...
-            %     'Total', mcdcCoverage(2), ...
-            %     'Percentage', calculatePercentage(mcdcCoverage) ...
-            % );
             
-            % % Add detailed information
-            % if ~isempty(functionDetails) && isfield(functionDetails, 'function')
-            %     coverageDetails.FunctionDetails = functionDetails.function;
-            % end
-            % 
-            % if ~isempty(statementDetails) && isfield(statementDetails, 'statement')
-            %     coverageDetails.StatementDetails = statementDetails.statement;
-            % end
-            % 
-            % if ~isempty(decisionDetails) && isfield(decisionDetails, 'decision')
-            %     coverageDetails.DecisionDetails = decisionDetails.decision;
-            % end
-            % 
-            % if ~isempty(conditionDetails) && isfield(conditionDetails, 'condition')
-            %     coverageDetails.ConditionDetails = conditionDetails.condition;
-            % end
-            % 
-            % if ~isempty(mcdcDetails) && isfield(mcdcDetails, 'mcdc')
-            %     coverageDetails.MCDCDetails = mcdcDetails.mcdc;
-            % end
+            % Get decision coverage if metric level is decision, condition, or mcdc
+            if ismember(plugin.MetricLevel, {'decision', 'condition', 'mcdc'})
+                decisionCoverage = coverageSummary(result, "decision");
+                coverageDetails.DecisionCoverage = aggregateCoverage(decisionCoverage);
+            else
+                coverageDetails.DecisionCoverage = struct('Executed', 0, 'Total', 0, 'Percentage', NaN);
+            end
+            
+            % Get condition coverage if metric level is condition or mcdc
+            if ismember(plugin.MetricLevel, {'condition', 'mcdc'})
+                conditionCoverage = coverageSummary(result, "condition");
+                coverageDetails.ConditionCoverage = aggregateCoverage(conditionCoverage);
+            else
+                coverageDetails.ConditionCoverage = struct('Executed', 0, 'Total', 0, 'Percentage', NaN);
+            end
+            
+            % Get MC/DC coverage if metric level is mcdc
+            if strcmp(plugin.MetricLevel, 'mcdc')
+                mcdcCoverage = coverageSummary(result, "mcdc");
+                coverageDetails.MCDCCoverage = aggregateCoverage(mcdcCoverage);
+            else
+                coverageDetails.MCDCCoverage = struct('Executed', 0, 'Total', 0, 'Percentage', NaN);
+            end
             
             % Determine file path for coverage results
             if ~isempty(getenv("RUNNER_TEMP")) && ~isempty(getenv("GITHUB_RUN_ID"))
@@ -132,7 +100,6 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
         end
     end
 end
-
 
 % Helper function to aggregate coverage data from multiple files
 function coverageStruct = aggregateCoverage(coverageMatrix)
