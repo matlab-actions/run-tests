@@ -98,6 +98,98 @@
 // }
 
 
+// import * as core from "@actions/core";
+// import { readFileSync, existsSync } from "fs";
+// import * as path from "path";
+
+// interface CoverageMetric {
+//     Executed: number;
+//     Total: number;
+//     Percentage: number;
+// }
+
+// interface CoverageData {
+//     MetricLevel?: string;
+//     StatementCoverage: CoverageMetric;
+//     FunctionCoverage: CoverageMetric;
+//     DecisionCoverage: CoverageMetric;
+//     ConditionCoverage: CoverageMetric;
+//     MCDCCoverage: CoverageMetric;
+// }
+
+// export function getCoverageData(): CoverageData | null {
+//     const runnerTemp = process.env.RUNNER_TEMP || "";
+//     const runId = process.env.GITHUB_RUN_ID || "";
+//     const coveragePath = path.join(runnerTemp, `matlabCoverageResults${runId}.json`);
+    
+//     core.info(`Looking for coverage at: ${coveragePath}`);
+    
+//     if (!existsSync(coveragePath)) {
+//         core.info("No coverage data found");
+//         return null;
+//     }
+
+//     const coverageData: CoverageData[] = JSON.parse(readFileSync(coveragePath, "utf8"));
+//     if (!coverageData || coverageData.length === 0) {
+//         core.info("Coverage data is empty");
+//         return null;
+//     }
+
+//     return coverageData[coverageData.length - 1];
+// }
+
+// function formatPercentage(percentage: number): string {
+//     return percentage.toFixed(2) + '%';
+// }
+
+// export function generateCoverageTableHTML(coverage: CoverageData): string {
+//     const metricLevel = (coverage.MetricLevel || 'mcdc').toLowerCase();
+    
+//     core.info(`Generating coverage table for metric level: ${metricLevel}`);
+    
+//     // Define all possible columns
+//     const allColumns = [
+//         { name: 'Statement', data: coverage.StatementCoverage, levels: ['statement', 'decision', 'condition', 'mcdc'] },
+//         { name: 'Function', data: coverage.FunctionCoverage, levels: ['statement', 'decision', 'condition', 'mcdc'] },
+//         { name: 'Decision', data: coverage.DecisionCoverage, levels: ['decision', 'condition', 'mcdc'] },
+//         { name: 'Condition', data: coverage.ConditionCoverage, levels: ['condition', 'mcdc'] },
+//         { name: 'MC/DC', data: coverage.MCDCCoverage, levels: ['mcdc'] }
+//     ];
+
+//     // Filter columns based on metric level
+//     const visibleColumns = allColumns.filter(col => col.levels.includes(metricLevel));
+
+//     // Build header row
+//     let headerRow = '<tr align="center"><th>Metric</th>';
+//     visibleColumns.forEach(col => {
+//         headerRow += `<th>${col.name}</th>`;
+//     });
+//     headerRow += '</tr>';
+
+//     // Build percentage row
+//     let percentageRow = '<tr align="center"><td><b>Percentage</b></td>';
+//     visibleColumns.forEach(col => {
+//         percentageRow += `<td>${formatPercentage(col.data.Percentage)}</td>`;
+//     });
+//     percentageRow += '</tr>';
+
+//     // Build covered/total row
+//     let coveredTotalRow = '<tr align="center"><td><b>Covered/Total</b></td>';
+//     visibleColumns.forEach(col => {
+//         coveredTotalRow += `<td>${col.data.Executed}/${col.data.Total}</td>`;
+//     });
+//     coveredTotalRow += '</tr>';
+
+//     return (
+//         `<table>
+//             ${headerRow}
+//             ${percentageRow}
+//             ${coveredTotalRow}
+//         </table>`
+//     );
+// }
+
+
 import * as core from "@actions/core";
 import { readFileSync, existsSync } from "fs";
 import * as path from "path";
@@ -110,11 +202,11 @@ interface CoverageMetric {
 
 interface CoverageData {
     MetricLevel?: string;
-    StatementCoverage: CoverageMetric;
-    FunctionCoverage: CoverageMetric;
-    DecisionCoverage: CoverageMetric;
-    ConditionCoverage: CoverageMetric;
-    MCDCCoverage: CoverageMetric;
+    StatementCoverage?: CoverageMetric;  // Made optional with ?
+    FunctionCoverage?: CoverageMetric;   // Made optional with ?
+    DecisionCoverage?: CoverageMetric;   // Made optional with ?
+    ConditionCoverage?: CoverageMetric;  // Made optional with ?
+    MCDCCoverage?: CoverageMetric;       // Made optional with ?
 }
 
 export function getCoverageData(): CoverageData | null {
@@ -129,62 +221,71 @@ export function getCoverageData(): CoverageData | null {
         return null;
     }
 
-    const coverageData: CoverageData[] = JSON.parse(readFileSync(coveragePath, "utf8"));
-    if (!coverageData || coverageData.length === 0) {
-        core.info("Coverage data is empty");
+    try {
+        const coverageData: CoverageData[] = JSON.parse(readFileSync(coveragePath, "utf8"));
+        if (!coverageData || coverageData.length === 0) {
+            core.info("Coverage data is empty");
+            return null;
+        }
+        return coverageData[coverageData.length - 1];
+    } catch (error) {
+        core.error(`Error reading coverage data: ${error}`);
         return null;
     }
-
-    return coverageData[coverageData.length - 1];
 }
 
 function formatPercentage(percentage: number): string {
+    if (percentage === null || percentage === undefined || isNaN(percentage)) {
+        return '0.00%';
+    }
     return percentage.toFixed(2) + '%';
 }
 
 export function generateCoverageTableHTML(coverage: CoverageData): string {
-    const metricLevel = (coverage.MetricLevel || 'mcdc').toLowerCase();
-    
-    core.info(`Generating coverage table for metric level: ${metricLevel}`);
-    
-    // Define all possible columns
-    const allColumns = [
-        { name: 'Statement', data: coverage.StatementCoverage, levels: ['statement', 'decision', 'condition', 'mcdc'] },
-        { name: 'Function', data: coverage.FunctionCoverage, levels: ['statement', 'decision', 'condition', 'mcdc'] },
-        { name: 'Decision', data: coverage.DecisionCoverage, levels: ['decision', 'condition', 'mcdc'] },
-        { name: 'Condition', data: coverage.ConditionCoverage, levels: ['condition', 'mcdc'] },
-        { name: 'MC/DC', data: coverage.MCDCCoverage, levels: ['mcdc'] }
-    ];
+    try {
+        core.info(`Generating coverage table for metric level: ${coverage.MetricLevel}`);
+        
+        // Define all possible columns
+        const allColumns = [
+            { name: 'Statement', data: coverage.StatementCoverage },
+            { name: 'Function', data: coverage.FunctionCoverage },
+            { name: 'Decision', data: coverage.DecisionCoverage },
+            { name: 'Condition', data: coverage.ConditionCoverage },
+            { name: 'MC/DC', data: coverage.MCDCCoverage }
+        ];
 
-    // Filter columns based on metric level
-    const visibleColumns = allColumns.filter(col => col.levels.includes(metricLevel));
+        // Filter to only include columns where data actually exists
+        const visibleColumns = allColumns.filter(col => col.data !== undefined && col.data !== null);
 
-    // Build header row
-    let headerRow = '<tr align="center"><th>Metric</th>';
-    visibleColumns.forEach(col => {
-        headerRow += `<th>${col.name}</th>`;
-    });
-    headerRow += '</tr>';
+        if (visibleColumns.length === 0) {
+            core.warning('No visible columns found');
+            return '<p>No coverage data available</p>';
+        }
 
-    // Build percentage row
-    let percentageRow = '<tr align="center"><td><b>Percentage</b></td>';
-    visibleColumns.forEach(col => {
-        percentageRow += `<td>${formatPercentage(col.data.Percentage)}</td>`;
-    });
-    percentageRow += '</tr>';
+        core.info(`Visible columns: ${visibleColumns.map(c => c.name).join(', ')}`);
 
-    // Build covered/total row
-    let coveredTotalRow = '<tr align="center"><td><b>Covered/Total</b></td>';
-    visibleColumns.forEach(col => {
-        coveredTotalRow += `<td>${col.data.Executed}/${col.data.Total}</td>`;
-    });
-    coveredTotalRow += '</tr>';
+        // Build header row
+        const headers = visibleColumns.map(col => `<th>${col.name}</th>`).join('');
+        const headerRow = `<tr align="center"><th>Metric</th>${headers}</tr>`;
 
-    return (
-        `<table>
-            ${headerRow}
-            ${percentageRow}
-            ${coveredTotalRow}
-        </table>`
-    );
+        // Build percentage row
+        const percentages = visibleColumns.map(col => 
+            `<td>${formatPercentage(col.data!.Percentage)}</td>`
+        ).join('');
+        const percentageRow = `<tr align="center"><td><b>Percentage</b></td>${percentages}</tr>`;
+
+        // Build covered/total row
+        const coveredTotals = visibleColumns.map(col => 
+            `<td>${col.data!.Executed}/${col.data!.Total}</td>`
+        ).join('');
+        const coveredTotalRow = `<tr align="center"><td><b>Covered/Total</b></td>${coveredTotals}</tr>`;
+
+        const tableHTML = `<table>${headerRow}${percentageRow}${coveredTotalRow}</table>`;
+        core.info(`Generated table HTML: ${tableHTML}`);
+        
+        return tableHTML;
+    } catch (error) {
+        core.error(`Error generating coverage table: ${error}`);
+        return '<p>Error generating coverage table</p>';
+    }
 }
