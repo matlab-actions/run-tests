@@ -49,24 +49,18 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
             if ismember(plugin.MetricLevel, {'decision', 'condition', 'mcdc'})
                 decisionCoverage = coverageSummary(result, "decision");
                 coverageDetails.DecisionCoverage = aggregateCoverage(decisionCoverage);
-            else
-                coverageDetails.DecisionCoverage = struct('Executed', 0, 'Total', 0, 'Percentage', NaN);
             end
             
             % Get condition coverage if metric level is condition or mcdc
             if ismember(plugin.MetricLevel, {'condition', 'mcdc'})
                 conditionCoverage = coverageSummary(result, "condition");
                 coverageDetails.ConditionCoverage = aggregateCoverage(conditionCoverage);
-            else
-                coverageDetails.ConditionCoverage = struct('Executed', 0, 'Total', 0, 'Percentage', NaN);
             end
             
             % Get MC/DC coverage if metric level is mcdc
             if strcmp(plugin.MetricLevel, 'mcdc')
                 mcdcCoverage = coverageSummary(result, "mcdc");
                 coverageDetails.MCDCCoverage = aggregateCoverage(mcdcCoverage);
-            else
-                coverageDetails.MCDCCoverage = struct('Executed', 0, 'Total', 0, 'Percentage', NaN);
             end
             
             % Determine file path for coverage results
