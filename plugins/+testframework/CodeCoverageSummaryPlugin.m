@@ -9,11 +9,12 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
     methods
         function plugin = CodeCoverageSummaryPlugin(coverageFormat, metricLevel)
             plugin.CoverageFormat = coverageFormat;
-            if nargin < 2
-                plugin.MetricLevel = 'mcdc';
-            else
-                plugin.MetricLevel = lower(metricLevel);
-            end
+            plugin.MetricLevel = metricLevel;
+            % if nargin < 2
+            %     plugin.MetricLevel = 'mcdc';
+            % else
+            %     plugin.MetricLevel = lower(metricLevel);
+            % end
         end
     end
     
@@ -21,8 +22,7 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
         function runSession(plugin, pluginData)
             % Checkout MATLAB Test license
             license('checkout', 'matlab_test');
-            disp("in summary plugin:");
-            disp(plugin.metricLevel);
+            
             % Run the session first (this ensures coverage data is collected)
             runSession@matlab.unittest.plugins.TestRunnerPlugin(plugin, pluginData);
             
@@ -38,7 +38,8 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
             % Create coverage summary structure
             coverageDetails = struct();
             coverageDetails.MetricLevel = plugin.MetricLevel;
-            
+            disp("in summary plugin:");
+            disp(plugin.metricLevel);
             % Always get statement and function coverage (available for all levels)
             statementCoverage = coverageSummary(result, "statement");
             functionCoverage = coverageSummary(result, "function");
