@@ -55,7 +55,7 @@ jobs:
           source-folder: sample
           startup-options: -logfile output.log
           code-coverage-summary-view: true
-          code-coverage-metric-level: condition
+          code-coverage-metric-level: statement
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # - name: Verify option application

@@ -38,8 +38,7 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
             % Create coverage summary structure
             coverageDetails = struct();
             coverageDetails.MetricLevel = plugin.MetricLevel;
-            disp("in summary plugin:");
-            disp(plugin.MetricLevel);
+            
             % Always get statement and function coverage (available for all levels)
             statementCoverage = coverageSummary(result, "statement");
             functionCoverage = coverageSummary(result, "function");

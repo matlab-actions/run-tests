@@ -34,8 +34,7 @@ async function run() {
 
     const codeCoverageSummaryView = core.getInput("code-coverage-summary-view");
     const codeCoverageMetricLevel = core.getInput("code-coverage-metric-level") || 'mcdc';
-    core.info("Metric level is");
-    core.info(codeCoverageMetricLevel);
+    
     // Validate metric level
     const validMetricLevels = ['statement', 'decision', 'condition', 'mcdc'];
     if (!validMetricLevels.includes(codeCoverageMetricLevel.toLowerCase())) {
