@@ -21,7 +21,8 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
         function runSession(plugin, pluginData)
             % Checkout MATLAB Test license
             license('checkout', 'matlab_test');
-            
+            disp("in summary plugin:");
+            disp(plugin.metricLevel);
             % Run the session first (this ensures coverage data is collected)
             runSession@matlab.unittest.plugins.TestRunnerPlugin(plugin, pluginData);
             

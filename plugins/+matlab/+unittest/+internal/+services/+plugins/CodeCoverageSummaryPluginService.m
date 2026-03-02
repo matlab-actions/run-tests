@@ -37,7 +37,8 @@ classdef CodeCoverageSummaryPluginService < matlab.buildtool.internal.services.c
                 
                 %coveragePlugin = matlab.unittest.plugins.CodeCoveragePlugin.forFile(...
                 %    targetFile, 'Producing', format, 'MetricLevel', 'mcdc');
- 
+                disp("IN SERVICE CLASS metric is");
+                disp(metricLevel);
                 sourceFolder = fullfile(pwd, 'sample');
                 coveragePlugin = matlab.unittest.plugins.CodeCoveragePlugin.forFolder(...
                     sourceFolder, 'Producing', format, 'MetricLevel', lower(metricLevel));
