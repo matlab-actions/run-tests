@@ -19,12 +19,12 @@ classdef CodeCoverageSummaryPluginService < matlab.buildtool.internal.services.c
                 end
                 
                 % Validate metric level
-                validMetricLevels = {'statement', 'decision', 'condition', 'mcdc'};
-                if ~ismember(lower(metricLevel), validMetricLevels)
-                    warning('CodeCoverageSummaryPlugin:InvalidMetricLevel', ...
-                        'Invalid metric level "%s". Using default "mcdc".', metricLevel);
-                    metricLevel = 'mcdc';
-                end
+                % validMetricLevels = {'statement', 'decision', 'condition', 'mcdc'};
+                % if ~ismember(lower(metricLevel), validMetricLevels)
+                %     warning('CodeCoverageSummaryPlugin:InvalidMetricLevel', ...
+                %         'Invalid metric level "%s". Using default "mcdc".', metricLevel);
+                %     metricLevel = 'mcdc';
+                % end
                 
                 % Create a shared CoverageResult format object
                 format = matlab.unittest.plugins.codecoverage.CoverageResult;
