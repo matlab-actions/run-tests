@@ -7,14 +7,10 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
     end
     
     methods
-        function plugin = CodeCoverageSummaryPlugin(coverageFormat, metricLevel)
-            plugin.CoverageFormat = coverageFormat;
+        function plugin = CodeCoverageSummaryPlugin(metricLevel)
+            format = matlab.unittest.plugins.codecoverage.CoverageResult;
+            plugin.CoverageFormat = format;
             plugin.MetricLevel = metricLevel;
-            % if nargin < 2
-            %     plugin.MetricLevel = 'mcdc';
-            % else
-            %     plugin.MetricLevel = lower(metricLevel);
-            % end
         end
     end
     

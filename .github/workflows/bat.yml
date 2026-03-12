@@ -54,8 +54,7 @@ jobs:
         with:
           source-folder: sample
           startup-options: -logfile output.log
-          code-coverage-summary-view: true
-          #code-coverage-metric-level: mcdc
+          code-coverage-metric-level: mcdc  # new option to configure metric level 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # - name: Verify option application
