@@ -22,7 +22,7 @@
         "@actions/core": "^1.11.1",
         "@actions/exec": "^1.1.1",
         "@actions/github": "^5.1.1",
-        "common-utils": "github:matlab-actions/common-utils#v1.0.0"
+        "common-utils": "github:matlab-actions/common-utils#tarun/githubAction"
     },
     "devDependencies": {
         "@types/jest": "^30.0.0",
