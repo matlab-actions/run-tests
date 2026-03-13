@@ -32,7 +32,7 @@ async function run() {
         LoggingLevel: core.getInput("logging-level"),
     };
 
-    const codeCoverageSummaryView = core.getInput("code-coverage-summary-view");
+    //const codeCoverageSummaryView = core.getInput("code-coverage-summary-view");
     const codeCoverageMetricLevel = core.getInput("code-coverage-metric-level") || 'mcdc';
     
     // Validate metric level
