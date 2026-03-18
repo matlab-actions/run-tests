@@ -8,7 +8,6 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
     
     methods
         function plugin = CodeCoverageSummaryPlugin(coverageFormat, metricLevel)
-            %format = matlab.unittest.plugins.codecoverage.CoverageResult;
             plugin.CoverageFormat = coverageFormat;
             plugin.MetricLevel = metricLevel;
         end
@@ -39,25 +38,25 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
             statementCoverage = coverageSummary(result, "statement");
             functionCoverage = coverageSummary(result, "function");
             
-            coverageDetails.StatementCoverage = aggregateCoverage(statementCoverage);
-            coverageDetails.FunctionCoverage = aggregateCoverage(functionCoverage);
+            coverageDetails.StatementCoverage = sumCoverage(statementCoverage);
+            coverageDetails.FunctionCoverage = sumCoverage(functionCoverage);
             
             % Get decision coverage if metric level is decision, condition, or mcdc
             if ismember(plugin.MetricLevel, {'decision', 'condition', 'mcdc'})
                 decisionCoverage = coverageSummary(result, "decision");
-                coverageDetails.DecisionCoverage = aggregateCoverage(decisionCoverage);
+                coverageDetails.DecisionCoverage = sumCoverage(decisionCoverage);
             end
             
             % Get condition coverage if metric level is condition or mcdc
             if ismember(plugin.MetricLevel, {'condition', 'mcdc'})
                 conditionCoverage = coverageSummary(result, "condition");
-                coverageDetails.ConditionCoverage = aggregateCoverage(conditionCoverage);
+                coverageDetails.ConditionCoverage = sumCoverage(conditionCoverage);
             end
             
             % Get MC/DC coverage if metric level is mcdc
             if strcmp(plugin.MetricLevel, 'mcdc')
                 mcdcCoverage = coverageSummary(result, "mcdc");
-                coverageDetails.MCDCCoverage = aggregateCoverage(mcdcCoverage);
+                coverageDetails.MCDCCoverage = sumCoverage(mcdcCoverage);
             end
             
             % Determine file path for coverage results
@@ -69,13 +68,6 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
                 coverageArtifactFile = fullfile(pwd, "matlabCoverageResults.json");
             end
             
-            % If coverage results artifact exists, update the same file
-            %if isfile(coverageArtifactFile)
-            %     coverageResults = {jsondecode(fileread(coverageArtifactFile))};
-            % else
-            %     coverageResults = {};
-            % end
-            % coverageResults{end+1} = coverageDetails;
             coverageResults = {coverageDetails};
             
             JsonCoverageResults = jsonencode(coverageResults, "PrettyPrint", true);
@@ -92,8 +84,8 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
     end
 end
 
-% Helper function to aggregate coverage data from multiple files
-function coverageStruct = aggregateCoverage(coverageMatrix)
+% Helper function to sum up the coverage data from multiple files
+function coverageStruct = sumCoverage(coverageMatrix)
     % Split the vector in half: first half is executed, second half is total
     executed = sum(coverageMatrix(:, 1));
     total = sum(coverageMatrix(:, 2));

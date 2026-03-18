@@ -26,12 +26,12 @@ classdef CodeCoverageSummaryPluginService < matlab.buildtool.internal.services.c
                 end
                 
                 coveragePlugin = matlab.unittest.plugins.CodeCoveragePlugin.forFolder(...
-                    sourceFolder, 'Producing', format, 'MetricLevel', lower(metricLevel));
+                    sourceFolder, 'Producing', format, 'MetricLevel', metricLevel);
 
                 plugins(end+1) = coveragePlugin;
                 
                 % Add the summary plugin with the same format object
-                summaryPlugin = testframework.CodeCoverageSummaryPlugin(format, lower(metricLevel));
+                summaryPlugin = testframework.CodeCoverageSummaryPlugin(format, metricLevel);
                 plugins(end+1) = summaryPlugin;
             else
                 plugins = matlab.unittest.plugins.TestRunnerPlugin.empty(1,0);
