@@ -84,15 +84,6 @@ inputs:
       Startup options for MATLAB
     required: false
     default: ""
-  code-coverage-summary-view:
-    description: >
-      Enable code coverage summary view in GitHub Actions
-    required: false
-    default: false
-  github-token:
-    description: 'GitHub token for creating checks'
-    required: false
-    default: ''
   code-coverage-metric-level:
     description: 'Metric level for code coverage (statement, decision, condition, mcdc)'
     required: false
