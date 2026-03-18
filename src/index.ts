@@ -49,7 +49,8 @@ async function run() {
         env: {
             ...process.env,
             MW_BATCH_LICENSING_ONLINE:'true', // Remove when online batch licensing is the default
-            INPUT_CODE_COVERAGE_METRIC_LEVEL: codeCoverageMetricLevel.toLowerCase()
+            INPUT_CODE_COVERAGE_METRIC_LEVEL: codeCoverageMetricLevel.toLowerCase(),
+            INPUT_SOURCE_FOLDER: options.SourceFolder || '' // Add source folder to environment
         }
     };
     core.info("Successfully generated test script!");
@@ -65,8 +66,8 @@ async function run() {
         const runId = process.env.GITHUB_RUN_ID || '';
         const actionName = process.env.GITHUB_ACTION || '';
 
-        testResultsSummary.processAndAddTestSummary(runnerTemp, runId, actionName, workspaceDir);
-        //processAndAddTestSummary(runnerTemp, runId, actionName, workspaceDir);
+        //testResultsSummary.processAndAddTestSummary(runnerTemp, runId, actionName, workspaceDir);
+        processAndAddTestSummary(runnerTemp, runId, actionName, workspaceDir);
         // core.summary.write();
 
         //writeCoverageSummary();
