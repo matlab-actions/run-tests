@@ -69,8 +69,6 @@ async function run() {
         testResultsSummary.processAndAddTestSummary(runnerTemp, runId, actionName, workspaceDir);
         //processAndAddTestSummary(runnerTemp, runId, actionName, workspaceDir);
         // core.summary.write();
-
-        //writeCoverageSummary();
         core.summary.write();
     });
 }
