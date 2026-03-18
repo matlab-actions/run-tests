@@ -19,30 +19,12 @@ classdef CodeCoverageSummaryPluginService < matlab.buildtool.internal.services.c
                 % Create an array to hold multiple plugins
                 plugins = matlab.unittest.plugins.TestRunnerPlugin.empty(0);
                 
-                % sourceFolder = fullfile(pwd, 'sample');
                 % Get source folder from environment variable
                 sourceFolder = getenv('INPUT_SOURCE_FOLDER');
-                % if isempty(sourceFolder)
-                %     % Fallback to current working directory if not specified
-                %     sourceFolder = pwd;
-                %     warning('CodeCoverageSummaryPluginService:NoSourceFolder', ...
-                %         'No source folder specified. Using current directory: %s', sourceFolder);
-                % else
-                %     % Convert to absolute path if it's relative
-                %     if ~isfolder(sourceFolder)
-                %         % Try as relative path from pwd
-                %         absolutePath = fullfile(pwd, sourceFolder);
-                %         if isfolder(absolutePath)
-                %             sourceFolder = absolutePath;
-                %         else
-                %             warning('CodeCoverageSummaryPluginService:InvalidSourceFolder', ...
-                %                 'Source folder "%s" does not exist. Using current directory.', sourceFolder);
-                %             sourceFolder = pwd;
-                %         end
-                %     end
-                % end
+                if isempty(sourceFolder)
+                    sourceFolder = pwd;
+                end
                 
-                disp(['Using source folder for coverage: ' sourceFolder]);
                 coveragePlugin = matlab.unittest.plugins.CodeCoveragePlugin.forFolder(...
                     sourceFolder, 'Producing', format, 'MetricLevel', lower(metricLevel));
 
