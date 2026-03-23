@@ -64,6 +64,7 @@ async function run() {
         const runId = process.env.GITHUB_RUN_ID || '';
         const actionName = process.env.GITHUB_ACTION || '';
 
+        //it will add test results and code coverage view
         testResultsSummary.processAndAddTestSummary(runnerTemp, runId, actionName, workspaceDir);
         core.summary.write();
     });
