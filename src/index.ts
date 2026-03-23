@@ -4,7 +4,7 @@ import * as core from "@actions/core";
 import * as exec from "@actions/exec";
 import * as scriptgen from "./scriptgen";
 import { matlab, testResultsSummary } from "common-utils";
-
+import { processAndAddTestSummary } from "./testResultsSummary";
 /**
  * Gather action inputs and then run action
  */
@@ -65,7 +65,8 @@ async function run() {
         const actionName = process.env.GITHUB_ACTION || '';
 
         //it will add test results and code coverage view
-        testResultsSummary.processAndAddTestSummary(runnerTemp, runId, actionName, workspaceDir);
+        //testResultsSummary.processAndAddTestSummary(runnerTemp, runId, actionName, workspaceDir);
+        processAndAddTestSummary(runnerTemp, runId, actionName, workspaceDir);
         core.summary.write();
     });
 }
