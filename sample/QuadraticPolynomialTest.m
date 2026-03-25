@@ -1,4 +1,4 @@
-classdef QuadraticPolynomialTest1 < matlab.unittest.TestCase
+classdef QuadraticPolynomialTest < matlab.unittest.TestCase
     methods (Test)
         function realSolution(testCase)
             p = QuadraticPolynomial(1,-3,2);
