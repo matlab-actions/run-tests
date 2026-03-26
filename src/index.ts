@@ -2,7 +2,7 @@
 
 import * as core from "@actions/core";
 import * as exec from "@actions/exec";
-import * as scriptgen from "./scriptgen";
+import * as scriptgen from "./scriptgen.js";
 import { matlab, testResultsSummary } from "common-utils";
 
 /**

@@ -1,6 +1,6 @@
 // Copyright 2020-2022 The MathWorks, Inc.
 
-import * as scriptgen from "./scriptgen";
+import * as scriptgen from "./scriptgen.js";
 
 describe("command generation", () => {
     it("contains genscript invocation with unspecified options", () => {
