@@ -85,9 +85,9 @@ inputs:
     required: false
     default: ""
   code-coverage-metric-level:
-    description: 'Metric level for code coverage (statement, decision, condition, mcdc)'
+    description: Metric level for code coverage (statement, decision, condition, mcdc)
     required: false
-    default: 'mcdc'
+    default: mcdc
 runs:
   using: node20
   main: dist/index.js
