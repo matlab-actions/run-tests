@@ -78,7 +78,6 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
             else
                 closeFile = onCleanup(@()fclose(fID));
                 fprintf(fID, '%s', JsonCoverageResults);
-                disp("Coverage data written to: " + coverageArtifactFile);
             end
         end
     end

@@ -86,7 +86,7 @@ inputs:
     default: ""
   code-coverage-metric-level:
     description: >-
-      Metric level for code coverage collection
+      Level of coverage metrics to collect
     required: false
     default: mcdc
 runs:
