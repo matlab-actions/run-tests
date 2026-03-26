@@ -23,8 +23,7 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
             
             % Now extract and save coverage data
             if isempty(plugin.CoverageFormat.Result)
-                warning('CodeCoverageSummaryPlugin:NoCoverageData', ...
-                    'No coverage data collected. Ensure CodeCoveragePlugin is added with the same format object.');
+                warning("testframework:CodeCoverageSummaryPlugin:NoCoverageData", "No coverage data collected.");
                 return;
             end
             
@@ -67,17 +66,20 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
                 % Local environment
                 coverageArtifactFile = fullfile(pwd, "matlabCoverageResults.json");
             end
-            
             coverageResults = {coverageDetails};
-            
-            JsonCoverageResults = jsonencode(coverageResults, "PrettyPrint", true);
-            [fID, msg] = fopen(coverageArtifactFile, "w");
-            if fID == -1
-                warning("codecoverage:CodeCoverageSummaryPlugin:UnableToOpenFile",...
-                    "Could not open a file for GitHub coverage result table due to: %s", msg);
-            else
-                closeFile = onCleanup(@()fclose(fID));
-                fprintf(fID, '%s', JsonCoverageResults);
+
+            try
+                JsonCoverageResults = jsonencode(coverageResults, "PrettyPrint", true);
+
+                [fID, msg] = fopen(coverageArtifactFile, "w");
+                if fID == -1
+                    warning("testframework:CodeCoverageSummaryPlugin:UnableToOpenFile","Unable to open a file required to create the table of code coverage. (Cause: %s)", msg);
+                else
+                    closeFile = onCleanup(@()fclose(fID));
+                    fprintf(fID, '%s', JsonCoverageResults);
+                end
+            catch e
+                warning("testframework:TestResultsSummaryPlugin:UnableToJsonEncode","Unable to jsonencode test results data. (Cause: %s)", e.message);
             end
         end
     end
