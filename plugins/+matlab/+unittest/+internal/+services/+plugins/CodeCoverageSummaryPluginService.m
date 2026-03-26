@@ -1,5 +1,5 @@
 classdef CodeCoverageSummaryPluginService < matlab.buildtool.internal.services.ciplugins.CITestRunnerPluginService
-    % Copyright 2025 The MathWorks, Inc.
+    % Copyright 2026 The MathWorks, Inc.
     
     methods
         function plugins = providePlugins(~, ~)
@@ -9,9 +9,6 @@ classdef CodeCoverageSummaryPluginService < matlab.buildtool.internal.services.c
                 
             % Get metric level from environment variable
                 metricLevel = getenv('INPUT_CODE_COVERAGE_METRIC_LEVEL');
-                if isempty(metricLevel)
-                    metricLevel = 'mcdc';
-                end
                 
                 % Create a shared CoverageResult format object
                 format = matlab.unittest.plugins.codecoverage.CoverageResult;

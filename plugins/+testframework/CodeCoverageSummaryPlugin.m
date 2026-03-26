@@ -1,5 +1,5 @@
 classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
-    % Copyright 2025 The MathWorks, Inc.
+    % Copyright 2026 The MathWorks, Inc.
     
     properties (Access=private)
         CoverageFormat

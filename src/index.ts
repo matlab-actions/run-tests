@@ -1,4 +1,4 @@
-// Copyright 2020-2025 The MathWorks, Inc.
+// Copyright 2020-2026 The MathWorks, Inc.
 
 import * as core from "@actions/core";
 import * as exec from "@actions/exec";
@@ -31,12 +31,13 @@ async function run() {
         LoggingLevel: core.getInput("logging-level"),
     };
 
-    const codeCoverageMetricLevel = core.getInput("code-coverage-metric-level") || 'mcdc';
+    var codeCoverageMetricLevel = core.getInput("code-coverage-metric-level").toLowerCase();
     
     // Validate metric level
     const validMetricLevels = ['statement', 'decision', 'condition', 'mcdc'];
-    if (!validMetricLevels.includes(codeCoverageMetricLevel.toLowerCase())) {
+    if (!validMetricLevels.includes(codeCoverageMetricLevel)) {
         core.warning(`Invalid metric level '${codeCoverageMetricLevel}'. Using the default value (mcdc) instead.`);
+        codeCoverageMetricLevel = 'mcdc';
     }
 
     const command = scriptgen.generateCommand(options);
@@ -47,7 +48,7 @@ async function run() {
         env: {
             ...process.env,
             MW_BATCH_LICENSING_ONLINE:'true', // Remove when online batch licensing is the default
-            INPUT_CODE_COVERAGE_METRIC_LEVEL: codeCoverageMetricLevel.toLowerCase(),
+            INPUT_CODE_COVERAGE_METRIC_LEVEL: codeCoverageMetricLevel,
             INPUT_SOURCE_FOLDER: options.SourceFolder || '' // Add source folder to environment
         }
     };
