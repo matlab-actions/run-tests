@@ -36,7 +36,7 @@ async function run() {
     // Validate metric level
     const validMetricLevels = ['statement', 'decision', 'condition', 'mcdc'];
     if (!validMetricLevels.includes(codeCoverageMetricLevel)) {
-        core.warning(`Invalid metric level '${codeCoverageMetricLevel}'. Using the default value (mcdc) instead.`);
+        core.warning(`Invalid metric level '${codeCoverageMetricLevel}'. Using the default value ('mcdc') instead.`);
         codeCoverageMetricLevel = 'mcdc';
     }
 
