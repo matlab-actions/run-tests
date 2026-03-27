@@ -7,7 +7,7 @@ classdef CodeCoverageSummaryPluginService < matlab.buildtool.internal.services.c
             % Check if MATLAB Test license is available
             if license('test', 'matlab_test') 
                 
-            % Get metric level from environment variable
+                % Get metric level from environment variable
                 metricLevel = getenv('INPUT_CODE_COVERAGE_METRIC_LEVEL');
                 
                 % Create a shared CoverageResult format object

@@ -59,13 +59,8 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
             end
             
             % Determine file path for coverage results
-            if ~isempty(getenv("RUNNER_TEMP")) && ~isempty(getenv("GITHUB_RUN_ID"))
-                % GitHub Actions environment
-                coverageArtifactFile = fullfile(getenv("RUNNER_TEMP"), "matlabCoverageResults" + getenv("GITHUB_RUN_ID") + ".json");
-            else
-                % Local environment
-                coverageArtifactFile = fullfile(pwd, "matlabCoverageResults.json");
-            end
+            coverageArtifactFile = fullfile(getenv("RUNNER_TEMP"), "matlabCoverageResults" + getenv("GITHUB_RUN_ID") + ".json");
+            
             coverageResults = {coverageDetails};
 
             try
@@ -73,13 +68,13 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
 
                 [fID, msg] = fopen(coverageArtifactFile, "w");
                 if fID == -1
-                    warning("testframework:CodeCoverageSummaryPlugin:UnableToOpenFile","Unable to open a file required to create the table of code coverage. (Cause: %s)", msg);
+                    warning("testframework:CodeCoverageSummaryPlugin:UnableToOpenFile","Unable to open a file required to show code coverage data. (Cause: %s)", msg);
                 else
                     closeFile = onCleanup(@()fclose(fID));
                     fprintf(fID, '%s', JsonCoverageResults);
                 end
             catch e
-                warning("testframework:TestResultsSummaryPlugin:UnableToJsonEncode","Unable to jsonencode test results data. (Cause: %s)", e.message);
+                warning("testframework:CodeCoverageSummaryPlugin:UnableToJsonEncode","Unable to jsonencode code coverage data. (Cause: %s)", e.message);
             end
         end
     end
