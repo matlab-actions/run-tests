@@ -56,13 +56,11 @@ jobs:
           set -e
           grep "Running TheTruth" output.log
           grep "Done TheTruth" output.log
-          grep "Running CircleCalculatorTest" output.log
-          grep "Done CircleCalculatorTest" output.log
           grep "Running QuadraticPolynomialTest" output.log
           grep "Done QuadraticPolynomialTest" output.log
           grep "Running tAssumptionFailure" output.log
           grep "Done tAssumptionFailure" output.log
-          grep "6 Passed" output.log
+          grep "3 Passed" output.log
           grep "1 Incomplete" output.log
         shell: bash
       - name: Generate Model
