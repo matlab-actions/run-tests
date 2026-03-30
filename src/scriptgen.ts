@@ -31,7 +31,7 @@ export interface RunTestsOptions {
  */
 export function generateCommand(options: RunTestsOptions): string {
     const command = `
-        addpath('${path.join(__dirname, "scriptgen")}');
+        addpath('${path.join(import.meta.dirname, "scriptgen")}');
         testScript = genscript('Test',
             'JUnitTestResults','${options.JUnitTestResults || ""}',
             'CoberturaCodeCoverage','${options.CoberturaCodeCoverage || ""}',
