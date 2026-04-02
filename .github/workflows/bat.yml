@@ -1,5 +1,5 @@
 name: Build and Test
-on: [push]
+on: [push, pull_request]
 permissions:
   contents: read
 
@@ -12,6 +12,10 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 24
+      - name: Configure npm for public registry
+        run: |
+          rm -f .npmrc
+          npm config set registry https://registry.npmjs.org/
       - name: Perform npm tasks
         run: npm run ci
       - uses: actions/upload-artifact@v5
@@ -46,12 +50,18 @@ jobs:
         with:
           source-folder: sample
           startup-options: -logfile output.log
+          code-coverage-metric-level: dummy  # new option to configure metric level 
       - name: Verify option application
         run: |
           set -e
           grep "Running TheTruth" output.log
           grep "Done TheTruth" output.log
-          grep "1 Passed" output.log
+          grep "Running QuadraticPolynomialTest" output.log
+          grep "Done QuadraticPolynomialTest" output.log
+          grep "Running tAssumptionFailure" output.log
+          grep "Done tAssumptionFailure" output.log
+          grep "3 Passed" output.log
+          grep "1 Incomplete" output.log
         shell: bash
       - name: Generate Model
         uses: matlab-actions/run-command@v2
