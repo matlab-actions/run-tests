@@ -18,9 +18,9 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Run tests
-        uses: matlab-actions/run-tests@v2
+        uses: matlab-actions/run-tests@v3
 ```
 
 ### Generate Test and Coverage Artifacts
@@ -35,11 +35,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Set up MATLAB
-        uses: matlab-actions/setup-matlab@v2
+        uses: matlab-actions/setup-matlab@v3
       - name: Run tests
-        uses: matlab-actions/run-tests@v2
+        uses: matlab-actions/run-tests@v3
         with:
           test-results-junit: test-results/results.xml
           code-coverage-cobertura: code-coverage/coverage.xml
@@ -57,16 +57,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Set up products
-        uses: matlab-actions/setup-matlab@v2
+        uses: matlab-actions/setup-matlab@v3
         with:
           products: >
             Simulink
             Simulink_Test
             Parallel_Computing_Toolbox
       - name: Run tests
-        uses: matlab-actions/run-tests@v2
+        uses: matlab-actions/run-tests@v3
         with:
           use-parallel: true
 ``` 
@@ -92,15 +92,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Set up MATLAB
-        uses: matlab-actions/setup-matlab@v2
+        uses: matlab-actions/setup-matlab@v3
       - name: Run tests
-        uses: matlab-actions/run-tests@v2
+        uses: matlab-actions/run-tests@v3
 ```
 
 ## Run MATLAB Tests
-When you define your workflow in the `.github/workflows` directory of your repository, specify the **Run MATLAB Tests** action as `matlab-actions/run-tests@v2`.
+When you define your workflow in the `.github/workflows` directory of your repository, specify the **Run MATLAB Tests** action as `matlab-actions/run-tests@v3`.
 
 By default, the action includes any files in your project that have a `Test` label. If your workflow does not use a MATLAB project, or if it uses a MATLAB release before R2019a, then the action includes all tests in the root of your repository and in any of its subfolders. The action fails if any of the included tests fail.
 
