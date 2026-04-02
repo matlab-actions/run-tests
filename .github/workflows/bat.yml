@@ -12,6 +12,10 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 24
+      - name: Configure npm for public registry
+        run: |
+          rm -f .npmrc
+          npm config set registry https://registry.npmjs.org/
       - name: Perform npm tasks
         run: npm run ci
       - uses: actions/upload-artifact@v5
