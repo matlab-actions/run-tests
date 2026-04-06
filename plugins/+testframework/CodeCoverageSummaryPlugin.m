@@ -33,12 +33,12 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
             coverageDetails = struct();
             coverageDetails.MetricLevel = plugin.MetricLevel;
             
-            % Always get statement and function coverage (available for all levels)
-            statementCoverage = coverageSummary(result, "statement");
+            % Always get function and statement coverage (available for all levels)
             functionCoverage = coverageSummary(result, "function");
+            statementCoverage = coverageSummary(result, "statement");
             
-            coverageDetails.StatementCoverage = sumCoverage(statementCoverage);
             coverageDetails.FunctionCoverage = sumCoverage(functionCoverage);
+            coverageDetails.StatementCoverage = sumCoverage(statementCoverage);
             
             % Get decision coverage if metric level is decision, condition, or mcdc
             if ismember(plugin.MetricLevel, {'decision', 'condition', 'mcdc'})

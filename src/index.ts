@@ -49,7 +49,7 @@ async function run() {
             ...process.env,
             MW_BATCH_LICENSING_ONLINE:'true', // Remove when online batch licensing is the default
             INPUT_CODE_COVERAGE_METRIC_LEVEL: codeCoverageMetricLevel,
-            INPUT_SOURCE_FOLDER: options.SourceFolder || '' // Add source folder to environment
+            INPUT_SOURCE_FOLDER: options.SourceFolder! // Add source folder to environment
         }
     };
     core.info("Successfully generated test script!");
