@@ -74,7 +74,7 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
                     fprintf(fID, '%s', JsonCoverageResults);
                 end
             catch e
-                warning("testframework:CodeCoverageSummaryPlugin:UnableToJsonEncode","Unable to jsonencode code coverage data. (Cause: %s)", e.message);
+                warning("testframework:CodeCoverageSummaryPlugin:UnableToJsonEncode","Unable to serialize code coverage data into JSON format. (Cause: %s)", e.message);
             end
         end
     end
