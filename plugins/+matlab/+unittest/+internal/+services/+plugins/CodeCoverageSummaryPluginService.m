@@ -9,6 +9,11 @@ classdef CodeCoverageSummaryPluginService < matlab.buildtool.internal.services.c
                 
                 % Get metric level from environment variable
                 metricLevel = getenv('INPUT_CODE_COVERAGE_METRIC_LEVEL');
+
+                % Set default metric level if not provided
+                if isempty(metricLevel)
+                    metricLevel = 'mcdc';
+                end
                 
                 % Create a shared CoverageResult format object
                 format = matlab.unittest.plugins.codecoverage.CoverageResult;
