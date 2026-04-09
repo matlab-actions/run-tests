@@ -34,6 +34,11 @@ jobs:
           name: built-action
       - name: Perform 'setup-matlab'
         uses: matlab-actions/setup-matlab@v2
+        with:
+          products: |
+            Simulink
+            Simulink_Test
+            Simulink_Coverage
       - name: Run MATLAB Tests
         continue-on-error: true
         uses: ./
