@@ -9,7 +9,7 @@ classdef CodeCoverageSummaryPluginService < matlab.buildtool.internal.services.c
             disp("MATLAB_Test");
             disp(ver('MATLAB_Test'));
             % Check if matlab_test toolbox is installed and MATLAB Test license is available
-            if  ~isempty(ver('matlab_test')) && license('test', 'matlab_test')
+            if  ~isempty(ver('MATLAB_Test')) && license('test', 'matlab_test')
                 
                 % Get metric level from environment variable
                 metricLevel = getenv('INPUT_CODE_COVERAGE_METRIC_LEVEL');
