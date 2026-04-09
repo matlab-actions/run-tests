@@ -4,6 +4,10 @@ classdef CodeCoverageSummaryPluginService < matlab.buildtool.internal.services.c
     methods
         function plugins = providePlugins(~, ~)
 
+            disp("matlab_test");
+            disp(ver('matlab_test'));
+            disp("MATLAB_Test");
+            disp(ver('MATLAB_Test'));
             % Check if matlab_test toolbox is installed and MATLAB Test license is available
             if  ~isempty(ver('matlab_test')) && license('test', 'matlab_test')
                 
