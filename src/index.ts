@@ -32,12 +32,14 @@ async function run() {
     };
 
     var codeCoverageMetricLevel = core.getInput("code-coverage-metric-level").toLowerCase();
-    
+
     // Validate metric level
-    const validMetricLevels = ['statement', 'decision', 'condition', 'mcdc'];
+    const validMetricLevels = ["statement", "decision", "condition", "mcdc"];
     if (!validMetricLevels.includes(codeCoverageMetricLevel)) {
-        core.warning(`Invalid metric level '${codeCoverageMetricLevel}'. Using the default value ('mcdc') instead.`);
-        codeCoverageMetricLevel = 'mcdc';
+        core.warning(
+            `Invalid metric level '${codeCoverageMetricLevel}'. Using the default value ('mcdc') instead.`,
+        );
+        codeCoverageMetricLevel = "mcdc";
     }
 
     const command = scriptgen.generateCommand(options);
@@ -47,28 +49,35 @@ async function run() {
     const execOptions = {
         env: {
             ...process.env,
-            MW_BATCH_LICENSING_ONLINE:'true', // Remove when online batch licensing is the default
+            MW_BATCH_LICENSING_ONLINE: "true", // Remove when online batch licensing is the default
             INPUT_CODE_COVERAGE_METRIC_LEVEL: codeCoverageMetricLevel,
-            INPUT_SOURCE_FOLDER: options.SourceFolder! // Add source folder to environment
-        }
+            INPUT_SOURCE_FOLDER: options.SourceFolder!, // Add source folder to environment
+        },
     };
     core.info("Successfully generated test script!");
 
-    await matlab.runCommand(
-        helperScript,
-        platform,
-        architecture,
-        (cmd, args) => exec.exec(cmd, args, execOptions),
-        startupOptions
-    ).finally(() => {
-        const runnerTemp = process.env.RUNNER_TEMP || '';
-        const runId = process.env.GITHUB_RUN_ID || '';
-        const actionName = process.env.GITHUB_ACTION || '';
+    await matlab
+        .runCommand(
+            helperScript,
+            platform,
+            architecture,
+            (cmd, args) => exec.exec(cmd, args, execOptions),
+            startupOptions,
+        )
+        .finally(() => {
+            const runnerTemp = process.env.RUNNER_TEMP || "";
+            const runId = process.env.GITHUB_RUN_ID || "";
+            const actionName = process.env.GITHUB_ACTION || "";
 
-        //add test results and code coverage view
-        testResultsSummary.processAndAddTestSummary(runnerTemp, runId, actionName, workspaceDir);
-        core.summary.write();
-    });
+            //add test results and code coverage view
+            testResultsSummary.processAndAddTestSummary(
+                runnerTemp,
+                runId,
+                actionName,
+                workspaceDir,
+            );
+            core.summary.write();
+        });
 }
 
 run().catch((e) => {

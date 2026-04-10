@@ -6,7 +6,7 @@ permissions:
 jobs:
   bat:
     name: Build and Test
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
@@ -14,7 +14,7 @@ jobs:
           node-version: 24
       - name: Perform npm tasks
         run: npm run ci
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v7
         with:
           name: built-action
           path: |
@@ -29,11 +29,11 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest, macos-14]
     steps:
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v8
         with:
           name: built-action
       - name: Perform 'setup-matlab'
-        uses: matlab-actions/setup-matlab@v2
+        uses: matlab-actions/setup-matlab@v3
         with:
           products: |
             MATLAB_Test
@@ -46,7 +46,7 @@ jobs:
         with:
           source-folder: sample
           startup-options: -logfile output.log
-          code-coverage-metric-level: mcdc  # new option to configure metric level 
+          code-coverage-metric-level: mcdc # new option to configure metric level
       - name: Verify option application
         run: |
           set -e
@@ -60,47 +60,47 @@ jobs:
           grep "1 Incomplete" output.log
         shell: bash
       - name: Generate Model
-        uses: matlab-actions/run-command@v2
-        with: 
-            command: cd('sample'),createSampleModel('temp_model'),sltest.testmanager.createTestsFromModel('sltestfile', 'temp_model');
+        uses: matlab-actions/run-command@v3
+        with:
+          command: cd('sample'),createSampleModel('temp_model'),sltest.testmanager.createTestsFromModel('sltestfile', 'temp_model');
       - name: Set up diary for logging
         run: echo 'diary console.log' >> startup.m
       - name: Run run-test command
         continue-on-error: true
         uses: ./
         with:
-            test-results-simulink-test: test-results/simulinktest.mldatx
-            model-coverage-cobertura: test-results/modelcoverage.xml
-            test-results-pdf: test-results/pdf-results.pdf
-            test-results-junit: test-results/results.xml
-            code-coverage-cobertura: test-results/coverage.xml
-            code-coverage-html: test-results/coverageHTML
-            model-coverage-html: test-results/modelcoverageHTML
-            test-results-html: test-results/resultsHTML
-            select-by-folder: sample
-            strict: true
-            use-parallel: true
-            output-detail: Detailed
-            logging-level: Detailed
+          test-results-simulink-test: test-results/simulinktest.mldatx
+          model-coverage-cobertura: test-results/modelcoverage.xml
+          test-results-pdf: test-results/pdf-results.pdf
+          test-results-junit: test-results/results.xml
+          code-coverage-cobertura: test-results/coverage.xml
+          code-coverage-html: test-results/coverageHTML
+          model-coverage-html: test-results/modelcoverageHTML
+          test-results-html: test-results/resultsHTML
+          select-by-folder: sample
+          strict: true
+          use-parallel: true
+          output-detail: Detailed
+          logging-level: Detailed
       - name: Verify artifacts generation
         run: |
-            (test -f test-results/simulinktest.mldatx) || (echo "File simulinktest.mldatx does not exist" && exit 1)
-            (test -f test-results/modelcoverage.xml) || (echo "File modelcoverage.xml does not exist" && exit 1)
-            (test -f test-results/pdf-results.pdf) || (echo "File pdf-results.pdf does not exist" && exit 1)
-            (test -f test-results/results.xml) || (echo "File results.xml does not exist" && exit 1)
-            (test -f test-results/coverage.xml) || (echo "File coverage.xml does not exist" && exit 1)
-            (test -d test-results/coverageHTML) || (echo "Directory coverageHTML does not exist" && exit 1)
-            (test -f test-results/coverageHTML/*.html) || (echo "No HTML file found" && exit 1)
-            (test -d test-results/modelcoverageHTML) || (echo "Directory modelcoverageHTML does not exist" && exit 1)
-            (test -f test-results/modelcoverageHTML/*.html) || (echo "No HTML file found" && exit 1)
-            (test -d test-results/resultsHTML) || (echo "Directory resultsHTML does not exist" && exit 1)
-            (test -f test-results/resultsHTML/*.html) || (echo "No HTML file found" && exit 1)
-            grep -q "runner.addPlugin(FailOnWarningsPlugin())" console.log
-            grep -q "runInParallel" console.log
-            grep -q "'OutputDetail', 3" console.log
-            grep -q "'LoggingLevel', 3" console.log
+          (test -f test-results/simulinktest.mldatx) || (echo "File simulinktest.mldatx does not exist" && exit 1)
+          (test -f test-results/modelcoverage.xml) || (echo "File modelcoverage.xml does not exist" && exit 1)
+          (test -f test-results/pdf-results.pdf) || (echo "File pdf-results.pdf does not exist" && exit 1)
+          (test -f test-results/results.xml) || (echo "File results.xml does not exist" && exit 1)
+          (test -f test-results/coverage.xml) || (echo "File coverage.xml does not exist" && exit 1)
+          (test -d test-results/coverageHTML) || (echo "Directory coverageHTML does not exist" && exit 1)
+          (test -f test-results/coverageHTML/*.html) || (echo "No HTML file found" && exit 1)
+          (test -d test-results/modelcoverageHTML) || (echo "Directory modelcoverageHTML does not exist" && exit 1)
+          (test -f test-results/modelcoverageHTML/*.html) || (echo "No HTML file found" && exit 1)
+          (test -d test-results/resultsHTML) || (echo "Directory resultsHTML does not exist" && exit 1)
+          (test -f test-results/resultsHTML/*.html) || (echo "No HTML file found" && exit 1)
+          grep -q "runner.addPlugin(FailOnWarningsPlugin())" console.log
+          grep -q "runInParallel" console.log
+          grep -q "'OutputDetail', 3" console.log
+          grep -q "'LoggingLevel', 3" console.log
         shell: bash
       - name: Verify workflow command is added
         run: |
-            grep "::group::TheTruth" output.log
+          grep "::group::TheTruth" output.log
         shell: bash
