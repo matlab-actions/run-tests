@@ -104,8 +104,8 @@ jobs:
         run: |
             grep "::group::TheTruth" output.log
         shell: bash
-  test-without-matlab-test:
-    name: Test Without Installing MATLAB_Test
+  run-test-without-install:
+    name: Run tests without installation 
     needs: bat
     runs-on: ubuntu-latest
     steps:
@@ -114,9 +114,6 @@ jobs:
           name: built-action
       - name: Perform 'setup-matlab' without MATLAB_Test
         uses: matlab-actions/setup-matlab@v2
-        with:
-          products: |
-            Simulink
       - name: Run MATLAB Tests without MATLAB_Test
         uses: ./
         with:
