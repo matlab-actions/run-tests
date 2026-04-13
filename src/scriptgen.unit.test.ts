@@ -41,11 +41,14 @@ describe("command generation", () => {
         expect(actual.includes("'OutputDetail',''")).toBeTruthy();
         expect(actual.includes("'LoggingLevel',''")).toBeTruthy();
 
-        const expected = `genscript('Test', 'JUnitTestResults','', 'CoberturaCodeCoverage','', 'HTMLCodeCoverage','', 
+        const expected =
+            `genscript('Test', 'JUnitTestResults','', 'CoberturaCodeCoverage','', 'HTMLCodeCoverage','', 
         'SourceFolder','', 'PDFTestReport','', 'HTMLTestReport','', 'SimulinkTestResults','', 
         'CoberturaModelCoverage','', 'HTMLModelCoverage','', 'SelectByTag','', 'SelectByFolder','', 
-        'Strict',false, 'UseParallel',false, 'OutputDetail','', 'LoggingLevel','')`
-        .replace(/\s+/g, "");
+        'Strict',false, 'UseParallel',false, 'OutputDetail','', 'LoggingLevel','')`.replace(
+                /\s+/g,
+                "",
+            );
         expect(actual.replace(/\s+/g, "").includes(expected)).toBeTruthy();
     });
 
@@ -73,22 +76,20 @@ describe("command generation", () => {
         expect(actual.includes("genscript('Test'")).toBeTruthy();
         expect(actual.includes("'JUnitTestResults','test-results/results.xml'")).toBeTruthy();
         expect(
-            actual.includes("'CoberturaCodeCoverage','code-coverage/coverage.xml'")
+            actual.includes("'CoberturaCodeCoverage','code-coverage/coverage.xml'"),
         ).toBeTruthy();
-        expect(
-            actual.includes("'HTMLCodeCoverage','code-coverage/coverage.html'")
-        ).toBeTruthy();
+        expect(actual.includes("'HTMLCodeCoverage','code-coverage/coverage.html'")).toBeTruthy();
         expect(actual.includes("'SourceFolder','source'")).toBeTruthy();
         expect(actual.includes("'PDFTestReport','test-results/pdf-results.pdf'")).toBeTruthy();
         expect(actual.includes("'HTMLTestReport','test-results/html-results.html'")).toBeTruthy();
         expect(
-            actual.includes("'SimulinkTestResults','test-results/simulinkTest.mldatx'")
+            actual.includes("'SimulinkTestResults','test-results/simulinkTest.mldatx'"),
         ).toBeTruthy();
         expect(
-            actual.includes("'CoberturaModelCoverage','test-results/modelcoverage.xml'")
+            actual.includes("'CoberturaModelCoverage','test-results/modelcoverage.xml'"),
         ).toBeTruthy();
         expect(
-            actual.includes("'HTMLModelCoverage','test-results/modelcoverage.html'")
+            actual.includes("'HTMLModelCoverage','test-results/modelcoverage.html'"),
         ).toBeTruthy();
         expect(actual.includes("'SelectByTag','FeatureA'")).toBeTruthy();
         expect(actual.includes("'SelectByFolder','test/tools;test/toolbox'")).toBeTruthy();
@@ -112,8 +113,7 @@ describe("command generation", () => {
         'Strict',true, 
         'UseParallel',true, 
         'OutputDetail','Detailed', 
-        'LoggingLevel','Detailed' )`
-        .replace(/\s+/g, "");
+        'LoggingLevel','Detailed' )`.replace(/\s+/g, "");
         expect(actual.replace(/\s+/g, "").includes(expected)).toBeTruthy();
     });
 });
