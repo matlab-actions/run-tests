@@ -105,7 +105,7 @@ jobs:
           grep "::group::TheTruth" output.log
         shell: bash
   run-test-without-install:
-    name: Run tests without installation 
+    name: Run tests without installation
     needs: bat
     runs-on: ubuntu-latest
     steps:
