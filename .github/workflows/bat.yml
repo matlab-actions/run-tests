@@ -104,3 +104,18 @@ jobs:
         run: |
           grep "::group::TheTruth" output.log
         shell: bash
+  run-tests-without-matlabtest:
+    name: Run tests without MATLAB Test
+    needs: bat
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: built-action
+      - name: Perform 'setup-matlab' without MATLAB Test
+        uses: matlab-actions/setup-matlab@v3
+      - name: Run MATLAB Tests
+        uses: ./
+        with:
+          source-folder: sample
+          code-coverage-metric-level: mcdc
