@@ -115,8 +115,11 @@ jobs:
           name: built-action
       - name: Perform 'setup-matlab' without MATLAB Test
         uses: matlab-actions/setup-matlab@v3
+        with:
+          products: |
+            MATLAB_Test
       - name: Run MATLAB Tests
         uses: ./
         with:
           source-folder: sample
-          code-coverage-metric-level: mcdc
+          code-coverage-metric-level: statement
