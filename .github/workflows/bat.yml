@@ -122,5 +122,6 @@ jobs:
         uses: ./
         with:
           source-folder: sample
-          code-coverage-metric-level: statement
+          # code-coverage-metric-level: statement
           code-coverage-html: test-results/coverageHTML
+          code-coverage-cobertura: test-results/coverage.xml
