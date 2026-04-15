@@ -75,7 +75,6 @@ jobs:
           test-results-junit: test-results/results.xml
           code-coverage-cobertura: test-results/coverage.xml
           code-coverage-html: test-results/coverageHTML
-          code-coverage-metric-level: statement
           model-coverage-html: test-results/modelcoverageHTML
           test-results-html: test-results/resultsHTML
           select-by-folder: sample
@@ -115,13 +114,9 @@ jobs:
           name: built-action
       - name: Perform 'setup-matlab' without MATLAB Test
         uses: matlab-actions/setup-matlab@v3
-        with:
-          products: |
-            MATLAB_Test
       - name: Run MATLAB Tests
         uses: ./
         with:
           source-folder: sample
-          # code-coverage-metric-level: statement
+          code-coverage-metric-level: statement
           code-coverage-html: test-results/coverageHTML
-          code-coverage-cobertura: test-results/coverage.xml
