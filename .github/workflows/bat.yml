@@ -137,4 +137,4 @@ jobs:
         with:
           source-folder: sample
           code-coverage-metric-level: statement
-          code-coverage-html: test-results/coverageHTML
+          # code-coverage-html: test-results/coverageHTML
