@@ -8,12 +8,8 @@ classdef CodeCoverageSummaryPluginService < matlab.buildtool.internal.services.c
             productName = 'MATLAB Test';
             isProductInstalled = any(productNames.matches(productName));
 
-            hasCoverageHTML = ~isempty(getenv('INPUT_CODE_COVERAGE_HTML'));
-            hasCoverageCobertura = ~isempty(getenv('INPUT_CODE_COVERAGE_COBERTURA'));
-            hasCoverageRequest = hasCoverageHTML || hasCoverageCobertura;
-
             % Check if MATLAB Test license is available and MATLAB Test is installed
-            if license('test', 'matlab_test') && isProductInstalled && ~hasCoverageRequest
+            if license('test', 'matlab_test') && isProductInstalled
                 % Get metric level from environment variable
                 metricLevel = getenv('INPUT_CODE_COVERAGE_METRIC_LEVEL');
 
@@ -22,18 +18,21 @@ classdef CodeCoverageSummaryPluginService < matlab.buildtool.internal.services.c
                 
                 % Create an array to hold multiple plugins
                 plugins = matlab.unittest.plugins.TestRunnerPlugin.empty(0);
-                
-                % Get source folder from environment variable
-                sourceFolder = getenv('INPUT_SOURCE_FOLDER');
-                if isempty(sourceFolder)
-                    sourceFolder = pwd;
-                end
-                
-                coveragePlugin = matlab.unittest.plugins.CodeCoveragePlugin.forFolder(...
-                    sourceFolder, 'Producing', format, 'MetricLevel', metricLevel);
+                   
+                hasCoverageHTML = ~isempty(getenv('INPUT_CODE_COVERAGE_HTML'));
+                hasCoverageCobertura = ~isempty(getenv('INPUT_CODE_COVERAGE_COBERTURA'));
+                hasCoverageRequest = hasCoverageHTML || hasCoverageCobertura;
+                if ~hasCoverageRequest 
+                    % Get source folder from environment variable
+                    sourceFolder = getenv('INPUT_SOURCE_FOLDER');
+                    if isempty(sourceFolder)
+                        sourceFolder = pwd;
+                    end
+                    coveragePlugin = matlab.unittest.plugins.CodeCoveragePlugin.forFolder(...
+                        sourceFolder, 'Producing', format, 'MetricLevel', metricLevel);
 
-                plugins(end+1) = coveragePlugin;
-                
+                    plugins(end+1) = coveragePlugin;
+                end
                 % Add the summary plugin with the same format object
                 summaryPlugin = testframework.CodeCoverageSummaryPlugin(format, metricLevel);
                 plugins(end+1) = summaryPlugin;
