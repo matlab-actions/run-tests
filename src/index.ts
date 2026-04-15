@@ -66,7 +66,7 @@ async function run() {
             startupOptions,
         )
         .finally(() => {
-            if(!optOutOfTestResultsSummary) {
+            if (!optOutOfTestResultsSummary) {
                 const runnerTemp = process.env.RUNNER_TEMP || "";
                 const runId = process.env.GITHUB_RUN_ID || "";
                 const actionName = process.env.GITHUB_ACTION || "";
