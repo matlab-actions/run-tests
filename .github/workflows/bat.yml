@@ -75,7 +75,7 @@ jobs:
           test-results-junit: test-results/results.xml
           code-coverage-cobertura: test-results/coverage.xml
           code-coverage-html: test-results/coverageHTML
-          code-coverage-metric-level: mcdc
+          code-coverage-metric-level: statement
           model-coverage-html: test-results/modelcoverageHTML
           test-results-html: test-results/resultsHTML
           select-by-folder: sample
