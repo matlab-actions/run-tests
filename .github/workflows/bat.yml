@@ -119,3 +119,22 @@ jobs:
         with:
           source-folder: sample
           code-coverage-metric-level: mcdc
+  run-tests-with-matlabtest:
+    name: Run tests with MATLAB Test
+    needs: bat
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: built-action
+      - name: Perform 'setup-matlab' with MATLAB Test
+        uses: matlab-actions/setup-matlab@v3
+        with:
+          products: |
+            MATLAB_Test
+      - name: Run MATLAB Tests
+        uses: ./
+        with:
+          source-folder: sample
+          code-coverage-metric-level: mcdc
+          code-coverage-html: test-results/coverageHTML
