@@ -75,6 +75,7 @@ jobs:
           test-results-junit: test-results/results.xml
           code-coverage-cobertura: test-results/coverage.xml
           code-coverage-html: test-results/coverageHTML
+          code-coverage-metric-level: mcdc
           model-coverage-html: test-results/modelcoverageHTML
           test-results-html: test-results/resultsHTML
           select-by-folder: sample
@@ -119,22 +120,3 @@ jobs:
         with:
           source-folder: sample
           code-coverage-metric-level: mcdc
-  run-tests-with-matlabtest:
-    name: Run tests with MATLAB Test
-    needs: bat
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/download-artifact@v8
-        with:
-          name: built-action
-      - name: Perform 'setup-matlab' with MATLAB Test
-        uses: matlab-actions/setup-matlab@v3
-        with:
-          products: |
-            MATLAB_Test
-      - name: Run MATLAB Tests
-        uses: ./
-        with:
-          source-folder: sample
-          code-coverage-metric-level: mcdc
-          code-coverage-html: test-results/coverageHTML
