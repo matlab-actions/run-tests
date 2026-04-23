@@ -118,6 +118,11 @@ jobs:
         with:
           source-folder: sample
           code-coverage-metric-level: mcdc
+          startup-options: -logfile test.log
+      - name: Verify no coverage summary for Test Case 1
+        run: |
+          ! grep -q "added the coverage details" test.log
+        shell: bash
       - name: Perform 'setup-matlab' with MATLAB Test
         uses: matlab-actions/setup-matlab@v3
         with:
@@ -139,6 +144,11 @@ jobs:
           use-parallel: true
           output-detail: Detailed
           logging-level: Detailed
+          startup-options: -logfile test.log
+      - name: Verify no coverage summary for Test Case 1
+        run: |
+          ! grep -q "added the coverage details" test.log
+        shell: bash
       - name: Run MATLAB Tests # Test Case 3: With MATLAB Test, and only code-coverage-metric-level option, view is shown.
         uses: ./
         with:
@@ -147,5 +157,5 @@ jobs:
           startup-options: -logfile test.log
       - name: Verify coverage summary view is generated
         run: |
-          grep "added coverage summary" test.log
+          grep "added the coverage details" test.log
         shell: bash

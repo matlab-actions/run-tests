@@ -62,22 +62,7 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
             
             % Determine file path for coverage results
             coverageArtifactFile = fullfile(getenv("RUNNER_TEMP"), "matlabCoverageResults" + getenv("GITHUB_RUN_ID") + ".json");
-            stepSummaryFile = getenv('GITHUB_STEP_SUMMARY');
-            disp("added coverage summary");
-            if ~isempty(stepSummaryFile)
-                % Write coverage summary to the file
-                fid = fopen(stepSummaryFile, 'a'); % 'a' for append mode
-                if fid ~= -1
-                    disp("I am here");
-                    fprintf(fid, '## Code Coverage Summary\n\n');
-                    fprintf(fid, '| Metric | Coverage |\n');
-                    fprintf(fid, '|--------|----------|\n');
-                    fprintf(fid, '| Statement | %.2f%% |\n', coverageDetails.StatementCoverage.Percentage);
-                    fprintf(fid, '| Function | %.2f%% |\n', coverageDetails.FunctionCoverage.Percentage);
-                    fprintf(fid, '\n');
-                    fclose(fid);
-                end
-            end
+            disp("added the coverage details");
             try
                 JsonCoverageResults = jsonencode(coverageResults, "PrettyPrint", true);
 
