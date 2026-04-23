@@ -147,13 +147,5 @@ jobs:
           startup-options: -logfile test.log
       - name: Verify coverage summary view is generated
         run: |
-          if [ ! -f "$GITHUB_STEP_SUMMARY" ]; then
-            echo "Step summary file not found"
-            exit 1
-          fi
-          echo "Step summary file found"
-          cat "$GITHUB_STEP_SUMMARY"
-
-          # Check for content expected in the coverage summary
-          grep -q "Coverage" "$GITHUB_STEP_SUMMARY"
+          grep "added coverage summary" test.log
         shell: bash
