@@ -75,7 +75,6 @@ jobs:
           test-results-junit: test-results/results.xml
           code-coverage-cobertura: test-results/coverage.xml
           code-coverage-html: test-results/coverageHTML
-          code-coverage-metric-level: mcdc
           model-coverage-html: test-results/modelcoverageHTML
           test-results-html: test-results/resultsHTML
           select-by-folder: sample
@@ -105,18 +104,43 @@ jobs:
         run: |
           grep "::group::TheTruth" output.log
         shell: bash
-  run-tests-without-matlabtest:
-    name: Run tests without MATLAB Test
+  run-tests-for-coverage-summary:
+    name: Test coverage summary view
     needs: bat
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v8
         with:
           name: built-action
-      - name: Perform 'setup-matlab' without MATLAB Test
+      - name: Perform 'setup-matlab' without MATLAB Test 
         uses: matlab-actions/setup-matlab@v3
-      - name: Run MATLAB Tests
+      - name: Run MATLAB Tests # Test Case 1: Without MATLAB Test, no view is shown
         uses: ./
         with:
           source-folder: sample
+          code-coverage-metric-level: mcdc
+      - name: Perform 'setup-matlab' with MATLAB Test 
+        uses: matlab-actions/setup-matlab@v3
+        with:
+          products: |
+            MATLAB_Test
+      - name: Run MATLAB Tests with other options # Test Case 2: With MATLAB Test, and other code-coverage options, no view is shown.
+        uses: ./
+        with:
+          model-coverage-cobertura: test-results/modelcoverage.xml
+          test-results-pdf: test-results/pdf-results.pdf
+          test-results-junit: test-results/results.xml
+          code-coverage-cobertura: test-results/coverage.xml
+          code-coverage-html: test-results/coverageHTML
+          code-coverage-metric-level: mcdc
+          model-coverage-html: test-results/modelcoverageHTML
+          test-results-html: test-results/resultsHTML
+          select-by-folder: sample
+          strict: true
+          use-parallel: true
+          output-detail: Detailed
+          logging-level: Detailed
+      - name: Run MATLAB Tests # Test Case 3: With MATLAB Test, and only code-coverage-metric-level option, view is shown.
+        uses: ./
+        with:
           code-coverage-metric-level: mcdc
