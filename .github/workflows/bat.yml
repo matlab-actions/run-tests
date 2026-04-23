@@ -152,7 +152,7 @@ jobs:
             exit 1
           fi
           echo "Step summary file found"
-          cat "$GITHUB_STEP_SUMMARY"
+          cat $GITHUB_STEP_SUMMARY
 
           # Check for content expected in the coverage summary
           grep -q "Coverage" "$GITHUB_STEP_SUMMARY"
