@@ -46,7 +46,6 @@ jobs:
         with:
           source-folder: sample
           startup-options: -logfile output.log
-          code-coverage-metric-level: mcdc # new option to configure metric level
       - name: Verify option application
         run: |
           set -e
@@ -140,6 +139,11 @@ jobs:
           use-parallel: true
           output-detail: Detailed
           logging-level: Detailed
+      - name: Perform 'setup-matlab' with MATLAB Test
+        uses: matlab-actions/setup-matlab@v3
+        with:
+          products: |
+            MATLAB_Test
       - name: Run MATLAB Tests # Test Case 3: With MATLAB Test, and only code-coverage-metric-level option, view is shown.
         uses: ./
         with:
