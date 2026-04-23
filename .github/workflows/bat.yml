@@ -46,7 +46,6 @@ jobs:
         with:
           source-folder: sample
           startup-options: -logfile output.log
-          code-coverage-html: test-results/coverageHTML
       - name: Verify option application
         run: |
           set -e
@@ -145,3 +144,11 @@ jobs:
         with:
           source-folder: sample
           code-coverage-metric-level: mcdc
+          startup-options: -logfile test.log
+      - name: Verify coverage view is shown for Test Case 3
+        run: |
+          echo "test.log:"
+          cat test.log
+          echo "grep"
+          grep "Coverage Summary" test.log
+        shell: bash
