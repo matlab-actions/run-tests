@@ -112,14 +112,14 @@ jobs:
       - uses: actions/download-artifact@v8
         with:
           name: built-action
-      - name: Perform 'setup-matlab' without MATLAB Test 
+      - name: Perform 'setup-matlab' without MATLAB Test
         uses: matlab-actions/setup-matlab@v3
       - name: Run MATLAB Tests # Test Case 1: Without MATLAB Test, no view is shown
         uses: ./
         with:
           source-folder: sample
           code-coverage-metric-level: mcdc
-      - name: Perform 'setup-matlab' with MATLAB Test 
+      - name: Perform 'setup-matlab' with MATLAB Test
         uses: matlab-actions/setup-matlab@v3
         with:
           products: |
