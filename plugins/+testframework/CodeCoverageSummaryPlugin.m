@@ -62,7 +62,7 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
             
             % Determine file path for coverage results
             coverageArtifactFile = fullfile(getenv("RUNNER_TEMP"), "matlabCoverageResults" + getenv("GITHUB_RUN_ID") + ".json");
-            disp("added the coverage details");
+           
             try
                 JsonCoverageResults = jsonencode(coverageResults, "PrettyPrint", true);
 
