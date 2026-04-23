@@ -71,11 +71,8 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
                     fprintf(fid, '## Code Coverage Summary\n\n');
                     fprintf(fid, '| Metric | Coverage |\n');
                     fprintf(fid, '|--------|----------|\n');
-                    fprintf(fid, '| Statement | %.2f%% |\n', statementCoverage);
-                    fprintf(fid, '| Function | %.2f%% |\n', functionCoverage);
-                    fprintf(fid, '| Decision | %.2f%% |\n', decisionCoverage);
-                    fprintf(fid, '| Condition | %.2f%% |\n', conditionCoverage);
-                    fprintf(fid, '| MC/DC | %.2f%% |\n', mcdcCoverage);
+                    fprintf(fid, '| Statement | %.2f%% |\n', coverageDetails.StatementCoverage.Percentage);
+                    fprintf(fid, '| Function | %.2f%% |\n', coverageDetails.FunctionCoverage.Percentage);
                     fprintf(fid, '\n');
                     fclose(fid);
                 end
