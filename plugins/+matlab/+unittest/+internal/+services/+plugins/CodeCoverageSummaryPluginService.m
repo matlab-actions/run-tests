@@ -27,7 +27,8 @@ classdef CodeCoverageSummaryPluginService < matlab.buildtool.internal.services.c
                 if isempty(sourceFolder)
                     sourceFolder = pwd;
                 end
-                
+                disp("Pwd is");
+                disp(pwd);
                 coveragePlugin = matlab.unittest.plugins.CodeCoveragePlugin.forFolder(...
                     sourceFolder, 'Producing', format, 'MetricLevel', metricLevel);
 
