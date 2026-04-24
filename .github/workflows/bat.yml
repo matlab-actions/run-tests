@@ -144,4 +144,3 @@ jobs:
         with:
           source-folder: sample
           code-coverage-metric-level: mcdc
-          startup-options: -logfile test.log
