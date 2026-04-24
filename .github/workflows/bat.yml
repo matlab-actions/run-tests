@@ -142,4 +142,5 @@ jobs:
       - name: Run MATLAB Tests # Test Case 3: With MATLAB Test, and only code-coverage-metric-level option, view is shown.
         uses: ./
         with:
+          source-folder: sample
           code-coverage-metric-level: mcdc
