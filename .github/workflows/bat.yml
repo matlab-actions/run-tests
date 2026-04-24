@@ -143,4 +143,4 @@ jobs:
         uses: ./
         with:
           source-folder: sample
-          code-coverage-metric-level: mcdc
+          code-coverage-metric-level: decision
