@@ -147,5 +147,5 @@ jobs:
           startup-options: -logfile test.log
       - name: Verify coverage summary view is generated
         run: |
-          test -f coverage_summary_generated.txt
+          test -f "$RUNNER_TEMP/matlabCoverageResults${{ github.run_id }}.json"
         shell: bash
