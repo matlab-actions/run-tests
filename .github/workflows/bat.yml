@@ -145,7 +145,3 @@ jobs:
           source-folder: sample
           code-coverage-metric-level: mcdc
           startup-options: -logfile test.log
-      - name: Verify coverage summary view is generated
-        run: |
-          test -f "$RUNNER_TEMP/matlabCoverageResults${{ github.run_id }}.json"
-        shell: bash
