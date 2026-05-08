@@ -1,7 +1,7 @@
 {
     "name": "run-matlab-tests-action",
     "author": "The MathWorks, Inc.",
-    "version": "3.1.0",
+    "version": "3.1.1",
     "description": "",
     "type": "module",
     "main": "lib/index.js",
@@ -22,7 +22,7 @@
     "dependencies": {
         "@actions/core": "^3.0.0",
         "@actions/exec": "^3.0.0",
-        "common-utils": "github:matlab-actions/common-utils#kapilg/encoding-fix"
+        "common-utils": "github:matlab-actions/common-utils#v2.2.2"
     },
     "devDependencies": {
         "@types/jest": "^30.0.0",
