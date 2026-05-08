@@ -55,6 +55,7 @@ async function run() {
             INPUT_SOURCE_FOLDER: options.SourceFolder!, // Add source folder to environment
             INPUT_CODE_COVERAGE_HTML: options.HTMLCodeCoverage!,
             INPUT_CODE_COVERAGE_COBERTURA: options.CoberturaCodeCoverage!,
+            MW_GENERATE_JOB_SUMMARY: String(generateJobSummary),
         },
     };
     core.info("Successfully generated test script!");
@@ -71,9 +72,9 @@ async function run() {
             if (generateJobSummary) {
                 const runnerTemp = process.env.RUNNER_TEMP || "";
                 const runId = process.env.GITHUB_RUN_ID || "";
+                const actionName = process.env.GITHUB_ACTION || "";
 
-                // Generate test results and code coverage view
-                testResultsSummary.processAndAddTestSummary(runnerTemp, runId, workspaceDir);
+                testResultsSummary.processAndAddTestSummary(runnerTemp, runId, actionName, workspaceDir);
                 core.summary.write();
             }
         });
