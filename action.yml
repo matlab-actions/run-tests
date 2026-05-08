@@ -84,11 +84,11 @@ inputs:
       Startup options for MATLAB
     required: false
     default: ""
-  opt-out-of-test-results-summary:
+  generate-job-summary:
     description: >-
-      Whether to opt out of the test results summary in the GitHub Action UI
+      Whether to generate a job summary with test results and code coverage information
     required: false
-    default: false
+    default: true
   code-coverage-metric-level:
     description: >-
       Level of coverage metrics to collect

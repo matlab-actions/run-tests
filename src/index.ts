@@ -31,7 +31,7 @@ async function run() {
         LoggingLevel: core.getInput("logging-level"),
     };
 
-    const optOutOfTestResultsSummary = core.getBooleanInput("opt-out-of-test-results-summary");
+    const generateJobSummary = core.getBooleanInput("generate-job-summary");
     var codeCoverageMetricLevel = core.getInput("code-coverage-metric-level").toLowerCase();
 
     // Validate metric level
@@ -66,12 +66,12 @@ async function run() {
             startupOptions,
         )
         .finally(() => {
-            if (!optOutOfTestResultsSummary) {
+            if (generateJobSummary) {
                 const runnerTemp = process.env.RUNNER_TEMP || "";
                 const runId = process.env.GITHUB_RUN_ID || "";
                 const actionName = process.env.GITHUB_ACTION || "";
 
-                //add test results and code coverage view
+                // Generate test results and code coverage view
                 testResultsSummary.processAndAddTestSummary(
                     runnerTemp,
                     runId,
