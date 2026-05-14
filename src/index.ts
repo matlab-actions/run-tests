@@ -31,7 +31,7 @@ async function run() {
         LoggingLevel: core.getInput("logging-level"),
     };
 
-    const generateJobSummary = core.getBooleanInput("generate-job-summary");
+    const generateSummary = core.getBooleanInput("generate-summary");
     var codeCoverageMetricLevel = core.getInput("code-coverage-metric-level").toLowerCase();
 
     // Validate metric level
@@ -55,7 +55,7 @@ async function run() {
             INPUT_SOURCE_FOLDER: options.SourceFolder!, // Add source folder to environment
             INPUT_CODE_COVERAGE_HTML: options.HTMLCodeCoverage!,
             INPUT_CODE_COVERAGE_COBERTURA: options.CoberturaCodeCoverage!,
-            MW_GENERATE_JOB_SUMMARY: String(generateJobSummary),
+            MW_GENERATE_SUMMARY: String(generateSummary),
         },
     };
     core.info("Successfully generated test script!");
@@ -69,7 +69,7 @@ async function run() {
             startupOptions,
         )
         .finally(() => {
-            if (generateJobSummary) {
+            if (generateSummary) {
                 const runnerTemp = process.env.RUNNER_TEMP || "";
                 const runId = process.env.GITHUB_RUN_ID || "";
                 const actionName = process.env.GITHUB_ACTION || "";

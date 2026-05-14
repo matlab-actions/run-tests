@@ -45,7 +45,7 @@ jobs:
         uses: ./
         with:
           source-folder: sample
-          generate-job-summary: false
+          generate-summary: false
       - name: Run MATLAB Tests
         continue-on-error: true
         uses: ./

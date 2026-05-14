@@ -12,7 +12,7 @@ classdef CodeCoverageSummaryPluginService < matlab.buildtool.internal.services.c
             hasCoverageRequest = hasCoverageHTML || hasCoverageCobertura;
 
             % Check if MATLAB Test license is available and MATLAB Test is installed
-            if license('test', 'matlab_test') && isProductInstalled && ~hasCoverageRequest
+            if strcmpi(getenv("MW_GENERATE_SUMMARY"), "true") && ~hasCoverageRequest && license('test', 'matlab_test') && isProductInstalled
                 % Get metric level from environment variable
                 metricLevel = getenv('INPUT_CODE_COVERAGE_METRIC_LEVEL');
 

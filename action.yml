@@ -84,7 +84,7 @@ inputs:
       Startup options for MATLAB
     required: false
     default: ""
-  generate-job-summary:
+  generate-summary:
     description: >-
       Whether to generate a MATLAB-related job summary for the workflow run
     required: false
