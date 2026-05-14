@@ -86,7 +86,7 @@ inputs:
     default: ""
   generate-job-summary:
     description: >-
-      Whether to generate a job summary with test results and code coverage information
+      Whether to generate a MATLAB-related job summary for the workflow run
     required: false
     default: true
   code-coverage-metric-level:
