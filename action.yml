@@ -86,7 +86,7 @@ inputs:
     default: ""
   generate-summary:
     description: >-
-      Whether to generate a MATLAB-related job summary for the workflow run
+      Option to generate a summary for the GitHub job summary
     required: false
     default: true
   code-coverage-metric-level:

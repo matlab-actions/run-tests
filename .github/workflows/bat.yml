@@ -52,7 +52,6 @@ jobs:
         with:
           source-folder: sample
           startup-options: -logfile output.log
-          code-coverage-metric-level: mcdc
       - name: Verify option application
         run: |
           set -e
