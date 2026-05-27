@@ -150,7 +150,7 @@ You can interact with the **All tests** table using the expanders to the left of
 > [!TIP]
 > With a MATLAB Test license, you also see your MATLAB and Simulink test results in the GitHub job summary when you take any of these actions:
 >
-> - Run tests with a [`matlab.buildtool.tasks.TestTask`](https://www.mathworks.com/help/matlab/ref/matlab.buildtool.tasks.testtask-class.html) instance using the [Run MATLAB Build](https://github.com/matlab-actions/run-build/) action.
+> - Run tests with a [`matlab.buildtool.tasks.TestTask`](https://www.mathworks.com/help/matlab/ref/matlab.buildtool.tasks.testtask-class.html) instance using the [Run MATLAB Build](https://github.com/matlab-actions/run-build/) or [Run MATLAB Command](https://github.com/matlab-actions/run-command/) action.
 > - Run tests with a default test runner using the [Run MATLAB Command](https://github.com/matlab-actions/run-command/) action. You can create a default test runner using the [`matlab.unittest.TestRunner.withDefaultPlugins`](https://www.mathworks.com/help/matlab/ref/matlab.unittest.testrunner.withdefaultplugins.html) method.
 
 ### Code Coverage Summary
