@@ -148,7 +148,7 @@ If you have a MATLAB Test license, after your workflow runs, the GitHub job summ
 You can interact with the **All tests** table using the expanders to the left of test filenames and diagnostics. In an expanded table row, individual test results from the corresponding test file appear in a table under the test filename. Each row of the inner table shows the status, procedure name, diagnostics, and duration of a test in the file.
 
 > [!TIP]
-> With a MATLAB Test license, you also see your MATLAB and Simulink test results on the workflow run summary page when you take any of these actions:
+> With a MATLAB Test license, you also see your MATLAB and Simulink test results in the GitHub job summary when you take any of these actions:
 >
 > - Run tests with a [`matlab.buildtool.tasks.TestTask`](https://www.mathworks.com/help/matlab/ref/matlab.buildtool.tasks.testtask-class.html) instance using the [Run MATLAB Build](https://github.com/matlab-actions/run-build/) action.
 > - Run tests with a default test runner using the [Run MATLAB Command](https://github.com/matlab-actions/run-command/) action. You can create a default test runner using the [`matlab.unittest.TestRunner.withDefaultPlugins`](https://www.mathworks.com/help/matlab/ref/matlab.unittest.testrunner.withdefaultplugins.html) method.
