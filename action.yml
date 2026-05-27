@@ -84,6 +84,11 @@ inputs:
       Startup options for MATLAB
     required: false
     default: ""
+  generate-summary:
+    description: >-
+      Option to generate a summary for the GitHub job summary
+    required: false
+    default: true
   code-coverage-metric-level:
     description: >-
       Level of coverage metrics to collect

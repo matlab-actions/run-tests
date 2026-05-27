@@ -31,6 +31,7 @@ async function run() {
         LoggingLevel: core.getInput("logging-level"),
     };
 
+    const generateSummary = core.getBooleanInput("generate-summary");
     var codeCoverageMetricLevel = core.getInput("code-coverage-metric-level").toLowerCase();
 
     // Validate metric level
@@ -50,10 +51,11 @@ async function run() {
         env: {
             ...process.env,
             MW_BATCH_LICENSING_ONLINE: "true", // Remove when online batch licensing is the default
-            INPUT_CODE_COVERAGE_METRIC_LEVEL: codeCoverageMetricLevel,
-            INPUT_SOURCE_FOLDER: options.SourceFolder!, // Add source folder to environment
-            INPUT_CODE_COVERAGE_HTML: options.HTMLCodeCoverage!,
-            INPUT_CODE_COVERAGE_COBERTURA: options.CoberturaCodeCoverage!,
+            MW_INPUT_CODE_COVERAGE_METRIC_LEVEL: codeCoverageMetricLevel,
+            MW_INPUT_SOURCE_FOLDER: options.SourceFolder!, // Add source folder to environment
+            MW_INPUT_CODE_COVERAGE_HTML: options.HTMLCodeCoverage!,
+            MW_INPUT_CODE_COVERAGE_COBERTURA: options.CoberturaCodeCoverage!,
+            MW_INPUT_GENERATE_SUMMARY: String(generateSummary),
         },
     };
     core.info("Successfully generated test script!");
@@ -67,12 +69,19 @@ async function run() {
             startupOptions,
         )
         .finally(() => {
-            const runnerTemp = process.env.RUNNER_TEMP || "";
-            const runId = process.env.GITHUB_RUN_ID || "";
+            if (generateSummary) {
+                const runnerTemp = process.env.RUNNER_TEMP || "";
+                const runId = process.env.GITHUB_RUN_ID || "";
+                const actionName = process.env.GITHUB_ACTION || "";
 
-            //add test results and code coverage view
-            testResultsSummary.processAndAddTestSummary(runnerTemp, runId, workspaceDir);
-            core.summary.write();
+                testResultsSummary.processAndAddTestSummary(
+                    runnerTemp,
+                    runId,
+                    actionName,
+                    workspaceDir,
+                );
+                core.summary.write();
+            }
         });
 }
 

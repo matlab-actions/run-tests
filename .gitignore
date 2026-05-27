@@ -1,6 +1,9 @@
 ## For development environment
 .vscode
 
+# Claude
+.claude/
+
 # Don't include intermediate TypeScript compilation;
 # it should be forcibly added on release
 lib

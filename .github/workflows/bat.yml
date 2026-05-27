@@ -40,8 +40,12 @@ jobs:
             Simulink
             Simulink_Test
             Simulink_Coverage
+      - name: Run MATLAB Tests with job summary disabled
+        uses: ./
+        with:
+          source-folder: sample
+          generate-summary: false
       - name: Run MATLAB Tests
-        continue-on-error: true
         uses: ./
         with:
           source-folder: sample
@@ -65,7 +69,6 @@ jobs:
       - name: Set up diary for logging
         run: echo 'diary console.log' >> startup.m
       - name: Run run-test command
-        continue-on-error: true
         uses: ./
         with:
           test-results-simulink-test: test-results/simulinktest.mldatx
