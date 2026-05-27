@@ -137,7 +137,7 @@ The **Run MATLAB Tests** action accepts optional inputs. For example, you can ad
 
 ## View Test and Coverage Results
 
-With a MATLAB Test license, you can view test results and code coverage metrics for your source code in the GitHub job summary.
+With a MATLAB Test license, you can view test results and code coverage metrics for your source code in the GitHub job summary when the `generate-summary` input is `true`.
 
 <img width="2011" height="2001" alt="Workflow run summary page showing four passed tests from a single test file. The MATLAB Code Coverage table displays the collected code coverage metrics for the source code. In the All tests table, the expanded row displays a table of test results for the test file." src="https://github.com/user-attachments/assets/128f4caf-157f-44e1-8347-91b907d9b64b" />
 
