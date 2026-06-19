@@ -121,12 +121,17 @@ jobs:
         with:
           source-folder: sample
           code-coverage-metric-level: mcdc
+      - name: Run MATLAB Tests for statement coverage without MATLAB Test # Test Case 2: Statement coverage without MATLAB Test, view is shown
+        uses: ./
+        with:
+          source-folder: sample
+          code-coverage-metric-level: statement
       - name: Perform 'setup-matlab' with MATLAB Test
         uses: matlab-actions/setup-matlab@v3
         with:
           products: |
             MATLAB_Test
-      - name: Run MATLAB Tests with other options # Test Case 2: With MATLAB Test, and other code-coverage options, no view is shown.
+      - name: Run MATLAB Tests with other options # Test Case 3: With MATLAB Test, and other code-coverage options, no view is shown.
         uses: ./
         with:
           model-coverage-cobertura: test-results/modelcoverage.xml
@@ -142,7 +147,7 @@ jobs:
           use-parallel: true
           output-detail: Detailed
           logging-level: Detailed
-      - name: Run MATLAB Tests # Test Case 3: With MATLAB Test, and only code-coverage-metric-level option, view is shown.
+      - name: Run MATLAB Tests # Test Case 4: With MATLAB Test, and only code-coverage-metric-level option, view is shown.
         uses: ./
         with:
           source-folder: sample
