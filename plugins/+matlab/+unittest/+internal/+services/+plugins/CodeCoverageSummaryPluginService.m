@@ -3,18 +3,13 @@ classdef CodeCoverageSummaryPluginService < matlab.buildtool.internal.services.c
     
     methods
         function plugins = providePlugins(~, ~)
-            verInfo = ver;
-            productNames = string({verInfo.Name});
-            productName = 'MATLAB Test';
-            isProductInstalled = any(productNames.matches(productName));
             hasCoverageHTML = ~isempty(getenv('MW_INPUT_CODE_COVERAGE_HTML'));
             hasCoverageCobertura = ~isempty(getenv('MW_INPUT_CODE_COVERAGE_COBERTURA'));
             hasCoverageRequest = hasCoverageHTML || hasCoverageCobertura;
 
-            % Check if MATLAB Test license is available and MATLAB Test is installed
-            if strcmpi(getenv("MW_INPUT_GENERATE_SUMMARY"), "true") && ~hasCoverageRequest && license('test', 'matlab_test') && isProductInstalled
+            if strcmpi(getenv("MW_INPUT_GENERATE_SUMMARY"), "true") && ~hasCoverageRequest
                 % Get metric level from environment variable
-                metricLevel = getenv('MW_INPUT_CODE_COVERAGE_METRIC_LEVEL');
+                metricLevel = getenv('MW_INPUT_CODE_COVERAGE_METRICS');
 
                 % Create a shared CoverageResult format object
                 format = matlab.unittest.plugins.codecoverage.CoverageResult;

@@ -32,15 +32,15 @@ async function run() {
     };
 
     const generateSummary = core.getBooleanInput("generate-summary");
-    var codeCoverageMetricLevel = core.getInput("code-coverage-metric-level").toLowerCase();
+    var codeCoverageMetrics = core.getInput("code-coverage-metrics").toLowerCase();
 
     // Validate metric level
-    const validMetricLevels = ["statement", "decision", "condition", "mcdc"];
-    if (!validMetricLevels.includes(codeCoverageMetricLevel)) {
+    const validMetricLevels = ["auto", "statement", "decision", "condition", "mcdc"];
+    if (!validMetricLevels.includes(codeCoverageMetrics)) {
         core.warning(
-            `Invalid metric level '${codeCoverageMetricLevel}'. Using the default value ('mcdc') instead.`,
+            `Invalid metric level '${codeCoverageMetrics}'. Using the default value ('auto') instead.`,
         );
-        codeCoverageMetricLevel = "mcdc";
+        codeCoverageMetrics = "auto";
     }
 
     const command = scriptgen.generateCommand(options);
@@ -51,7 +51,7 @@ async function run() {
         env: {
             ...process.env,
             MW_BATCH_LICENSING_ONLINE: "true", // Remove when online batch licensing is the default
-            MW_INPUT_CODE_COVERAGE_METRIC_LEVEL: codeCoverageMetricLevel,
+            MW_INPUT_CODE_COVERAGE_METRICS: codeCoverageMetrics,
             MW_INPUT_SOURCE_FOLDER: options.SourceFolder!, // Add source folder to environment
             MW_INPUT_CODE_COVERAGE_HTML: options.HTMLCodeCoverage!,
             MW_INPUT_CODE_COVERAGE_COBERTURA: options.CoberturaCodeCoverage!,
