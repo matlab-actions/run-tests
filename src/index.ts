@@ -13,6 +13,8 @@ async function run() {
     const architecture = process.arch;
     const workspaceDir = process.cwd();
 
+    const codeCoverageMetrics = core.getInput("code-coverage-metrics").toLowerCase().trim();
+
     const options: scriptgen.RunTestsOptions = {
         JUnitTestResults: core.getInput("test-results-junit"),
         CoberturaCodeCoverage: core.getInput("code-coverage-cobertura"),
@@ -29,19 +31,10 @@ async function run() {
         UseParallel: core.getBooleanInput("use-parallel"),
         OutputDetail: core.getInput("output-detail"),
         LoggingLevel: core.getInput("logging-level"),
+        CodeCoverageMetrics: codeCoverageMetrics,
     };
 
     const generateSummary = core.getBooleanInput("generate-summary");
-    var codeCoverageMetrics = core.getInput("code-coverage-metrics").toLowerCase();
-
-    // Validate metric level
-    const validMetricLevels = ["auto", "statement", "decision", "condition", "mcdc"];
-    if (!validMetricLevels.includes(codeCoverageMetrics)) {
-        core.warning(
-            `Invalid metric level '${codeCoverageMetrics}'. Using the default value ('auto') instead.`,
-        );
-        codeCoverageMetrics = "auto";
-    }
 
     const command = scriptgen.generateCommand(options);
     const startupOptions = core.getInput("startup-options").split(" ");
@@ -51,7 +44,7 @@ async function run() {
         env: {
             ...process.env,
             MW_BATCH_LICENSING_ONLINE: "true", // Remove when online batch licensing is the default
-            MW_INPUT_CODE_COVERAGE_METRICS: codeCoverageMetrics,
+            MW_INPUT_CODE_COVERAGE_METRICS: options.CodeCoverageMetrics!,
             MW_INPUT_SOURCE_FOLDER: options.SourceFolder!, // Add source folder to environment
             MW_INPUT_CODE_COVERAGE_HTML: options.HTMLCodeCoverage!,
             MW_INPUT_CODE_COVERAGE_COBERTURA: options.CoberturaCodeCoverage!,

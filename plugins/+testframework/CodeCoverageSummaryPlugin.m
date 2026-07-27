@@ -3,13 +3,13 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
     
     properties (Access=private)
         CoverageFormat
-        MetricLevel
+        Metrics
     end
     
     methods
-        function plugin = CodeCoverageSummaryPlugin(coverageFormat, metricLevel)
+        function plugin = CodeCoverageSummaryPlugin(coverageFormat, metrics)
             plugin.CoverageFormat = coverageFormat;
-            plugin.MetricLevel = metricLevel;
+            plugin.Metrics = metrics;
         end
     end
     
@@ -28,29 +28,28 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
             
             % Create coverage summary structure
             coverageDetails = struct();
-            coverageDetails.MetricLevel = plugin.MetricLevel;
-            
-            % Always get function and statement coverage (available for all levels)
+
+            % Always get function and statement coverage
             functionCoverage = coverageSummary(result, "function");
             statementCoverage = coverageSummary(result, "statement");
-            
+
             coverageDetails.FunctionCoverage = sumCoverage(functionCoverage);
             coverageDetails.StatementCoverage = sumCoverage(statementCoverage);
-            
-            % Get decision coverage if metric level is decision, condition, or mcdc
-            if ismember(plugin.MetricLevel, {'decision', 'condition', 'mcdc'})
+
+            % Get decision coverage if metrics contains decision, condition, or mcdc
+            if any(ismember({'decision', 'condition', 'mcdc'}, plugin.Metrics))
                 decisionCoverage = coverageSummary(result, "decision");
                 coverageDetails.DecisionCoverage = sumCoverage(decisionCoverage);
             end
-            
-            % Get condition coverage if metric level is condition or mcdc
-            if ismember(plugin.MetricLevel, {'condition', 'mcdc'})
+
+            % Get condition coverage if metrics contains condition or mcdc
+            if any(ismember({'condition', 'mcdc'}, plugin.Metrics))
                 conditionCoverage = coverageSummary(result, "condition");
                 coverageDetails.ConditionCoverage = sumCoverage(conditionCoverage);
             end
-            
-            % Get MC/DC coverage if metric level is mcdc
-            if strcmp(plugin.MetricLevel, 'mcdc')
+
+            % Get MC/DC coverage if metrics contains mcdc
+            if any(ismember({'mcdc'}, plugin.Metrics))
                 mcdcCoverage = coverageSummary(result, "mcdc");
                 coverageDetails.MCDCCoverage = sumCoverage(mcdcCoverage);
             end

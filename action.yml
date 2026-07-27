@@ -91,7 +91,7 @@ inputs:
     default: true
   code-coverage-metrics:
     description: >-
-      Level of coverage metrics to collect
+      Code coverage metrics to collect
     required: false
     default: auto
 runs:
