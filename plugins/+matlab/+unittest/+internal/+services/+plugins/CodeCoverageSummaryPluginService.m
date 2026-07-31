@@ -38,8 +38,9 @@ classdef CodeCoverageSummaryPluginService < matlab.buildtool.internal.services.c
                 end
 
                 if isMATLABReleaseOlderThan("R2026b")
+                    metric = metrics{1};
                     coveragePlugin = matlab.unittest.plugins.CodeCoveragePlugin.forFolder(...
-                        sourceFolder, 'Producing', format, 'MetricLevel', metrics);
+                        sourceFolder, 'Producing', format, 'MetricLevel', metric);
                 else
                     coveragePlugin = matlab.unittest.plugins.CodeCoveragePlugin.forFolder(...
                         sourceFolder, 'Producing', format, 'Metrics', metrics);
