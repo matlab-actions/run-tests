@@ -116,11 +116,10 @@ jobs:
           name: built-action
       - name: Perform 'setup-matlab' without MATLAB Test
         uses: matlab-actions/setup-matlab@v3
-      - name: Run MATLAB Tests without MATLAB Test # Test Case 1: Without MATLAB Test, no view is shown
+      - name: Run MATLAB Tests without MATLAB Test # Test Case 1: Without MATLAB Test, statement coverage view is shown
         uses: ./
         with:
           source-folder: sample
-          code-coverage-metrics: mcdc
       - name: Perform 'setup-matlab' with MATLAB Test
         uses: matlab-actions/setup-matlab@v3
         with:
@@ -146,8 +145,8 @@ jobs:
         uses: ./
         with:
           source-folder: sample
-          code-coverage-metrics: statement
-      - name: Run MATLAB Tests with default metrics # Test Case 4: With MATLAB Test, and no code-coverage-metrics option ('auto' default), view is shown.
+          code-coverage-metrics: decision
+      - name: Run MATLAB Tests with default metrics # Test Case 4: With MATLAB Test, and no code-coverage-metrics option ('auto' default), mcdc view is shown.
         uses: ./
         with:
           source-folder: sample
