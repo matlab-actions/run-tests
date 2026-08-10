@@ -48,10 +48,7 @@ describe("command generation", () => {
         'SourceFolder','', 'PDFTestReport','', 'HTMLTestReport','', 'SimulinkTestResults','',
         'CoberturaModelCoverage','', 'HTMLModelCoverage','', 'SelectByTag','', 'SelectByFolder','',
         'Strict',false, 'UseParallel',false, 'OutputDetail','', 'LoggingLevel','',
-        'Metrics',{})`.replace(
-                /\s+/g,
-                "",
-            );
+        'Metrics',{})`.replace(/\s+/g, "");
         expect(actual.replace(/\s+/g, "").includes(expected)).toBeTruthy();
     });
 

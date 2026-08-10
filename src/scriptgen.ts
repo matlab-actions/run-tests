@@ -29,7 +29,11 @@ function formatMetricsCellArray(metrics: string | undefined): string {
     if (!metrics || metrics.trim() === "") {
         return "{}";
     }
-    const items = metrics.trim().split(/\s+/).map(m => `'${m}'`).join(",");
+    const items = metrics
+        .trim()
+        .split(/\s+/)
+        .map((m) => `'${m}'`)
+        .join(",");
     return `{${items}}`;
 }
 
