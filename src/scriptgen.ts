@@ -1,4 +1,4 @@
-// Copyright 2020-2022 The MathWorks, Inc.
+// Copyright 2020-2026 The MathWorks, Inc.
 
 import * as path from "path";
 
@@ -22,6 +22,19 @@ export interface RunTestsOptions {
     UseParallel?: boolean;
     OutputDetail?: string;
     LoggingLevel?: string;
+    CodeCoverageMetrics?: string;
+}
+
+function formatMetricsCellArray(metrics: string | undefined): string {
+    if (!metrics || metrics.trim() === "") {
+        return "{}";
+    }
+    const items = metrics
+        .trim()
+        .split(/\s+/)
+        .map((m) => `'${m}'`)
+        .join(",");
+    return `{${items}}`;
 }
 
 /**
@@ -30,6 +43,7 @@ export interface RunTestsOptions {
  * @param options scriptgen options for running tests.
  */
 export function generateCommand(options: RunTestsOptions): string {
+    const metricsCellArray = formatMetricsCellArray(options.CodeCoverageMetrics);
     const command = `
         addpath('${path.join(import.meta.dirname, "scriptgen")}');
         testScript = genscript('Test',
@@ -47,7 +61,8 @@ export function generateCommand(options: RunTestsOptions): string {
             'Strict',${options.Strict || false},
             'UseParallel',${options.UseParallel || false},
             'OutputDetail','${options.OutputDetail || ""}',
-            'LoggingLevel','${options.LoggingLevel || ""}'
+            'LoggingLevel','${options.LoggingLevel || ""}',
+            'Metrics',${metricsCellArray}
             );
         disp('Running MATLAB script with contents:');
         disp(testScript.Contents);

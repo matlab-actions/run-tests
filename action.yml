@@ -89,11 +89,11 @@ inputs:
       Option to generate a summary for the GitHub job summary
     required: false
     default: true
-  code-coverage-metric-level:
+  code-coverage-metrics:
     description: >-
-      Level of coverage metrics to collect
+      Code coverage metrics to collect
     required: false
-    default: mcdc
+    default: auto
 runs:
   using: node24
   main: dist/index.js

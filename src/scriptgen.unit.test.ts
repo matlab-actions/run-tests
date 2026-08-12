@@ -1,4 +1,4 @@
-// Copyright 2020-2022 The MathWorks, Inc.
+// Copyright 2020-2026 The MathWorks, Inc.
 
 import * as scriptgen from "./scriptgen.js";
 
@@ -20,6 +20,7 @@ describe("command generation", () => {
             UseParallel: false,
             OutputDetail: "",
             LoggingLevel: "",
+            CodeCoverageMetrics: "",
         };
 
         const actual = scriptgen.generateCommand(options);
@@ -40,16 +41,25 @@ describe("command generation", () => {
         expect(actual.includes("'UseParallel',false")).toBeTruthy();
         expect(actual.includes("'OutputDetail',''")).toBeTruthy();
         expect(actual.includes("'LoggingLevel',''")).toBeTruthy();
+        expect(actual.includes("'Metrics',{}")).toBeTruthy();
 
         const expected =
-            `genscript('Test', 'JUnitTestResults','', 'CoberturaCodeCoverage','', 'HTMLCodeCoverage','', 
-        'SourceFolder','', 'PDFTestReport','', 'HTMLTestReport','', 'SimulinkTestResults','', 
-        'CoberturaModelCoverage','', 'HTMLModelCoverage','', 'SelectByTag','', 'SelectByFolder','', 
-        'Strict',false, 'UseParallel',false, 'OutputDetail','', 'LoggingLevel','')`.replace(
-                /\s+/g,
-                "",
-            );
+            `genscript('Test', 'JUnitTestResults','', 'CoberturaCodeCoverage','', 'HTMLCodeCoverage','',
+        'SourceFolder','', 'PDFTestReport','', 'HTMLTestReport','', 'SimulinkTestResults','',
+        'CoberturaModelCoverage','', 'HTMLModelCoverage','', 'SelectByTag','', 'SelectByFolder','',
+        'Strict',false, 'UseParallel',false, 'OutputDetail','', 'LoggingLevel','',
+        'Metrics',{})`.replace(/\s+/g, "");
         expect(actual.replace(/\s+/g, "").includes(expected)).toBeTruthy();
+    });
+
+    it("contains genscript invocation with single metrics value", () => {
+        const options: scriptgen.RunTestsOptions = {
+            CodeCoverageMetrics: "statement",
+        };
+
+        const actual = scriptgen.generateCommand(options);
+
+        expect(actual.includes("'Metrics',{'statement'}")).toBeTruthy();
     });
 
     it("contains genscript invocation with all options specified", () => {
@@ -69,6 +79,7 @@ describe("command generation", () => {
             UseParallel: true,
             OutputDetail: "Detailed",
             LoggingLevel: "Detailed",
+            CodeCoverageMetrics: "mcdc type-size",
         };
 
         const actual = scriptgen.generateCommand(options);
@@ -97,23 +108,25 @@ describe("command generation", () => {
         expect(actual.includes("'UseParallel',true")).toBeTruthy();
         expect(actual.includes("'OutputDetail','Detailed'")).toBeTruthy();
         expect(actual.includes("'LoggingLevel','Detailed'")).toBeTruthy();
+        expect(actual.includes("'Metrics',{'mcdc','type-size'}")).toBeTruthy();
 
-        const expected = `genscript('Test', 
-        'JUnitTestResults','test-results/results.xml', 
+        const expected = `genscript('Test',
+        'JUnitTestResults','test-results/results.xml',
         'CoberturaCodeCoverage','code-coverage/coverage.xml',
-        'HTMLCodeCoverage','code-coverage/coverage.html', 
+        'HTMLCodeCoverage','code-coverage/coverage.html',
         'SourceFolder','source',
-        'PDFTestReport','test-results/pdf-results.pdf', 
-        'HTMLTestReport','test-results/html-results.html', 
+        'PDFTestReport','test-results/pdf-results.pdf',
+        'HTMLTestReport','test-results/html-results.html',
         'SimulinkTestResults','test-results/simulinkTest.mldatx',
-        'CoberturaModelCoverage','test-results/modelcoverage.xml', 
-        'HTMLModelCoverage','test-results/modelcoverage.html', 
-        'SelectByTag','FeatureA', 
-        'SelectByFolder','test/tools;test/toolbox', 
-        'Strict',true, 
-        'UseParallel',true, 
-        'OutputDetail','Detailed', 
-        'LoggingLevel','Detailed' )`.replace(/\s+/g, "");
+        'CoberturaModelCoverage','test-results/modelcoverage.xml',
+        'HTMLModelCoverage','test-results/modelcoverage.html',
+        'SelectByTag','FeatureA',
+        'SelectByFolder','test/tools;test/toolbox',
+        'Strict',true,
+        'UseParallel',true,
+        'OutputDetail','Detailed',
+        'LoggingLevel','Detailed',
+        'Metrics',{'mcdc','type-size'})`.replace(/\s+/g, "");
         expect(actual.replace(/\s+/g, "").includes(expected)).toBeTruthy();
     });
 });
