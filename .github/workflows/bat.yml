@@ -120,11 +120,12 @@ jobs:
         uses: ./
         with:
           source-folder: sample
-      - name: Run MATLAB Tests without MATLAB Test for advanced coverage # Test Case 2: Without MATLAB Test, decision coverage view should error
+      - name: Run MATLAB Tests without MATLAB Test for advanced coverage # Test Case 2: Without MATLAB Test, advanced coverage should error
         uses: ./
         with:
           source-folder: sample
           code-coverage-metrics: decision
+        continue-on-error: true
       - name: Perform 'setup-matlab' with MATLAB Test
         uses: matlab-actions/setup-matlab@a0180c939fb1a28de13f44f7b778b912384ced1f # v3.0.1
         with:
