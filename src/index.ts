@@ -13,7 +13,15 @@ async function run() {
     const architecture = process.arch;
     const workspaceDir = process.cwd();
 
-    const codeCoverageMetrics = core.getInput("code-coverage-metrics").toLowerCase().trim();
+    var codeCoverageMetrics = core.getInput("code-coverage-metrics").toLowerCase().trim();
+    const codeCoverageMetricLevel = core
+        .getInput("code-coverage-metric-level")
+        .toLowerCase()
+        .trim();
+    // If the user has specified a code coverage metric level, use that instead of default "auto" for the code coverage metrics.
+    if (codeCoverageMetrics === "auto" && codeCoverageMetricLevel !== "auto") {
+        codeCoverageMetrics = codeCoverageMetricLevel;
+    }
 
     const options: scriptgen.RunTestsOptions = {
         JUnitTestResults: core.getInput("test-results-junit"),
