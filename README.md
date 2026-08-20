@@ -157,7 +157,7 @@ You can interact with the **All tests** table using the expanders to the left of
 
 The **MATLAB Code Coverage** table in the GitHub job summary displays the collected code coverage metrics for the MATLAB source code specified by the `source-folder` input of the **Run MATLAB Tests** action. To generate the coverage summary, you must not specify the `code-coverage-html` or `code-coverage-cobertura` action inputs.
 
-The action uses the `code-coverage-metrics` input to determine which coverage metrics to include in the summary. By default, the value of `code-coverage-metrics` is `auto`. With a MATLAB Test license, `auto` collects all structural coverage metrics: statement, function, decision, condition, and modified condition/decision coverage (MC/DC). Without a MATLAB Test license, `auto` collects statement and function coverage. To disable the coverage summary without affecting the test results summary, specify `code-coverage-metrics` as an empty value.
+The action uses the `code-coverage-metrics` input to determine which coverage metrics to include in the summary. By default, the value of `code-coverage-metrics` is `auto`. With a MATLAB Test license, `auto` collects all structural coverage metrics: statement, function, decision, condition, and modified condition/decision coverage (MC/DC). Without a MATLAB Test license, `auto` collects statement and function coverage. To disable the coverage summary without affecting the test results summary, specify `code-coverage-metrics` as an empty value (`''`).
 
 ## Notes
 
