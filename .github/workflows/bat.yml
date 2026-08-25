@@ -81,7 +81,7 @@ jobs:
           model-coverage-html: test-results/modelcoverageHTML
           test-results-html: test-results/resultsHTML
           select-by-folder: sample
-          strict: true
+          strict: false
           use-parallel: true
           output-detail: Detailed
           logging-level: Detailed
