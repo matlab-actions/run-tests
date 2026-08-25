@@ -25,6 +25,22 @@ export interface RunTestsOptions {
     CodeCoverageMetrics?: string;
 }
 
+/**
+ * Resolve the effective code coverage metrics from the new
+ * `code-coverage-metrics` input and the deprecated `code-coverage-metric-level`
+ * input. If the user leaves the new input at its "auto" default but specifies a
+ * value for the deprecated input, the deprecated value takes precedence.
+ *
+ * @param metrics value of the `code-coverage-metrics` input.
+ * @param metricLevel value of the deprecated `code-coverage-metric-level` input.
+ */
+export function resolveCodeCoverageMetrics(metrics: string, metricLevel: string): string {
+    if (metrics === "auto" && metricLevel !== "auto") {
+        return metricLevel;
+    }
+    return metrics;
+}
+
 function formatMetricsCellArray(metrics: string | undefined): string {
     if (!metrics || metrics.trim() === "") {
         return "{}";
