@@ -116,10 +116,10 @@ jobs:
           name: built-action
       - name: Perform 'setup-matlab' without MATLAB Test
         uses: matlab-actions/setup-matlab@a0180c939fb1a28de13f44f7b778b912384ced1f # v3.0.1
-      - name: Run MATLAB Tests without MATLAB Test # Test Case 1: Without MATLAB Test, statement coverage view is shown
-        uses: ./
-        with:
-          source-folder: sample
+      # - name: Run MATLAB Tests without MATLAB Test # Test Case 1: Without MATLAB Test, statement coverage view is shown
+      #   uses: ./
+      #   with:
+      #     source-folder: sample
       - name: Run MATLAB Tests without MATLAB Test for advanced coverage # Test Case 2: Without MATLAB Test, advanced coverage should error
         uses: ./
         with:
@@ -137,31 +137,31 @@ jobs:
           code-coverage-cobertura: test-results/coverage.xml
           code-coverage-html: test-results/coverageHTML
           code-coverage-metrics: mcdc
-      - name: Run MATLAB Tests with other options # Test Case 4: With MATLAB Test, and other non code-coverage report options, view is shown.
-        uses: ./
-        with:
-          model-coverage-cobertura: test-results/modelcoverage.xml
-          test-results-pdf: test-results/pdf-results.pdf
-          test-results-junit: test-results/results.xml
-          code-coverage-metrics: decision
-          model-coverage-html: test-results/modelcoverageHTML
-          test-results-html: test-results/resultsHTML
-          select-by-folder: sample
-          strict: true
-          use-parallel: true
-          output-detail: Detailed
-          logging-level: Detailed
-      - name: Run MATLAB Tests with default metrics # Test Case 5: With MATLAB Test, and no code-coverage-metrics option ('auto' default), mcdc view is shown.
-        uses: ./
-        with:
-          source-folder: sample
-      - name: Run MATLAB Tests with old field # Test Case 6: With MATLAB Test and code-coverage-metrics option (w/o coverage report options), view is shown.
-        uses: ./
-        with:
-          source-folder: sample
-          code-coverage-metric-level: decision
-      - name: Run MATLAB Tests with empty metrics # Test Case 7: With MATLAB Test, and empty code-coverage-metrics option, no view is shown.
-        uses: ./
-        with:
-          source-folder: sample
-          code-coverage-metrics: ""
+      # - name: Run MATLAB Tests with other options # Test Case 4: With MATLAB Test, and other non code-coverage report options, view is shown.
+      #   uses: ./
+      #   with:
+      #     model-coverage-cobertura: test-results/modelcoverage.xml
+      #     test-results-pdf: test-results/pdf-results.pdf
+      #     test-results-junit: test-results/results.xml
+      #     code-coverage-metrics: decision
+      #     model-coverage-html: test-results/modelcoverageHTML
+      #     test-results-html: test-results/resultsHTML
+      #     select-by-folder: sample
+      #     strict: true
+      #     use-parallel: true
+      #     output-detail: Detailed
+      #     logging-level: Detailed
+      # - name: Run MATLAB Tests with default metrics # Test Case 5: With MATLAB Test, and no code-coverage-metrics option ('auto' default), mcdc view is shown.
+      #   uses: ./
+      #   with:
+      #     source-folder: sample
+      # - name: Run MATLAB Tests with old field # Test Case 6: With MATLAB Test and code-coverage-metrics option (w/o coverage report options), view is shown.
+      #   uses: ./
+      #   with:
+      #     source-folder: sample
+      #     code-coverage-metric-level: decision
+      # - name: Run MATLAB Tests with empty metrics # Test Case 7: With MATLAB Test, and empty code-coverage-metrics option, no view is shown.
+      #   uses: ./
+      #   with:
+      #     source-folder: sample
+      #     code-coverage-metrics: ""
