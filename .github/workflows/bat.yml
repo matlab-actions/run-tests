@@ -41,6 +41,8 @@ jobs:
             Simulink
             Simulink_Test
             Simulink_Coverage
+            Simulink_Coder
+            Embedded_Coder
       - name: Run MATLAB Tests with job summary disabled
         uses: ./
         with:
