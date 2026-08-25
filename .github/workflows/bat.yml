@@ -37,6 +37,7 @@ jobs:
         with:
           products: |
             MATLAB_Test
+            Parallel_Computing_Toolbox
             Simulink
             Simulink_Test
             Simulink_Coverage
@@ -116,16 +117,30 @@ jobs:
           name: built-action
       - name: Perform 'setup-matlab' without MATLAB Test
         uses: matlab-actions/setup-matlab@a0180c939fb1a28de13f44f7b778b912384ced1f # v3.0.1
+        with:
+          products: |
+            Parallel_Computing_Toolbox
+            Simulink
+            Simulink_Test
+            Simulink_Coverage
       - name: Run MATLAB Tests without MATLAB Test # Test Case 1: Without MATLAB Test, statement coverage view is shown
         uses: ./
         with:
           source-folder: sample
       - name: Run MATLAB Tests without MATLAB Test for advanced coverage # Test Case 2: Without MATLAB Test, advanced coverage should error
+        id: advanced-coverage-without-matlab-test
         uses: ./
         with:
           source-folder: sample
           code-coverage-metrics: decision
         continue-on-error: true
+      - name: Verify advanced coverage step failed # Verify Test Case 2 exited with a failure
+        run: |
+          if [ "${{ steps.advanced-coverage-without-matlab-test.outcome }}" != "failure" ]; then
+            echo "Expected advanced coverage step to fail without MATLAB Test, but outcome was '${{ steps.advanced-coverage-without-matlab-test.outcome }}'"
+            exit 1
+          fi
+        shell: bash
       - name: Perform 'setup-matlab' with MATLAB Test
         uses: matlab-actions/setup-matlab@a0180c939fb1a28de13f44f7b778b912384ced1f # v3.0.1
         with:
