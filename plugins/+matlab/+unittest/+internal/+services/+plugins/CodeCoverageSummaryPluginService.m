@@ -1,3 +1,4 @@
+%{
 classdef CodeCoverageSummaryPluginService < matlab.buildtool.internal.services.ciplugins.CITestRunnerPluginService
     % Copyright 2026 The MathWorks, Inc.
     
@@ -57,3 +58,4 @@ classdef CodeCoverageSummaryPluginService < matlab.buildtool.internal.services.c
         end
     end
 end
+)%
