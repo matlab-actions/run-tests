@@ -63,11 +63,10 @@ jobs:
           grep "3 Passed" output.log
           grep "1 Incomplete" output.log
         shell: bash
-      - name: Set up diary for logging
-        run: echo 'diary console.log' >> startup.m
       - name: Run run-test command
         uses: ./
         with:
+          startup-options: -logfile output1.log
           test-results-pdf: test-results/pdf-results.pdf
           test-results-junit: test-results/results.xml
           code-coverage-cobertura: test-results/coverage.xml
@@ -87,18 +86,17 @@ jobs:
           (test -f test-results/coverageHTML/*.html) || (echo "No HTML file found" && exit 1)
           (test -d test-results/resultsHTML) || (echo "Directory resultsHTML does not exist" && exit 1)
           (test -f test-results/resultsHTML/*.html) || (echo "No HTML file found" && exit 1)
-          grep -q "runner.addPlugin(FailOnWarningsPlugin())" console.log
-          grep -q "runInParallel" console.log
-          grep -q "'OutputDetail', 3" console.log
-          grep -q "'LoggingLevel', 3" console.log
-        shell: bash
-      - name: Clear diary log file
-        run: printf '' > console.log
+          grep -q "runner.addPlugin(FailOnWarningsPlugin())" output1.log
+          grep -q "runInParallel" output1.log
+          grep -q "'OutputDetail', 3" output1.log
+          grep -q "'LoggingLevel', 3" output1.log
         shell: bash
       - name: Generate Model
         uses: matlab-actions/run-command@bcd446a219949c24051c1d04a4b4e0274c42f23b # v3.2.0
         with:
           command: cd('sample'),createSampleModel('temp_model'),sltest.testmanager.createTestsFromModel('sltestfile', 'temp_model');
+      - name: Set up diary for logging
+        run: echo 'diary console.log' >> startup.m
       - name: Run run-test command
         uses: ./
         with:
