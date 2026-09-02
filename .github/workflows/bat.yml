@@ -63,6 +63,8 @@ jobs:
           grep "3 Passed" output.log
           grep "1 Incomplete" output.log
         shell: bash
+      - name: Set up diary for logging
+        run: echo 'diary console.log' >> startup.m
       - name: Run run-test command
         uses: ./
         with:
@@ -90,12 +92,13 @@ jobs:
           grep -q "'OutputDetail', 3" console.log
           grep -q "'LoggingLevel', 3" console.log
         shell: bash
+      - name: Clear diary log file
+        run: printf '' > console.log
+        shell: bash
       - name: Generate Model
         uses: matlab-actions/run-command@bcd446a219949c24051c1d04a4b4e0274c42f23b # v3.2.0
         with:
           command: cd('sample'),createSampleModel('temp_model'),sltest.testmanager.createTestsFromModel('sltestfile', 'temp_model');
-      - name: Set up diary for logging
-        run: echo 'diary console.log' >> startup.m
       - name: Run run-test command
         uses: ./
         with:
@@ -193,8 +196,10 @@ jobs:
           use-parallel: true
           output-detail: Detailed
           logging-level: Detailed
-      - name: Run MATLAB Tests with default metrics # Test Case 5: With MATLAB Test, w/o source-folder and no code-coverage-metrics option ('auto' default), mcdc view is shown.
+      - name: Run MATLAB Tests with default metrics # Test Case 5: With MATLAB Test, and no code-coverage-metrics option ('auto' default), mcdc view is shown.
         uses: ./
+        with:
+          source-folder: sample
       - name: Run MATLAB Tests with old field # Test Case 6: With MATLAB Test and code-coverage-metrics option (w/o coverage report options), view is shown.
         uses: ./
         with:
