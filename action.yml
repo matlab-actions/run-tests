@@ -94,6 +94,11 @@ inputs:
       Code coverage metrics to collect
     required: false
     default: auto
+  code-coverage-metric-level:
+    description: >-
+      (Not recommended) Level of coverage metrics to collect
+    required: false
+    default: auto
 runs:
   using: node24
   main: dist/index.js

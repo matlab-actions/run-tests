@@ -13,7 +13,10 @@ async function run() {
     const architecture = process.arch;
     const workspaceDir = process.cwd();
 
-    const codeCoverageMetrics = core.getInput("code-coverage-metrics").toLowerCase().trim();
+    const codeCoverageMetrics = scriptgen.resolveCodeCoverageMetrics(
+        core.getInput("code-coverage-metrics").toLowerCase().trim(),
+        core.getInput("code-coverage-metric-level").toLowerCase().trim(),
+    );
 
     const options: scriptgen.RunTestsOptions = {
         JUnitTestResults: core.getInput("test-results-junit"),

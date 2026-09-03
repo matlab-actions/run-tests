@@ -130,3 +130,25 @@ describe("command generation", () => {
         expect(actual.replace(/\s+/g, "").includes(expected)).toBeTruthy();
     });
 });
+
+describe("code coverage metrics resolution", () => {
+    it("uses the metric level when metrics is left at the 'auto' default", () => {
+        expect(scriptgen.resolveCodeCoverageMetrics("auto", "decision")).toEqual("decision");
+    });
+
+    it("keeps 'auto' when the metric level is also 'auto'", () => {
+        expect(scriptgen.resolveCodeCoverageMetrics("auto", "auto")).toEqual("auto");
+    });
+
+    it("prefers an explicit metrics value over the metric level", () => {
+        expect(scriptgen.resolveCodeCoverageMetrics("mcdc", "decision")).toEqual("mcdc");
+    });
+
+    it("keeps an explicit metrics value when the metric level is 'auto'", () => {
+        expect(scriptgen.resolveCodeCoverageMetrics("statement", "auto")).toEqual("statement");
+    });
+
+    it("keeps an empty metrics value to disable the coverage summary", () => {
+        expect(scriptgen.resolveCodeCoverageMetrics("", "auto")).toEqual("");
+    });
+});

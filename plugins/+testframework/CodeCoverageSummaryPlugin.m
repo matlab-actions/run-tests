@@ -1,65 +1,72 @@
-classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
+classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin & ...
+        matlab.unittest.plugins.Parallelizable
     % Copyright 2026 The MathWorks, Inc.
-    
+
     properties (Access=private)
         CoverageFormat
         Metrics
     end
-    
+
     methods
         function plugin = CodeCoverageSummaryPlugin(coverageFormat, metrics)
             plugin.CoverageFormat = coverageFormat;
             plugin.Metrics = metrics;
         end
+
+        function tf = supportsParallelThreadPool_(~)
+            tf = true;
+        end
     end
-    
+
     methods (Access=protected)
         function runSession(plugin, pluginData)
-            % Run the session first (this ensures coverage data is collected)
+            % Run the session first (this ensures coverage data is collected).
             runSession@matlab.unittest.plugins.TestRunnerPlugin(plugin, pluginData);
-            
-            % Now extract and save coverage data
-            if isempty(plugin.CoverageFormat.Result)
-                warning("testframework:CodeCoverageSummaryPlugin:NoCoverageData", "No coverage data collected.");
-                return;
-            end
-            
-            result = plugin.CoverageFormat.Result;
-            
-            % Create coverage summary structure
-            coverageDetails = struct();
 
-            % Always get function and statement coverage
-            functionCoverage = coverageSummary(result, "function");
-            statementCoverage = coverageSummary(result, "statement");
-
-            coverageDetails.FunctionCoverage = sumCoverage(functionCoverage);
-            coverageDetails.StatementCoverage = sumCoverage(statementCoverage);
-
-            % Get decision coverage if metrics contains decision, condition, or mcdc
-            if any(ismember({'decision', 'condition', 'mcdc'}, plugin.Metrics))
-                decisionCoverage = coverageSummary(result, "decision");
-                coverageDetails.DecisionCoverage = sumCoverage(decisionCoverage);
-            end
-
-            % Get condition coverage if metrics contains condition or mcdc
-            if any(ismember({'condition', 'mcdc'}, plugin.Metrics))
-                conditionCoverage = coverageSummary(result, "condition");
-                coverageDetails.ConditionCoverage = sumCoverage(conditionCoverage);
-            end
-
-            % Get MC/DC coverage if metrics contains mcdc
-            if any(ismember({'mcdc'}, plugin.Metrics))
-                mcdcCoverage = coverageSummary(result, "mcdc");
-                coverageDetails.MCDCCoverage = sumCoverage(mcdcCoverage);
-            end
-            
-            coverageResults = {coverageDetails};
-            
-            % Determine file path for coverage results
-            coverageArtifactFile = fullfile(getenv("RUNNER_TEMP"), "matlabCoverageResults" + getenv("GITHUB_RUN_ID") + ".json");
-
+            % Extracting and writing the coverage summary is best-effort: any
+            % failure here must only surface as a warning so that the plugin
+            % never blocks or fails the user's build.
             try
+                if isempty(plugin.CoverageFormat.Result)
+                    warning("testframework:CodeCoverageSummaryPlugin:NoCoverageData", "No coverage data collected.");
+                    return;
+                end
+
+                result = plugin.CoverageFormat.Result;
+
+                % Create coverage summary structure
+                coverageDetails = struct();
+
+                % Always get function and statement coverage
+                functionCoverage = coverageSummary(result, "function");
+                statementCoverage = coverageSummary(result, "statement");
+
+                coverageDetails.FunctionCoverage = sumCoverage(functionCoverage);
+                coverageDetails.StatementCoverage = sumCoverage(statementCoverage);
+
+                % Get decision coverage if metrics contains decision, condition, or mcdc
+                if any(ismember({'decision', 'condition', 'mcdc'}, plugin.Metrics))
+                    decisionCoverage = coverageSummary(result, "decision");
+                    coverageDetails.DecisionCoverage = sumCoverage(decisionCoverage);
+                end
+
+                % Get condition coverage if metrics contains condition or mcdc
+                if any(ismember({'condition', 'mcdc'}, plugin.Metrics))
+                    conditionCoverage = coverageSummary(result, "condition");
+                    coverageDetails.ConditionCoverage = sumCoverage(conditionCoverage);
+                end
+
+                % Get MC/DC coverage if metrics contains mcdc
+                if any(ismember({'mcdc'}, plugin.Metrics))
+                    mcdcCoverage = coverageSummary(result, "mcdc");
+                    coverageDetails.MCDCCoverage = sumCoverage(mcdcCoverage);
+                end
+
+                coverageResults = {coverageDetails};
+
+                % Determine file path for coverage results
+                coverageArtifactFile = fullfile(getenv("RUNNER_TEMP"), "matlabCoverageResults" + getenv("GITHUB_RUN_ID") + ".json");
+
                 JsonCoverageResults = jsonencode(coverageResults, "PrettyPrint", true);
 
                 [fID, msg] = fopen(coverageArtifactFile, "w");
@@ -70,7 +77,7 @@ classdef CodeCoverageSummaryPlugin < matlab.unittest.plugins.TestRunnerPlugin
                     fprintf(fID, '%s', JsonCoverageResults);
                 end
             catch e
-                warning("testframework:CodeCoverageSummaryPlugin:UnableToJsonEncode","Unable to serialize code coverage data into JSON format. (Cause: %s)", e.message);
+                warning("testframework:CodeCoverageSummaryPlugin:UnableToReportCoverage","Unable to report code coverage data in the job summary. (Cause: %s)", e.message);
             end
         end
     end

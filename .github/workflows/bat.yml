@@ -37,6 +37,7 @@ jobs:
         with:
           products: |
             MATLAB_Test
+            Parallel_Computing_Toolbox
             Simulink
             Simulink_Test
             Simulink_Coverage
@@ -62,6 +63,34 @@ jobs:
           grep "3 Passed" output.log
           grep "1 Incomplete" output.log
         shell: bash
+      - name: Run run-test command
+        uses: ./
+        with:
+          startup-options: -logfile output1.log
+          test-results-pdf: test-results/pdf-results.pdf
+          test-results-junit: test-results/results.xml
+          code-coverage-cobertura: test-results/coverage.xml
+          code-coverage-html: test-results/coverageHTML
+          test-results-html: test-results/resultsHTML
+          select-by-folder: sample
+          strict: true
+          use-parallel: true
+          output-detail: Detailed
+          logging-level: Detailed
+      - name: Verify artifacts generation
+        run: |
+          (test -f test-results/pdf-results.pdf) || (echo "File pdf-results.pdf does not exist" && exit 1)
+          (test -f test-results/results.xml) || (echo "File results.xml does not exist" && exit 1)
+          (test -f test-results/coverage.xml) || (echo "File coverage.xml does not exist" && exit 1)
+          (test -d test-results/coverageHTML) || (echo "Directory coverageHTML does not exist" && exit 1)
+          (test -f test-results/coverageHTML/*.html) || (echo "No HTML file found" && exit 1)
+          (test -d test-results/resultsHTML) || (echo "Directory resultsHTML does not exist" && exit 1)
+          (test -f test-results/resultsHTML/*.html) || (echo "No HTML file found" && exit 1)
+          grep -q "runner.addPlugin(FailOnWarningsPlugin())" output1.log
+          grep -q "runInParallel" output1.log
+          grep -q "'OutputDetail', 3" output1.log
+          grep -q "'LoggingLevel', 3" output1.log
+        shell: bash
       - name: Generate Model
         uses: matlab-actions/run-command@bcd446a219949c24051c1d04a4b4e0274c42f23b # v3.2.0
         with:
@@ -81,7 +110,8 @@ jobs:
           test-results-html: test-results/resultsHTML
           select-by-folder: sample
           strict: true
-          use-parallel: true
+          # Keeping use-parallel false due to a known issue with model coverage in parallel.
+          use-parallel: false
           output-detail: Detailed
           logging-level: Detailed
       - name: Verify artifacts generation
@@ -98,7 +128,6 @@ jobs:
           (test -d test-results/resultsHTML) || (echo "Directory resultsHTML does not exist" && exit 1)
           (test -f test-results/resultsHTML/*.html) || (echo "No HTML file found" && exit 1)
           grep -q "runner.addPlugin(FailOnWarningsPlugin())" console.log
-          grep -q "runInParallel" console.log
           grep -q "'OutputDetail', 3" console.log
           grep -q "'LoggingLevel', 3" console.log
         shell: bash
@@ -116,41 +145,65 @@ jobs:
           name: built-action
       - name: Perform 'setup-matlab' without MATLAB Test
         uses: matlab-actions/setup-matlab@a0180c939fb1a28de13f44f7b778b912384ced1f # v3.0.1
+        with:
+          products: |
+            Parallel_Computing_Toolbox
+            Simulink
+            Simulink_Test
+            Simulink_Coverage
       - name: Run MATLAB Tests without MATLAB Test # Test Case 1: Without MATLAB Test, statement coverage view is shown
         uses: ./
         with:
           source-folder: sample
+      - name: Run MATLAB Tests without MATLAB Test for advanced coverage # Test Case 2: Without MATLAB Test, advanced coverage should error
+        id: advanced-coverage-without-matlab-test
+        uses: ./
+        with:
+          source-folder: sample
+          code-coverage-metrics: decision
+        continue-on-error: true
+      - name: Verify advanced coverage step failed # Verify Test Case 2 exited with a failure
+        run: |
+          if [ "${{ steps.advanced-coverage-without-matlab-test.outcome }}" != "failure" ]; then
+            echo "Expected advanced coverage step to fail without MATLAB Test, but outcome was '${{ steps.advanced-coverage-without-matlab-test.outcome }}'"
+            exit 1
+          fi
+        shell: bash
       - name: Perform 'setup-matlab' with MATLAB Test
         uses: matlab-actions/setup-matlab@a0180c939fb1a28de13f44f7b778b912384ced1f # v3.0.1
         with:
           products: |
             MATLAB_Test
-      - name: Run MATLAB Tests with other options # Test Case 2: With MATLAB Test, and other code-coverage report options, no view is shown.
+      - name: Run MATLAB Tests with coverage report options # Test Case 3: With MATLAB Test and code-coverage report options, no view is shown.
         uses: ./
         with:
-          model-coverage-cobertura: test-results/modelcoverage.xml
-          test-results-pdf: test-results/pdf-results.pdf
-          test-results-junit: test-results/results.xml
+          source-folder: sample
           code-coverage-cobertura: test-results/coverage.xml
           code-coverage-html: test-results/coverageHTML
           code-coverage-metrics: mcdc
-          model-coverage-html: test-results/modelcoverageHTML
+      - name: Run MATLAB Tests with other options # Test Case 4: With MATLAB Test, and other non code-coverage report options, view is shown.
+        uses: ./
+        with:
+          source-folder: sample
+          test-results-pdf: test-results/pdf-results.pdf
+          test-results-junit: test-results/results.xml
+          code-coverage-metrics: decision
           test-results-html: test-results/resultsHTML
           select-by-folder: sample
           strict: true
           use-parallel: true
           output-detail: Detailed
           logging-level: Detailed
-      - name: Run MATLAB Tests # Test Case 3: With MATLAB Test and code-coverage-metrics option (w/o coverage report options), view is shown.
+      - name: Run MATLAB Tests with default metrics # Test Case 5: With MATLAB Test, and no code-coverage-metrics option ('auto' default), mcdc view is shown.
         uses: ./
         with:
           source-folder: sample
-          code-coverage-metrics: decision
-      - name: Run MATLAB Tests with default metrics # Test Case 4: With MATLAB Test, and no code-coverage-metrics option ('auto' default), mcdc view is shown.
+      - name: Run MATLAB Tests with old field # Test Case 6: With MATLAB Test and code-coverage-metrics option (w/o coverage report options), view is shown.
         uses: ./
         with:
           source-folder: sample
-      - name: Run MATLAB Tests with empty metrics # Test Case 5: With MATLAB Test, and empty code-coverage-metrics option, no view is shown.
+          code-coverage-metric-level: decision
+      - name: Run MATLAB Tests with empty metrics # Test Case 7: With MATLAB Test, and empty code-coverage-metrics option, no view is shown.
         uses: ./
         with:
           source-folder: sample
