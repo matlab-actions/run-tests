@@ -208,3 +208,8 @@ jobs:
         with:
           source-folder: sample
           code-coverage-metrics: ""
+      - name: Run MATLAB Tests with multiple metrics # Test Case 8: With MATLAB Test and code-coverage-metrics option (w/o coverage report options), view is shown for structural metrics.
+        uses: ./
+        with:
+          source-folder: sample
+          code-coverage-metrics: mcdc type-size
