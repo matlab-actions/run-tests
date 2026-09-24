@@ -35,6 +35,7 @@ jobs:
       - name: Perform 'setup-matlab'
         uses: matlab-actions/setup-matlab@a0180c939fb1a28de13f44f7b778b912384ced1f # v3.0.1
         with:
+          release: latest-including-prerelease
           products: |
             MATLAB_Test
             Parallel_Computing_Toolbox
