@@ -33,8 +33,9 @@ jobs:
         with:
           name: built-action
       - name: Perform 'setup-matlab'
-        uses: matlab-actions/setup-matlab@a0180c939fb1a28de13f44f7b778b912384ced1f # v3.0.1
+        uses: matlab-actions/setup-matlab@f9e43010f1ae678f7cfa0542fe2a4f60f7d1ad8d # v3.1.0
         with:
+          release: latest-including-prerelease
           products: |
             MATLAB_Test
             Parallel_Computing_Toolbox
@@ -71,6 +72,7 @@ jobs:
           test-results-junit: test-results/results.xml
           code-coverage-cobertura: test-results/coverage.xml
           code-coverage-html: test-results/coverageHTML
+          code-coverage-metrics: mcdc type-size
           test-results-html: test-results/resultsHTML
           select-by-folder: sample
           strict: true
@@ -106,6 +108,7 @@ jobs:
           test-results-junit: test-results/results.xml
           code-coverage-cobertura: test-results/coverage.xml
           code-coverage-html: test-results/coverageHTML
+          code-coverage-metrics: mcdc type-size
           model-coverage-html: test-results/modelcoverageHTML
           test-results-html: test-results/resultsHTML
           select-by-folder: sample
@@ -144,8 +147,9 @@ jobs:
         with:
           name: built-action
       - name: Perform 'setup-matlab' without MATLAB Test
-        uses: matlab-actions/setup-matlab@a0180c939fb1a28de13f44f7b778b912384ced1f # v3.0.1
+        uses: matlab-actions/setup-matlab@f9e43010f1ae678f7cfa0542fe2a4f60f7d1ad8d # v3.1.0
         with:
+          release: latest-including-prerelease
           products: |
             Parallel_Computing_Toolbox
             Simulink
@@ -170,8 +174,9 @@ jobs:
           fi
         shell: bash
       - name: Perform 'setup-matlab' with MATLAB Test
-        uses: matlab-actions/setup-matlab@a0180c939fb1a28de13f44f7b778b912384ced1f # v3.0.1
+        uses: matlab-actions/setup-matlab@f9e43010f1ae678f7cfa0542fe2a4f60f7d1ad8d # v3.1.0
         with:
+          release: latest-including-prerelease
           products: |
             MATLAB_Test
       - name: Run MATLAB Tests with coverage report options # Test Case 3: With MATLAB Test and code-coverage report options, no view is shown.
@@ -208,3 +213,8 @@ jobs:
         with:
           source-folder: sample
           code-coverage-metrics: ""
+      - name: Run MATLAB Tests with multiple metrics # Test Case 8: With MATLAB Test and code-coverage-metrics option (w/o coverage report options), view is shown for structural metrics.
+        uses: ./
+        with:
+          source-folder: sample
+          code-coverage-metrics: mcdc type-size
